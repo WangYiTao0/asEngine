@@ -1,3 +1,4 @@
+#include "aspch.h"
 #include "asGraphicsDevice.h"
 
 using namespace asGraphics;
