@@ -137,6 +137,14 @@ namespace asGraphics
 		USAGE_STAGING,
 	};
 
+	enum TEXTURE_ADDRESS_MODE
+	{
+		TEXTURE_ADDRESS_WRAP,
+		TEXTURE_ADDRESS_MIRROR,
+		TEXTURE_ADDRESS_CLAMP,
+		TEXTURE_ADDRESS_BORDER,
+	};
+
 	enum FILTER
 	{
 		FILTER_MIN_MAG_MIP_POINT,
@@ -355,5 +363,261 @@ namespace asGraphics
 		uint32_t AlignedByteOffset = APPEND_ALIGNED_ELEMENT;
 		INPUT_CLASSIFICATION InputSlotClass = INPUT_CLASSIFICATION::INPUT_PER_VERTEX_DATA;
 		uint32_t InstanceDataStepRate = 0;
+	};
+
+	union ClearValue
+	{
+		float color[4];
+		struct ClearDepthStencil
+		{
+			float depth;
+			uint32_t stencil;
+		} depthstencil;
+	};
+
+	struct TextureDesc
+	{
+		enum TEXTURE_TYPE
+		{
+			TEXTURE_1D,
+			TEXTURE_2D,
+			TEXTURE_3D,
+		} type = TEXTURE_2D;
+		uint32_t Width = 0;
+		uint32_t Height = 0;
+		uint32_t Depth = 0;
+		uint32_t ArraySize = 1;
+		uint32_t MipLevels = 1;
+		FORMAT Format = FORMAT_UNKNOWN;
+		uint32_t SampleCount = 1;
+		USAGE Usage = USAGE_DEFAULT;
+		uint32_t BindFlags = 0;
+		uint32_t CPUAccessFlags = 0;
+		uint32_t MiscFlags = 0;
+		ClearValue clear = {};
+		IMAGE_LAYOUT layout = IMAGE_LAYOUT_GENERAL;
+	};
+
+	struct SamplerDesc
+	{
+		FILTER Filter = FILTER_MIN_MAG_MIP_POINT;
+		TEXTURE_ADDRESS_MODE AddressU = TEXTURE_ADDRESS_CLAMP;
+		TEXTURE_ADDRESS_MODE AddressV = TEXTURE_ADDRESS_CLAMP;
+		TEXTURE_ADDRESS_MODE AddressW = TEXTURE_ADDRESS_CLAMP;
+		float MipLODBias = 0.0f;
+		uint32_t MaxAnisotropy = 0;
+		COMPARISON_FUNC ComparisonFunc = COMPARISON_NEVER;
+		float BorderColor[4] = { 0.0f,0.0f,0.0f,0.0f };
+		float MinLOD = 0.0f;
+		float MaxLOD = FLT_MAX;
+	};
+	struct RasterizerStateDesc
+	{
+		FILL_MODE FillMode = FILL_SOLID;
+		CULL_MODE CullMode = CULL_NONE;
+		bool FrontCounterClockwise = false;
+		int32_t DepthBias = 0;
+		float DepthBiasClamp = 0.0f;
+		float SlopeScaledDepthBias = 0.0f;
+		bool DepthClipEnable = false;
+		bool MultisampleEnable = false;
+		bool AntialiasedLineEnable = false;
+		bool ConservativeRasterizationEnable = false;
+		uint32_t ForcedSampleCount = 0;
+	};
+
+	struct DepthStencilOpDesc
+	{
+		STENCIL_OP StencilFailOp = STENCIL_OP_KEEP;
+		STENCIL_OP StencilDepthFailOp = STENCIL_OP_KEEP;
+		STENCIL_OP StencilPassOp = STENCIL_OP_KEEP;
+		COMPARISON_FUNC StencilFunc = COMPARISON_NEVER;
+	};
+	struct DepthStencilStateDesc
+	{
+		bool DepthEnable = false;
+		DEPTH_WRITE_MASK DepthWriteMask = DEPTH_WRITE_MASK_ZERO;
+		COMPARISON_FUNC DepthFunc = COMPARISON_NEVER;
+		bool StencilEnable = false;
+		uint8_t StencilReadMask = 0xff;
+		uint8_t StencilWriteMask = 0xff;
+		DepthStencilOpDesc FrontFace;
+		DepthStencilOpDesc BackFace;
+	};
+
+	struct RenderTargetBlendStateDesc
+	{
+		bool BlendEnable = false;
+		BLEND SrcBlend = BLEND_SRC_ALPHA;
+		BLEND DestBlend = BLEND_INV_SRC_ALPHA;
+		BLEND_OP BlendOp = BLEND_OP_ADD;
+		BLEND SrcBlendAlpha = BLEND_ONE;
+		BLEND DestBlendAlpha = BLEND_ONE;
+		BLEND_OP BlendOpAlpha = BLEND_OP_ADD;
+		uint8_t RenderTargetWriteMask = COLOR_WRITE_ENABLE_ALL;
+	};
+
+	struct BlendStateDesc
+	{
+		bool AlphaToCoverageEnable = false;
+		bool IndependentBlendEnable = false;
+		RenderTargetBlendStateDesc RenderTarget[8];
+	};
+
+	struct GPUBufferDesc
+	{
+		uint32_t ByteWidth = 0;
+		USAGE Usage = USAGE_DEFAULT;
+		uint32_t BindFlags = 0;
+		uint32_t CPUAccessFlags = 0;
+		uint32_t MiscFlags = 0;
+		uint32_t StructureByteStride = 0; // needed for typed and structured buffer types!
+		FORMAT Format = FORMAT_UNKNOWN; // only needed for typed buffer!
+	};
+
+	struct GPUQueryDesc
+	{
+		GPU_QUERY_TYPE Type = GPU_QUERY_TYPE_INVALID;
+	};
+
+	struct GPUQueryResult
+	{
+		uint64_t	result_passed_sample_count = 0;
+		uint64_t	result_timestamp = 0;
+		uint64_t	result_timestamp_frequency = 0;
+	};
+	struct PipelineStateDesc
+	{
+		const VertexShader* vs = nullptr;
+		const PixelShader* ps = nullptr;
+		const HullShader* hs = nullptr;
+		const DomainShader* ds = nullptr;
+		const GeometryShader* gs = nullptr;
+		const BlendState* bs = nullptr;
+		const RasterizerState* rs = nullptr;
+		const DepthStencilState* dss = nullptr;
+		const VertexLayout* il = nullptr;
+		PRIMITIVETOPOLOGY			pt = TRIANGLELIST;
+		uint32_t					sampleMask = 0xFFFFFFFF;
+	};
+
+	struct GPUBarrier
+	{
+		enum TYPE
+		{
+			MEMORY_BARRIER,		// UAV accesses
+			IMAGE_BARRIER,		// image layout transition
+			BUFFER_BARRIER,		// buffer state transition
+		} type = MEMORY_BARRIER;
+		union
+		{
+			struct Memory
+			{
+				const GPUResource* resource;
+			} memory;
+			struct Image
+			{
+				const Texture* texture;
+				IMAGE_LAYOUT layout_before;
+				IMAGE_LAYOUT layout_after;
+			} image;
+			struct Buffer
+			{
+				const GPUBuffer* buffer;
+				BUFFER_STATE state_before;
+				BUFFER_STATE state_after;
+			} buffer;
+		};
+
+		static GPUBarrier Memory(const GPUResource* resource = nullptr)
+		{
+			GPUBarrier barrier;
+			barrier.type = MEMORY_BARRIER;
+			barrier.memory.resource = resource;
+			return barrier;
+		}
+		static GPUBarrier Image(const Texture* texture, IMAGE_LAYOUT before, IMAGE_LAYOUT after)
+		{
+			GPUBarrier barrier;
+			barrier.type = IMAGE_BARRIER;
+			barrier.image.texture = texture;
+			barrier.image.layout_before = before;
+			barrier.image.layout_after = after;
+			return barrier;
+		}
+		static GPUBarrier Buffer(const GPUBuffer* buffer, BUFFER_STATE before, BUFFER_STATE after)
+		{
+			GPUBarrier barrier;
+			barrier.type = BUFFER_BARRIER;
+			barrier.buffer.buffer = buffer;
+			barrier.buffer.state_before = before;
+			barrier.buffer.state_after = after;
+			return barrier;
+		}
+	};
+	struct RenderPassAttachment
+	{
+		enum TYPE
+		{
+			RENDERTARGET,
+			DEPTH_STENCIL,
+		} type = RENDERTARGET;
+		enum LOAD_OPERATION
+		{
+			LOADOP_LOAD,
+			LOADOP_CLEAR,
+			LOADOP_DONTCARE,
+		} loadop = LOADOP_LOAD;
+		const Texture* texture = nullptr;
+		int subresource = -1;
+		enum STORE_OPERATION
+		{
+			STOREOP_STORE,
+			STOREOP_DONTCARE,
+		} storeop = STOREOP_STORE;
+		IMAGE_LAYOUT initial_layout = IMAGE_LAYOUT_GENERAL;
+		IMAGE_LAYOUT final_layout = IMAGE_LAYOUT_GENERAL;
+	};
+
+	struct RenderPassDesc
+	{
+		uint32_t numAttachments = 0;
+		RenderPassAttachment attachments[9] = {};
+	};
+
+	struct IndirectDrawArgsInstanced
+	{
+		uint32_t VertexCountPerInstance = 0;
+		uint32_t InstanceCount = 0;
+		uint32_t StartVertexLocation = 0;
+		uint32_t StartInstanceLocation = 0;
+	};
+
+	struct IndirectDrawArgsIndexedInstanced
+	{
+		uint32_t IndexCountPerInstance = 0;
+		uint32_t InstanceCount = 0;
+		uint32_t StartIndexLocation = 0;
+		int32_t BaseVertexLocation = 0;
+		uint32_t StartInstanceLocation = 0;
+	};
+	struct IndirectDispatchArgs
+	{
+		uint32_t ThreadGroupCountX = 0;
+		uint32_t ThreadGroupCountY = 0;
+		uint32_t ThreadGroupCountZ = 0;
+	};
+	struct SubresourceData
+	{
+		const void* pSysMem = nullptr;
+		uint32_t SysMemPitch = 0;
+		uint32_t SysMemSlicePitch = 0;
+	};
+	struct Rect
+	{
+		int32_t left = 0;
+		int32_t top = 0;
+		int32_t right = 0;
+		int32_t bottom = 0;
 	};
 }
