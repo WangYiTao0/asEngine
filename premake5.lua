@@ -26,3 +26,4 @@ group ""
 
 include "asEngine"
 include "Sandbox"
+include "Editor"
