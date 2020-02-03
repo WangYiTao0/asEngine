@@ -14,7 +14,7 @@
 #endif // _WIN32
 
 
-namespace wiPlatform
+namespace asPlatform
 {
 #ifdef _WIN32
 #ifndef WINSTORE_SUPPORT

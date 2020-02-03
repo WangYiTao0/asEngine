@@ -56,7 +56,10 @@ namespace asGraphics
 			size_t byteOffset = 0;
 			uint64_t residentFrame = 0;
 			bool dirty = false;
-		} frame_allocators[COMMANDLIST_COUNT];
+		};
+		
+		GPUAllocator frame_allocators[COMMANDLIST_COUNT];
+
 		void commit_allocations(CommandList cmd);
 
 		void CreateBackBufferResources();
@@ -66,7 +69,7 @@ namespace asGraphics
 		wiContainers::ThreadSafeRingBuffer<CommandList, COMMANDLIST_COUNT> active_commandlists;
 
 	public:
-		GraphicsDevice_DX11(wiPlatform::window_type window, bool fullscreen = false, bool debuglayer = false);
+		GraphicsDevice_DX11(asPlatform::window_type window, bool fullscreen = false, bool debuglayer = false);
 		virtual ~GraphicsDevice_DX11();
 
 		virtual bool CreateBuffer(const GPUBufferDesc* pDesc, const SubresourceData* pInitialData, GPUBuffer* pBuffer) override;
