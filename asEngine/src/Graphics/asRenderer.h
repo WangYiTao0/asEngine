@@ -1,7 +1,7 @@
 #pragma once
 #include "CommonInclude.h"
 #include "asEnums.h"
-#include "asGraphicsDevice.h"
+#include "API/asGraphicsDevice.h"
 #include "asScene_Decl.h"
 #include "asECS.h"
 

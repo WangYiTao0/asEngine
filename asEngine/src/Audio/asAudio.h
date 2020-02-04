@@ -19,12 +19,12 @@ namespace asAudio
 
 	struct Sound
 	{
-		wiCPUHandle handle = WI_NULL_HANDLE;
+		asCPUHandle handle = AS_NULL_HANDLE;
 
 		void operator=(Sound&& other)
 		{
 			handle = other.handle;
-			other.handle = WI_NULL_HANDLE;
+			other.handle = AS_NULL_HANDLE;
 		}
 
 		Sound() {}
@@ -32,7 +32,7 @@ namespace asAudio
 		{
 			handle = other.handle;
 
-			other.handle = WI_NULL_HANDLE;
+			other.handle = AS_NULL_HANDLE;
 		}
 		~Sound();
 	};
@@ -41,7 +41,7 @@ namespace asAudio
 		SUBMIX_TYPE type = SUBMIX_TYPE_SOUNDEFFECT;
 		float loop_begin = 0;	// loop region begin in seconds (0 = from beginning)
 		float loop_length = 0;	// loop region legth in seconds (0 = until the end)
-		wiCPUHandle handle = WI_NULL_HANDLE;
+		asCPUHandle handle = AS_NULL_HANDLE;
 
 		void operator=(SoundInstance&& other)
 		{
@@ -50,7 +50,7 @@ namespace asAudio
 			loop_length = other.loop_length;
 			handle = other.handle;
 
-			other.handle = WI_NULL_HANDLE;
+			other.handle = AS_NULL_HANDLE;
 		}
 
 		SoundInstance() {}
@@ -61,7 +61,7 @@ namespace asAudio
 			loop_length = other.loop_length;
 			handle = other.handle;
 
-			other.handle = WI_NULL_HANDLE;
+			other.handle = AS_NULL_HANDLE;
 		}
 		~SoundInstance();
 	};

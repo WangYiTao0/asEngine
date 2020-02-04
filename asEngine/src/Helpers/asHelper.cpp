@@ -2,8 +2,8 @@
 
 #include "Helpers/asHelper.h"
 #include "System/asPlatform.h"
-#include "asRenderer.h"
-#include "asBackLog.h"
+#include "Graphics/asRenderer.h"
+#include "Tools/asBackLog.h"
 
 #include "Utility/stb_image_write.h"
 
@@ -54,7 +54,7 @@ namespace asHelper
 	void messageBox(const std::string& msg, const std::string& caption)
 	{
 #ifndef WINSTORE_SUPPORT
-		MessageBoxA(wiPlatform::GetWindow(), msg.c_str(), caption.c_str(), 0);
+		MessageBoxA(asPlatform::GetWindow(), msg.c_str(), caption.c_str(), 0);
 #else
 		wstring wmsg;
 		StringConvert(msg, wmsg);
@@ -106,7 +106,7 @@ namespace asHelper
 		return saveTextureToFile(data, desc, fileName);
 	}
 
-	bool saveTextureToFile(const std::vector<uint8_t>& textureData, const wiGraphics::TextureDesc& desc, const std::string& fileName)
+	bool saveTextureToFile(const std::vector<uint8_t>& textureData, const asGraphics::TextureDesc& desc, const std::string& fileName)
 	{
 		using namespace asGraphics;
 

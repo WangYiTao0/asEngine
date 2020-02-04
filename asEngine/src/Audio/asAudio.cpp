@@ -1,7 +1,7 @@
 #include "aspch.h"
 #include "asAudio.h"
-#include "asBackLog.h"
-#include "asHelper.h"
+#include "Tools/asBackLog.h"
+#include "Helpers/asHelper.h"
 
 
 #include <xaudio2.h>
@@ -27,7 +27,7 @@
 #define fourccDPDS 'sdpd'
 #endif
 
-namespace wiAudio
+namespace asAudio
 {
 	static const XAUDIO2FX_REVERB_I3DL2_PARAMETERS reverbPresets[] =
 	{
@@ -187,7 +187,7 @@ namespace wiAudio
 
 		if (audio->success)
 		{
-			wiBackLog::post("wiAudio Initialized");
+			asBackLog::post("wiAudio Initialized");
 		}
 	}
 
@@ -266,7 +266,7 @@ namespace wiAudio
 		Destroy(sound);
 
 		std::wstring wfilename;
-		wiHelper::StringConvert(filename, wfilename);
+		asHelper::StringConvert(filename, wfilename);
 
 		HANDLE hFile = CreateFile2(
 			wfilename.c_str(),
@@ -314,7 +314,7 @@ namespace wiAudio
 		hr = ReadChunkData(hFile, soundinternal->audioData.data(), dwChunkSize, dwChunkPosition);
 		assert(SUCCEEDED(hr));
 
-		sound->handle = (wiCPUHandle)soundinternal;
+		sound->handle = (asCPUHandle)soundinternal;
 
 		return true;
 	}
@@ -365,33 +365,33 @@ namespace wiAudio
 			return false;
 		}
 
-		instance->handle = (wiCPUHandle)instanceinternal;
+		instance->handle = (asCPUHandle)instanceinternal;
 
 		return true;
 	}
 	void Destroy(Sound* sound)
 	{
-		if (sound != nullptr && sound->handle != WI_NULL_HANDLE)
+		if (sound != nullptr && sound->handle != AS_NULL_HANDLE)
 		{
 			SoundInternal* soundinternal = (SoundInternal*)sound->handle;
 			delete soundinternal;
-			sound->handle = WI_NULL_HANDLE;
+			sound->handle = AS_NULL_HANDLE;
 		}
 	}
 	void Destroy(SoundInstance* instance)
 	{
-		if (instance != nullptr && instance->handle != WI_NULL_HANDLE)
+		if (instance != nullptr && instance->handle != AS_NULL_HANDLE)
 		{
 			SoundInstanceInternal* instanceinternal = (SoundInstanceInternal*)instance->handle;
 			instanceinternal->sourceVoice->Stop();
 			instanceinternal->sourceVoice->DestroyVoice();
 			delete instanceinternal;
-			instance->handle = WI_NULL_HANDLE;
+			instance->handle = AS_NULL_HANDLE;
 		}
 	}
 	void Play(SoundInstance* instance)
 	{
-		if (instance != nullptr && instance->handle != WI_NULL_HANDLE)
+		if (instance != nullptr && instance->handle != AS_NULL_HANDLE)
 		{
 			SoundInstanceInternal* instanceinternal = (SoundInstanceInternal*)instance->handle;
 			HRESULT hr = instanceinternal->sourceVoice->Start();
@@ -400,7 +400,7 @@ namespace wiAudio
 	}
 	void Pause(SoundInstance* instance)
 	{
-		if (instance != nullptr && instance->handle != WI_NULL_HANDLE)
+		if (instance != nullptr && instance->handle != AS_NULL_HANDLE)
 		{
 			SoundInstanceInternal* instanceinternal = (SoundInstanceInternal*)instance->handle;
 			HRESULT hr = instanceinternal->sourceVoice->Stop(); // preserves cursor position
@@ -409,7 +409,7 @@ namespace wiAudio
 	}
 	void Stop(SoundInstance* instance)
 	{
-		if (instance != nullptr && instance->handle != WI_NULL_HANDLE)
+		if (instance != nullptr && instance->handle != AS_NULL_HANDLE)
 		{
 			SoundInstanceInternal* instanceinternal = (SoundInstanceInternal*)instance->handle;
 			HRESULT hr = instanceinternal->sourceVoice->Stop(); // preserves cursor position
@@ -422,7 +422,7 @@ namespace wiAudio
 	}
 	void SetVolume(float volume, SoundInstance* instance)
 	{
-		if (instance == nullptr || instance->handle == WI_NULL_HANDLE)
+		if (instance == nullptr || instance->handle == AS_NULL_HANDLE)
 		{
 			HRESULT hr = audio->masteringVoice->SetVolume(volume);
 			assert(SUCCEEDED(hr));
@@ -437,7 +437,7 @@ namespace wiAudio
 	float GetVolume(const SoundInstance* instance)
 	{
 		float volume = 0;
-		if (instance == nullptr || instance->handle == WI_NULL_HANDLE)
+		if (instance == nullptr || instance->handle == AS_NULL_HANDLE)
 		{
 			audio->masteringVoice->GetVolume(&volume);
 		}
@@ -450,7 +450,7 @@ namespace wiAudio
 	}
 	void ExitLoop(SoundInstance* instance)
 	{
-		if (instance != nullptr && instance->handle != WI_NULL_HANDLE)
+		if (instance != nullptr && instance->handle != AS_NULL_HANDLE)
 		{
 			SoundInstanceInternal* instanceinternal = (SoundInstanceInternal*)instance->handle;
 			HRESULT hr = instanceinternal->sourceVoice->ExitLoop();
@@ -472,7 +472,7 @@ namespace wiAudio
 
 	void Update3D(SoundInstance* instance, const SoundInstance3D& instance3D)
 	{
-		if (instance != nullptr && instance->handle != WI_NULL_HANDLE)
+		if (instance != nullptr && instance->handle != AS_NULL_HANDLE)
 		{
 			SoundInstanceInternal* instanceinternal = (SoundInstanceInternal*)instance->handle;
 

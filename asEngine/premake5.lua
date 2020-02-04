@@ -23,12 +23,18 @@ defines
 
 includedirs
 {
-    "src"
+    "src",
+    "$(VULKAN_SDK)/include",
+}
+
+libdirs
+{
+    "$(VULKAN_SDK)/Lib",
 }
 
 links
 {
-    opengl32
+    "vulkan-1",
 }
 
 filter "system:windows"
