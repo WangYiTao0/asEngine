@@ -24,7 +24,7 @@ namespace asTextureHelper
 	std::unordered_map<unsigned long, asGraphics::Texture*> colorTextures;
 	wiSpinLock colorlock;
 
-	void Initialize()
+	void Initilize()
 	{
 		// Random64x64
 		{
@@ -116,6 +116,11 @@ namespace asTextureHelper
 		}
 
 		asBackLog::post("wiTextureHelper Initialized");
+	}
+
+	void Initilize()
+	{
+
 	}
 
 	const Texture* getRandom64x64()
