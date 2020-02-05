@@ -1,7 +1,7 @@
 #pragma once
 #include <atomic>
 
-class wiSpinLock
+class asSpinLock
 {
 private:
 	std::atomic_flag lck = ATOMIC_FLAG_INIT;

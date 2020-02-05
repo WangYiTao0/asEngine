@@ -545,3 +545,4 @@ namespace asAudio
 		HRESULT hr = audio->reverbSubmix->SetEffectParameters(0, &native, sizeof(native));
 		assert(SUCCEEDED(hr));
 	}
+}

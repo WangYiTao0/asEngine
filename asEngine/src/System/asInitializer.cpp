@@ -1,3 +1,4 @@
+#include "aspch.h"
 #include "asInitializer.h"
 #include "asEngine.h"
 
@@ -24,7 +25,7 @@ namespace asInitializer
 
 		asJobSystem::Initialize();
 
-		//asJobSystem::Execute(ctx, [] { asFont::Initialize(); });
+		asJobSystem::Execute(ctx, [] { asFont::Initialize(); });
 		//asJobSystem::Execute(ctx, [] { asImage::Initialize(); });
 		//asJobSystem::Execute(ctx, [] { asInput::Initialize(); });
 		//asJobSystem::Execute(ctx, [] { asRenderer::Initialize(); asWidget::LoadShaders(); });

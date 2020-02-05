@@ -28,7 +28,7 @@ namespace asJobSystem
 	//	jobCount	: how many jobs to generate for this task.
 	//	groupSize	: how many jobs to execute per thread. Jobs inside a group execute serially. It might be worth to increase for small jobs
 	//	func		: receives a wiJobDispatchArgs as parameter
-	void Dispatch(context& ctx, uint32_t jobCount, uint32_t groupSize, const std::function<void(wiJobDispatchArgs)>& job);
+	void Dispatch(context& ctx, uint32_t jobCount, uint32_t groupSize, const std::function<void(asJobDispatchArgs)>& job);
 
 	// Check if any threads are working currently or not
 	bool IsBusy(const context& ctx);

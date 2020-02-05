@@ -16,6 +16,7 @@
 #include "Tools\asBackLog.h"
 
 
+#include "Graphics\asFont.h"
 
 //#ifdef _WIN32
 //#ifdef WINSTORE_SUPPORT

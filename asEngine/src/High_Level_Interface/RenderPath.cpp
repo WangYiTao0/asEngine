@@ -1,3 +1,4 @@
+#include "aspch.h"
 #include "RenderPath.h"
 #include "Graphics\asRenderer.h"
 

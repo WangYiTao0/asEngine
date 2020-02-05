@@ -19,13 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-
+#include "aspch.h"
 #include "D3D12MemAlloc.h"
 
-#include <mutex>
-#include <atomic>
-#include <algorithm>
-#include <cstdlib>
 #include <malloc.h> // for _aligned_malloc, _aligned_free
 
 ////////////////////////////////////////////////////////////////////////////////

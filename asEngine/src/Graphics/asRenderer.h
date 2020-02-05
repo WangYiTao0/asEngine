@@ -2,8 +2,8 @@
 #include "CommonInclude.h"
 #include "asEnums.h"
 #include "API/asGraphicsDevice.h"
-#include "asScene_Decl.h"
-#include "asECS.h"
+#include "System\asScene_Dec1.h"
+#include "System\asECS.h"
 
 #include <memory>
 
@@ -76,7 +76,7 @@ namespace asRenderer
 	// Updates the per frame constant buffer (need to call at least once per frame)
 	void UpdateFrameCB(asGraphics::CommandList cmd);
 	// Updates the per camera constant buffer need to call for each different camera that is used when calling DrawScene() and the like
-	void UpdateCameraCB(const wiScene::CameraComponent& camera, asGraphics::CommandList cmd);
+	void UpdateCameraCB(const asScene::CameraComponent& camera, asGraphics::CommandList cmd);
 	// Set a global clipping plane state that is available to use in any shader (access as float4 g_xClipPlane)
 	void SetClipPlane(const XMFLOAT4& clipPlane, asGraphics::CommandList cmd);
 	// Set a global alpha reference value that can be used by any shaders to perform alpha-testing (access as float g_xAlphaRef)
@@ -89,13 +89,13 @@ namespace asRenderer
 	// A black skydome will be draw with only the sun being visible on it
 	void DrawSun(asGraphics::CommandList cmd);
 	// Draw the world from a camera. You must call UpdateCameraCB() at least once in this frame prior to this
-	void DrawScene(const wiScene::CameraComponent& camera, bool tessellation, asGraphics::CommandList cmd, RENDERPASS renderPass, bool grass, bool occlusionCulling);
+	void DrawScene(const asScene::CameraComponent& camera, bool tessellation, asGraphics::CommandList cmd, RENDERPASS renderPass, bool grass, bool occlusionCulling);
 	// Draw the transparent world from a camera. You must call UpdateCameraCB() at least once in this frame prior to this
-	void DrawScene_Transparent(const wiScene::CameraComponent& camera, const asGraphics::Texture& lineardepth, RENDERPASS renderPass, asGraphics::CommandList cmd, bool grass, bool occlusionCulling);
+	void DrawScene_Transparent(const asScene::CameraComponent& camera, const asGraphics::Texture& lineardepth, RENDERPASS renderPass, asGraphics::CommandList cmd, bool grass, bool occlusionCulling);
 	// Draw shadow maps for each visible light that has associated shadow maps
-	void DrawShadowmaps(const wiScene::CameraComponent& camera, asGraphics::CommandList cmd, uint32_t layerMask = ~0);
+	void DrawShadowmaps(const asScene::CameraComponent& camera, asGraphics::CommandList cmd, uint32_t layerMask = ~0);
 	// Draw debug world. You must also enable what parts to draw, eg. SetToDrawGridHelper, etc, see implementation for details what can be enabled.
-	void DrawDebugWorld(const wiScene::CameraComponent& camera, asGraphics::CommandList cmd);
+	void DrawDebugWorld(const asScene::CameraComponent& camera, asGraphics::CommandList cmd);
 	// Draw Soft offscreen particles. Linear depth should be already readable (see BindDepthTextures())
 	void DrawSoftParticles(
 		const asScene::CameraComponent& camera,
@@ -114,24 +114,24 @@ namespace asRenderer
 	);
 	// Draw simple light visualizer geometries
 	void DrawLightVisualizers(
-		const wiScene::CameraComponent& camera,
+		const asScene::CameraComponent& camera,
 		asGraphics::CommandList cmd
 	);
 	// Draw volumetric light scattering effects
 	void DrawVolumeLights(
-		const wiScene::CameraComponent& camera,
+		const asScene::CameraComponent& camera,
 		const asGraphics::Texture& depthbuffer,
 		asGraphics::CommandList cmd
 	);
 	// Draw Lens Flares for lights that have them enabled
 	void DrawLensFlares(
-		const wiScene::CameraComponent& camera,
+		const asScene::CameraComponent& camera,
 		const asGraphics::Texture& depthbuffer,
 		asGraphics::CommandList cmd
 	);
 	// Draw deferred decals
 	void DrawDeferredDecals(
-		const wiScene::CameraComponent& camera,
+		const asScene::CameraComponent& camera,
 		const asGraphics::Texture& depthbuffer,
 		asGraphics::CommandList cmd
 	);
@@ -320,7 +320,7 @@ namespace asRenderer
 		void Create(asGraphics::GraphicsDevice* device, uint32_t newRayCapacity);
 	};
 	// Generate rays for every pixel of the internal resolution
-	RayBuffers* GenerateScreenRayBuffers(const wiScene::CameraComponent& camera, asGraphics::CommandList cmd);
+	RayBuffers* GenerateScreenRayBuffers(const asScene::CameraComponent& camera, asGraphics::CommandList cmd);
 	// Render the scene with ray tracing. You provide the ray buffer, where each ray maps to one pixel of the result testure
 	void RayTraceScene(
 		const RayBuffers* rayBuffers,

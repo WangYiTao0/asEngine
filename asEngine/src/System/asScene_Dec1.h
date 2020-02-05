@@ -24,6 +24,6 @@ namespace asScene
 	struct SoundComponent;
 	struct Scene;
 
-	class wiEmittedParticle; // todo: rename
-	class wiHairParticle; // todo: rename
+	class asEmittedParticle; // todo: rename
+	class asHairParticle; // todo: rename
 }

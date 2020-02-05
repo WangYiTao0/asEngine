@@ -1,4 +1,5 @@
 #pragma once
+#include "Helpers\asSpinLock.h"
 
 namespace wiContainers
 {
@@ -46,6 +47,6 @@ namespace wiContainers
 		T data[capacity];
 		size_t head = 0;
 		size_t tail = 0;
-		wiSpinLock lock;
+		asSpinLock lock;
 	};
 }
