@@ -16,7 +16,7 @@ asResource::~asResource()
 		switch (type)
 		{
 		case asResource::IMAGE:
-			SAFE_DELETE(Texture);
+			SAFE_DELETE(texture);
 			break;
 		case asResource::SOUND:
 			SAFE_DELETE(Sound);

@@ -13,7 +13,7 @@ struct asResource
 	union 
 	{
 		const void* data = nullptr;
-		const asGraphics::Texture* Texture;
+		const asGraphics::Texture* texture;
 		const asAudio::Sound* Sound;
 	};
 

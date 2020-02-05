@@ -5,7 +5,7 @@
 
 struct asImageParams;
 
-namespace wiImage
+namespace asImage
 {
 	void Draw(const asGraphics::Texture* texture, const asImageParams& params, asGraphics::CommandList cmd);
 
