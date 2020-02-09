@@ -1,3 +1,6 @@
 [submodule "asEngine/3rdPart/spdlog"]
 	path = asEngine/3rdPart/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "asEngine/3rdPart/imgui"]
+	path = asEngine/3rdPart/imgui
+	url = https://github.com/WangYiTao0/imgui.git

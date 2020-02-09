@@ -18,6 +18,7 @@
     {
         "../asEngine/src",
         "../asEngine/3rdPart/spdlog/include",
+        "../asEngine/%{IncludeDir.ImGui}"
     }
 
     links
@@ -30,15 +31,15 @@
 
     defines
     {
-        "_PLATFORM_WINDOWS"
+        "AS_PLATFORM_WINDOWS"
     }
 
 filter "configurations:Debug"
-    defines "_DEBUG"
+    defines "AS_DEBUG"
     runtime "Debug"
     symbols "on"
 
 filter "configurations:Release"
-    defines "_RELEASE"
+    defines "AS_RELEASE"
     runtime "Release"
     optimize "on"

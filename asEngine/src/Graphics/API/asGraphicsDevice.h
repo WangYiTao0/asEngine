@@ -3,6 +3,7 @@
 #include "asGraphicsDescriptors.h"
 #include "asGraphicsResource.h"
 
+#include <string>
 namespace as
 {
 	namespace asGraphics

@@ -44,7 +44,7 @@
 #include "Helpers/asColors.h"
 #include "Physics/asPhysicsEngine.h"
 #include "Graphics/asEnums.h"
-#include "asInitializer.h"
+#include "System/asInitializer.h"
 //#include "asLua.h"
 //#include "asLuna.h"
 #include "Graphics/API/asGraphicsDevice.h"

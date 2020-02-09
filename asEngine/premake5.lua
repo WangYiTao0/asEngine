@@ -26,6 +26,7 @@ includedirs
     "src",
     "$(VULKAN_SDK)/include",
     "3rdPart/spdlog/include",
+    "%{IncludeDir.ImGui}",
 }
 
 libdirs
@@ -36,6 +37,7 @@ libdirs
 links
 {
     "vulkan-1",
+    --"ImGui",
 }
 
 filter "system:windows"
