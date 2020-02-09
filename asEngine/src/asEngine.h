@@ -16,9 +16,11 @@
 #include "Tools\asBackLog.h"
 
 
-#include "Graphics\asFont.h"
 
+// For use by asEngine applications
+#include "Graphics\asFont.h"
 #include "Core/Application.h"
+#include "Core/Log.h"
 
 //#ifdef _WIN32
 //#ifdef WINSTORE_SUPPORT

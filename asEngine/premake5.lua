@@ -25,6 +25,7 @@ includedirs
 {
     "src",
     "$(VULKAN_SDK)/include",
+    "3rdPart/spdlog/include",
 }
 
 libdirs

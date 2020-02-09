@@ -1,5 +1,5 @@
 #include <asEngine.h>
-#include <EntryPoint.h>
+#include <Core/EntryPoint.h>
 
 class Sandbox : public asCore::Application
 {

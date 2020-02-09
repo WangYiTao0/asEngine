@@ -17,7 +17,8 @@ workspace "asEngine"
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
--- Include directories relative to 
+-- Include directories relative to root folder (solution directory)
+IncludeDir = {}
 
 -- Projects
 group "Dependencies"
