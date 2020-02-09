@@ -8,7 +8,7 @@ namespace as
 {
 	namespace asTextureHelper
 	{
-		void Initilize();
+		void Initialize();
 		const asGraphics::Texture* getRandom64x64();
 		const asGraphics::Texture* getColorGradeDefault();
 		const asGraphics::Texture* getNormalMapDefault();

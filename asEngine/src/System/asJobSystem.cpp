@@ -79,7 +79,7 @@ namespace as
 
 				// Name the thread:
 				std::wstringstream wss;
-				wss << "wiJobSystem_" << threadID;
+				wss << "asJobSystem_" << threadID;
 				HRESULT hr = SetThreadDescription(handle, wss.str().c_str());
 				assert(SUCCEEDED(hr));
 #endif // _WIN32
@@ -88,7 +88,7 @@ namespace as
 			}
 
 			std::stringstream ss("");
-			ss << "wiJobSystem Initialized with [" << numCores << " cores] [" << numThreads << " threads]";
+			ss << "asJobSystem Initialized with [" << numCores << " cores] [" << numThreads << " threads]";
 			asBackLog::post(ss.str().c_str());
 		}
 

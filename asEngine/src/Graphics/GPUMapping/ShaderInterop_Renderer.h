@@ -192,7 +192,7 @@ CBUFFER(FrameCB, CBSLOT_RENDERER_FRAME)
 	float		g_xFrame_VoxelRadianceRayStepSize;			// raymarch step size in voxel space units
 
 	float3		g_xFrame_VoxelRadianceDataCenter;			// center of the voxel grid in world space units
-	uint		g_xFrame_Options;							// wiRenderer bool options packed into bitmask
+	uint		g_xFrame_Options;							// asRenderer bool options packed into bitmask
 
 	uint3		g_xFrame_EntityCullingTileCount;
 	int			g_xFrame_GlobalEnvProbeIndex;

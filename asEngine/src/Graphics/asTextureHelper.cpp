@@ -117,7 +117,7 @@ namespace as
 				asRenderer::GetDevice()->SetName(&helperTextures[HELPERTEXTURE_BLACKCUBEMAP], "HELPERTEXTURE_BLACKCUBEMAP");
 			}
 
-			asBackLog::post("wiTextureHelper Initialized");
+			asBackLog::post("asTextureHelper Initialized");
 		}
 
 

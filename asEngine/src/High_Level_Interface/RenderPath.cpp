@@ -2,28 +2,31 @@
 #include "RenderPath.h"
 #include "Graphics\asRenderer.h"
 
-void RenderPath::Update(float dt)
+namespace as
 {
-	if (as::asRenderer::ResolutionChanged() || !initial_resizebuffer)
+	void RenderPath::Update(float dt)
 	{
-		ResizeBuffers();
-		initial_resizebuffer = true;
+		if (as::asRenderer::ResolutionChanged() || !initial_resizebuffer)
+		{
+			ResizeBuffers();
+			initial_resizebuffer = true;
+		}
 	}
-}
 
-void RenderPath::Start()
-{
-	if (onStart != nullptr)
+	void RenderPath::Start()
 	{
-		onStart();
+		if (onStart != nullptr)
+		{
+			onStart();
+		}
 	}
-}
 
-void RenderPath::Stop()
-{
-	if (onStop != nullptr)
+	void RenderPath::Stop()
 	{
-		onStop();
+		if (onStop != nullptr)
+		{
+			onStop();
+		}
 	}
 }
 

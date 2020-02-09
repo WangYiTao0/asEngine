@@ -20,25 +20,25 @@ namespace as
 			initializationStarted = true;
 
 			std::stringstream ss;
-			ss << std::endl << "[wiInitializer] Initializing Wicked Engine, please wait..." << std::endl;
+			ss << std::endl << "[asInitializer] Initializing Wicked Engine, please wait..." << std::endl;
 			//ss << "Version: " << asVersion::GetVersionString() << std::endl;
 			asBackLog::post(ss.str().c_str());
 
 			asJobSystem::Initialize();
 
 			asJobSystem::Execute(ctx, [] { asFont::Initialize(); });
-			//asJobSystem::Execute(ctx, [] { asImage::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asImage::Initialize(); });
 			//asJobSystem::Execute(ctx, [] { asInput::Initialize(); });
 			//asJobSystem::Execute(ctx, [] { asRenderer::Initialize(); asWidget::LoadShaders(); });
-			//asJobSystem::Execute(ctx, [] { asAudio::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asAudio::Initialize(); });
 			//asJobSystem::Execute(ctx, [] { asNetwork::Initialize(); });
-			//asJobSystem::Execute(ctx, [] { asTextureHelper::Initialize(); });
-			//asJobSystem::Execute(ctx, [] { asScene::asHairParticle::Initialize(); });
-			//asJobSystem::Execute(ctx, [] { asScene::asEmittedParticle::Initialize(); });
-			//asJobSystem::Execute(ctx, [] { asOcean::Initialize(); });
-			//asJobSystem::Execute(ctx, [] { asGPUSortLib::LoadShaders(); });
-			//asJobSystem::Execute(ctx, [] { asGPUBVH::LoadShaders(); });
-			//asJobSystem::Execute(ctx, [] { asPhysicsEngine::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asTextureHelper::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asScene::asHairParticle::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asScene::asEmittedParticle::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asOcean::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asGPUSortLib::LoadShaders(); });
+			asJobSystem::Execute(ctx, [] { asGPUBVH::LoadShaders(); });
+			asJobSystem::Execute(ctx, [] { asPhysicsEngine::Initialize(); });
 
 		}
 
