@@ -1,6 +1,13 @@
 #pragma once
 
+extern asCore::Application* asCore::CreateApplication();
+
 int main(int argc, char** argv)
 {
-	return;
+	auto app = asCore::CreateApplication();
+
+	app->Run();
+
+	delete app;
+
 }

@@ -18,6 +18,8 @@
 
 #include "Graphics\asFont.h"
 
+#include "Core/Application.h"
+
 //#ifdef _WIN32
 //#ifdef WINSTORE_SUPPORT
 //#pragma comment(lib,"WickedEngine_UWP.lib")
