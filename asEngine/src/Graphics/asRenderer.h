@@ -10,7 +10,6 @@
 struct RAY;
 namespace as
 {
-
 	namespace asRenderer
 	{
 		inline uint32_t CombineStencilrefs(STENCILREF engineStencilRef, uint8_t userStencilRef)

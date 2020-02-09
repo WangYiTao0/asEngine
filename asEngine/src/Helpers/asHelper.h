@@ -24,7 +24,7 @@ namespace as
 
 		void screenshot(const std::string& name = "");
 
-		bool saveTextureToFile(asGraphics::Texture& texture, const std::string& fileName);
+		bool saveTextureToFile(const asGraphics::Texture& texture, const std::string& fileName);
 
 		bool saveTextureToFile(const std::vector<uint8_t>& textureData, const asGraphics::TextureDesc& desc, const std::string& fileName);
 

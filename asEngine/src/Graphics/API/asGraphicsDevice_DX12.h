@@ -43,8 +43,8 @@ namespace as
 			ID3D12RootSignature* computeRootSig = nullptr;
 
 			ID3D12CommandSignature* dispatchIndirectCommandSignature = nullptr;
-			ID3D12CommandSignature* draasnstancedIndirectCommandSignature = nullptr;
-			ID3D12CommandSignature* draasndexedInstancedIndirectCommandSignature = nullptr;
+			ID3D12CommandSignature* drawInstancedIndirectCommandSignature = nullptr;
+			ID3D12CommandSignature* drawIndexedInstancedIndirectCommandSignature = nullptr;
 
 			ID3D12QueryHeap* querypool_timestamp = nullptr;
 			ID3D12QueryHeap* querypool_occlusion = nullptr;

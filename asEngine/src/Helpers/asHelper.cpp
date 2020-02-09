@@ -78,7 +78,7 @@ namespace as
 			assert(result);
 		}
 
-		bool saveTextureToFile(asGraphics::Texture& texture, const string& fileName)
+		bool saveTextureToFile(const asGraphics::Texture& texture, const string& fileName)
 		{
 			using namespace asGraphics;
 
