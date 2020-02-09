@@ -5,53 +5,15 @@ namespace as
 {
 	namespace asGraphics
 	{
-		VertexShader::~VertexShader()
+		Shader::~Shader()
 		{
 			if (device != nullptr)
 			{
-				device->DestroyVertexShader(this);
+				device->DestroyShader(this);
 			}
 		}
 
-		PixelShader::~PixelShader()
-		{
-			if (device != nullptr)
-			{
-				device->DestroyPixelShader(this);
-			}
-		}
 
-		GeometryShader::~GeometryShader()
-		{
-			if (device != nullptr)
-			{
-				device->DestroyGeometryShader(this);
-			}
-		}
-
-		DomainShader::~DomainShader()
-		{
-			if (device != nullptr)
-			{
-				device->DestroyDomainShader(this);
-			}
-		}
-
-		HullShader::~HullShader()
-		{
-			if (device != nullptr)
-			{
-				device->DestroyHullShader(this);
-			}
-		}
-
-		ComputeShader::~ComputeShader()
-		{
-			if (device != nullptr)
-			{
-				device->DestroyComputeShader(this);
-			}
-		}
 
 		Sampler::~Sampler()
 		{

@@ -24,53 +24,15 @@ namespace as
 			~ShaderByteCode() { SAFE_DELETE_ARRAY(data); }
 		};
 
-		struct VertexShader : public GraphicsDeviceChild
+		struct Shader : public GraphicsDeviceChild
 		{
-			~VertexShader();
-
+			~Shader();
+			SHADERSTAGE stage = SHADERSTAGE_COUNT;
 			ShaderByteCode code;
 			asCPUHandle resource = AS_NULL_HANDLE;
 		};
 
-		struct PixelShader : public GraphicsDeviceChild
-		{
-			~PixelShader();
 
-			ShaderByteCode code;
-			asCPUHandle resource = AS_NULL_HANDLE;
-		};
-
-		struct GeometryShader : public GraphicsDeviceChild
-		{
-			~GeometryShader();
-
-			ShaderByteCode code;
-			asCPUHandle resource = AS_NULL_HANDLE;
-		};
-
-		struct HullShader : public GraphicsDeviceChild
-		{
-			~HullShader();
-
-			ShaderByteCode code;
-			asCPUHandle resource = AS_NULL_HANDLE;
-		};
-
-		struct DomainShader : public GraphicsDeviceChild
-		{
-			~DomainShader();
-
-			ShaderByteCode code;
-			asCPUHandle resource = AS_NULL_HANDLE;
-		};
-
-		struct ComputeShader : public GraphicsDeviceChild
-		{
-			~ComputeShader();
-
-			ShaderByteCode code;
-			asCPUHandle resource = AS_NULL_HANDLE;
-		};
 
 		struct Sampler : public GraphicsDeviceChild
 		{

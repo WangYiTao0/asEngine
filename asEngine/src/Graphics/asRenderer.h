@@ -19,12 +19,12 @@ namespace as
 		}
 
 		const asGraphics::Sampler* GetSampler(int slot);
-		const asGraphics::VertexShader* GetVertexShader(VSTYPES id);
-		const asGraphics::HullShader* GetHullShader(HSTYPES id);
-		const asGraphics::DomainShader* GetDomainShader(DSTYPES id);
-		const asGraphics::GeometryShader* GetGeometryShader(GSTYPES id);
-		const asGraphics::PixelShader* GetPixelShader(PSTYPES id);
-		const asGraphics::ComputeShader* GetComputeShader(CSTYPES id);
+		const asGraphics::Shader* GetVertexShader(VSTYPES id);
+		const asGraphics::Shader* GetHullShader(HSTYPES id);
+		const asGraphics::Shader* GetDomainShader(DSTYPES id);
+		const asGraphics::Shader* GetGeometryShader(GSTYPES id);
+		const asGraphics::Shader* GetPixelShader(PSTYPES id);
+		const asGraphics::Shader* GetComputeShader(CSTYPES id);
 		const asGraphics::VertexLayout* GetVertexLayout(VLTYPES id);
 		const asGraphics::RasterizerState* GetRasterizerState(RSTYPES id);
 		const asGraphics::DepthStencilState* GetDepthStencilState(DSSTYPES id);
@@ -52,12 +52,7 @@ namespace as
 		// Reload shaders
 		void ReloadShaders();
 
-		bool LoadVertexShader(asGraphics::VertexShader& shader, const std::string& filename);
-		bool LoadHullShader(asGraphics::HullShader& shader, const std::string& filename);
-		bool LoadDomainShader(asGraphics::DomainShader& shader, const std::string& filename);
-		bool LoadGeometryShader(asGraphics::GeometryShader& shader, const std::string& filename);
-		bool LoadPixelShader(asGraphics::PixelShader& shader, const std::string& filename);
-		bool LoadComputeShader(asGraphics::ComputeShader& shader, const std::string& filename);
+		bool LoadShader(asGraphics::SHADERSTAGE stage, asGraphics::Shader& shader, const std::string& filename);
 
 		// Returns the main camera that is currently being used in rendering (and also for post processing)
 		asScene::CameraComponent& GetCamera();

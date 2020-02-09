@@ -10,8 +10,8 @@ namespace as
 {
 	namespace asFFTGenerator
 	{
-		ComputeShader radix008A_CS;
-		ComputeShader radix008A_CS2;
+		Shader radix008A_CS;
+		Shader radix008A_CS2;
 
 #define TWO_PI 6.283185307179586476925286766559
 
@@ -202,8 +202,8 @@ namespace as
 		{
 			std::string path = asRenderer::GetShaderPath();
 
-			asRenderer::LoadComputeShader(radix008A_CS, "fft_512x512_c2c_CS.cso");
-			asRenderer::LoadComputeShader(radix008A_CS2, "fft_512x512_c2c_v2_CS.cso");
+			asRenderer::LoadShader(CS,radix008A_CS, "fft_512x512_c2c_CS.cso");
+			asRenderer::LoadShader(CS,radix008A_CS2, "fft_512x512_c2c_v2_CS.cso");
 		}
 	}
 }

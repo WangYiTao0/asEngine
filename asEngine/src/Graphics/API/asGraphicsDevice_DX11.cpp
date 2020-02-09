@@ -1490,65 +1490,43 @@ namespace as
 
 			return SUCCEEDED(hr);
 		}
-		bool GraphicsDevice_DX11::CreateVertexShader(const void* pShaderBytecode, size_t BytecodeLength, VertexShader* pVertexShader)
+		bool GraphicsDevice_DX11::CreateShader(SHADERSTAGE stage, const void* pShaderBytecode, size_t BytecodeLength, Shader* pShader)
 		{
-			DestroyVertexShader(pVertexShader);
-			pVertexShader->Register(shared_from_this());
+			DestroyShader(pShader);
+			pShader->Register(shared_from_this());
 
-			pVertexShader->code.data = new BYTE[BytecodeLength];
-			memcpy(pVertexShader->code.data, pShaderBytecode, BytecodeLength);
-			pVertexShader->code.size = BytecodeLength;
-			return device->CreateVertexShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11VertexShader**)&pVertexShader->resource);
-		}
-		bool GraphicsDevice_DX11::CreatePixelShader(const void* pShaderBytecode, size_t BytecodeLength, PixelShader* pPixelShader)
-		{
-			DestroyPixelShader(pPixelShader);
-			pPixelShader->Register(shared_from_this());
+			pShader->code.data = new BYTE[BytecodeLength];
+			std::memcpy(pShader->code.data, pShaderBytecode, BytecodeLength);
+			pShader->code.size = BytecodeLength;
+			pShader->stage = stage;
 
-			pPixelShader->code.data = new BYTE[BytecodeLength];
-			memcpy(pPixelShader->code.data, pShaderBytecode, BytecodeLength);
-			pPixelShader->code.size = BytecodeLength;
-			return device->CreatePixelShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11PixelShader**)&pPixelShader->resource);
-		}
-		bool GraphicsDevice_DX11::CreateGeometryShader(const void* pShaderBytecode, size_t BytecodeLength, GeometryShader* pGeometryShader)
-		{
-			DestroyGeometryShader(pGeometryShader);
-			pGeometryShader->Register(shared_from_this());
+			HRESULT hr = E_FAIL;
 
-			pGeometryShader->code.data = new BYTE[BytecodeLength];
-			memcpy(pGeometryShader->code.data, pShaderBytecode, BytecodeLength);
-			pGeometryShader->code.size = BytecodeLength;
-			return device->CreateGeometryShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11GeometryShader**)&pGeometryShader->resource);
-		}
-		bool GraphicsDevice_DX11::CreateHullShader(const void* pShaderBytecode, size_t BytecodeLength, HullShader* pHullShader)
-		{
-			DestroyHullShader(pHullShader);
-			pHullShader->Register(shared_from_this());
+			switch (stage)
+			{
+			case asGraphics::VS:
+				hr = device->CreateVertexShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11VertexShader**)&pShader->resource);
+				break;
+			case asGraphics::HS:
+				hr = device->CreateHullShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11HullShader**)&pShader->resource);
+				break;
+			case asGraphics::DS:
+				hr = device->CreateDomainShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11DomainShader**)&pShader->resource);
+				break;
+			case asGraphics::GS:
+				hr = device->CreateGeometryShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11GeometryShader**)&pShader->resource);
+				break;
+			case asGraphics::PS:
+				hr = device->CreatePixelShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11PixelShader**)&pShader->resource);
+				break;
+			case asGraphics::CS:
+				hr = device->CreateComputeShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11ComputeShader**)&pShader->resource);
+				break;
+			}
 
-			pHullShader->code.data = new BYTE[BytecodeLength];
-			memcpy(pHullShader->code.data, pShaderBytecode, BytecodeLength);
-			pHullShader->code.size = BytecodeLength;
-			return device->CreateHullShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11HullShader**)&pHullShader->resource);
-		}
-		bool GraphicsDevice_DX11::CreateDomainShader(const void* pShaderBytecode, size_t BytecodeLength, DomainShader* pDomainShader)
-		{
-			DestroyDomainShader(pDomainShader);
-			pDomainShader->Register(shared_from_this());
+			assert(SUCCEEDED(hr));
 
-			pDomainShader->code.data = new BYTE[BytecodeLength];
-			memcpy(pDomainShader->code.data, pShaderBytecode, BytecodeLength);
-			pDomainShader->code.size = BytecodeLength;
-			return device->CreateDomainShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11DomainShader**)&pDomainShader->resource);
-		}
-		bool GraphicsDevice_DX11::CreateComputeShader(const void* pShaderBytecode, size_t BytecodeLength, ComputeShader* pComputeShader)
-		{
-			DestroyComputeShader(pComputeShader);
-			pComputeShader->Register(shared_from_this());
-
-			pComputeShader->code.data = new BYTE[BytecodeLength];
-			memcpy(pComputeShader->code.data, pShaderBytecode, BytecodeLength);
-			pComputeShader->code.size = BytecodeLength;
-			return device->CreateComputeShader(pShaderBytecode, BytecodeLength, nullptr, (ID3D11ComputeShader**)&pComputeShader->resource);
+			return SUCCEEDED(hr);
 		}
 		bool GraphicsDevice_DX11::CreateBlendState(const BlendStateDesc* pBlendStateDesc, BlendState* pBlendState)
 		{
@@ -2222,52 +2200,12 @@ namespace as
 				pInputLayout->resource = AS_NULL_HANDLE;
 			}
 		}
-		void GraphicsDevice_DX11::DestroyVertexShader(VertexShader* pVertexShader)
+		void GraphicsDevice_DX11::DestroyShader(Shader* pShader)
 		{
-			if (pVertexShader->resource != AS_NULL_HANDLE)
+			if (pShader->resource != AS_NULL_HANDLE)
 			{
-				((ID3D11VertexShader*)pVertexShader->resource)->Release();
-				pVertexShader->resource = AS_NULL_HANDLE;
-			}
-		}
-		void GraphicsDevice_DX11::DestroyPixelShader(PixelShader* pPixelShader)
-		{
-			if (pPixelShader->resource != AS_NULL_HANDLE)
-			{
-				((ID3D11PixelShader*)pPixelShader->resource)->Release();
-				pPixelShader->resource = AS_NULL_HANDLE;
-			}
-		}
-		void GraphicsDevice_DX11::DestroyGeometryShader(GeometryShader* pGeometryShader)
-		{
-			if (pGeometryShader->resource != AS_NULL_HANDLE)
-			{
-				((ID3D11GeometryShader*)pGeometryShader->resource)->Release();
-				pGeometryShader->resource = AS_NULL_HANDLE;
-			}
-		}
-		void GraphicsDevice_DX11::DestroyHullShader(HullShader* pHullShader)
-		{
-			if (pHullShader->resource != AS_NULL_HANDLE)
-			{
-				((ID3D11HullShader*)pHullShader->resource)->Release();
-				pHullShader->resource = AS_NULL_HANDLE;
-			}
-		}
-		void GraphicsDevice_DX11::DestroyDomainShader(DomainShader* pDomainShader)
-		{
-			if (pDomainShader->resource != AS_NULL_HANDLE)
-			{
-				((ID3D11DomainShader*)pDomainShader->resource)->Release();
-				pDomainShader->resource = AS_NULL_HANDLE;
-			}
-		}
-		void GraphicsDevice_DX11::DestroyComputeShader(ComputeShader* pComputeShader)
-		{
-			if (pComputeShader->resource != AS_NULL_HANDLE)
-			{
-				((ID3D11ComputeShader*)pComputeShader->resource)->Release();
-				pComputeShader->resource = AS_NULL_HANDLE;
+				((ID3D11VertexShader*)pShader->resource)->Release();
+				pShader->resource = AS_NULL_HANDLE;
 			}
 		}
 		void GraphicsDevice_DX11::DestroyBlendState(BlendState* pBlendState)
@@ -2940,7 +2878,7 @@ namespace as
 				prev_pt[cmd] = desc.pt;
 			}
 		}
-		void GraphicsDevice_DX11::BindComputeShader(const ComputeShader* cs, CommandList cmd)
+		void GraphicsDevice_DX11::BindComputeShader(const Shader* cs, CommandList cmd)
 		{
 			ID3D11ComputeShader* _cs = cs == nullptr ? nullptr : (ID3D11ComputeShader*)cs->resource;
 			if (_cs != prev_cs[cmd].Get())

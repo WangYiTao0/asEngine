@@ -12,12 +12,12 @@ namespace as
 {
 	namespace asOcean_Internal
 	{
-		ComputeShader		updateSpectrumCS;
-		ComputeShader		updateDisplacementMapCS;
-		ComputeShader		updateGradientFoldingCS;
-		VertexShader		oceanSurfVS;
-		PixelShader			wireframePS;
-		PixelShader			oceanSurfPS;
+		Shader			updateSpectrumCS;
+		Shader			updateDisplacementMapCS;
+		Shader			updateGradientFoldingCS;
+		Shader			oceanSurfVS;
+		Shader			wireframePS;
+		Shader			oceanSurfPS;
 
 		GPUBuffer			shadingCB;
 		RasterizerState		rasterizerState;
@@ -359,14 +359,14 @@ void asOcean::LoadShaders()
 
 	std::string path = as::asRenderer::GetShaderPath();
 
-	as::asRenderer::LoadComputeShader(updateSpectrumCS, "oceanSimulatorCS.cso");
-	as::asRenderer::LoadComputeShader(updateDisplacementMapCS, "oceanUpdateDisplacementMapCS.cso");
-	as::asRenderer::LoadComputeShader(updateGradientFoldingCS, "oceanUpdateGradientFoldingCS.cso");
+	as::asRenderer::LoadShader(CS,updateSpectrumCS, "oceanSimulatorCS.cso");
+	as::asRenderer::LoadShader(CS,updateDisplacementMapCS, "oceanUpdateDisplacementMapCS.cso");
+	as::asRenderer::LoadShader(CS,updateGradientFoldingCS, "oceanUpdateGradientFoldingCS.cso");
 
-	as::asRenderer::LoadVertexShader(oceanSurfVS, "oceanSurfaceVS.cso");
+	as::asRenderer::LoadShader(VS,oceanSurfVS, "oceanSurfaceVS.cso");
 
-	as::asRenderer::LoadPixelShader(oceanSurfPS, "oceanSurfacePS.cso");
-	as::asRenderer::LoadPixelShader(wireframePS, "oceanSurfaceSimplePS.cso");
+	as::asRenderer::LoadShader(PS,oceanSurfPS, "oceanSurfacePS.cso");
+	as::asRenderer::LoadShader(PS,wireframePS, "oceanSurfaceSimplePS.cso");
 
 
 	GraphicsDevice* device = as::asRenderer::GetDevice();

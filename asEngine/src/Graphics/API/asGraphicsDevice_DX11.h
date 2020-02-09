@@ -76,12 +76,7 @@ namespace as
 			virtual bool CreateBuffer(const GPUBufferDesc* pDesc, const SubresourceData* pInitialData, GPUBuffer* pBuffer) override;
 			virtual bool CreateTexture(const TextureDesc* pDesc, const SubresourceData* pInitialData, Texture* pTexture) override;
 			virtual bool CreateInputLayout(const VertexLayoutDesc* pInputElementDescs, uint32_t NumElements, const ShaderByteCode* shaderCode, VertexLayout* pInputLayout) override;
-			virtual bool CreateVertexShader(const void* pShaderBytecode, size_t BytecodeLength, VertexShader* pVertexShader) override;
-			virtual bool CreatePixelShader(const void* pShaderBytecode, size_t BytecodeLength, PixelShader* pPixelShader) override;
-			virtual bool CreateGeometryShader(const void* pShaderBytecode, size_t BytecodeLength, GeometryShader* pGeometryShader) override;
-			virtual bool CreateHullShader(const void* pShaderBytecode, size_t BytecodeLength, HullShader* pHullShader) override;
-			virtual bool CreateDomainShader(const void* pShaderBytecode, size_t BytecodeLength, DomainShader* pDomainShader) override;
-			virtual bool CreateComputeShader(const void* pShaderBytecode, size_t BytecodeLength, ComputeShader* pComputeShader) override;
+			virtual bool CreateShader(SHADERSTAGE stage, const void* pShaderBytecode, size_t BytecodeLength, Shader* pShader) override;
 			virtual bool CreateBlendState(const BlendStateDesc* pBlendStateDesc, BlendState* pBlendState) override;
 			virtual bool CreateDepthStencilState(const DepthStencilStateDesc* pDepthStencilStateDesc, DepthStencilState* pDepthStencilState) override;
 			virtual bool CreateRasterizerState(const RasterizerStateDesc* pRasterizerStateDesc, RasterizerState* pRasterizerState) override;
@@ -96,12 +91,7 @@ namespace as
 			virtual void DestroyBuffer(GPUBuffer* pBuffer) override;
 			virtual void DestroyTexture(Texture* pTexture) override;
 			virtual void DestroyInputLayout(VertexLayout* pInputLayout) override;
-			virtual void DestroyVertexShader(VertexShader* pVertexShader) override;
-			virtual void DestroyPixelShader(PixelShader* pPixelShader) override;
-			virtual void DestroyGeometryShader(GeometryShader* pGeometryShader) override;
-			virtual void DestroyHullShader(HullShader* pHullShader) override;
-			virtual void DestroyDomainShader(DomainShader* pDomainShader) override;
-			virtual void DestroyComputeShader(ComputeShader* pComputeShader) override;
+			virtual void DestroyShader(Shader* pShader) override;
 			virtual void DestroyBlendState(BlendState* pBlendState) override;
 			virtual void DestroyDepthStencilState(DepthStencilState* pDepthStencilState) override;
 			virtual void DestroyRasterizerState(RasterizerState* pRasterizerState) override;
@@ -144,7 +134,7 @@ namespace as
 			virtual void BindStencilRef(uint32_t value, CommandList cmd) override;
 			virtual void BindBlendFactor(float r, float g, float b, float a, CommandList cmd) override;
 			virtual void BindPipelineState(const PipelineState* pso, CommandList cmd) override;
-			virtual void BindComputeShader(const ComputeShader* cs, CommandList cmd) override;
+			virtual void BindComputeShader(const Shader* cs, CommandList cmd) override;
 			virtual void Draw(uint32_t vertexCount, uint32_t startVertexLocation, CommandList cmd) override;
 			virtual void DrawIndexed(uint32_t indexCount, uint32_t startIndexLocation, uint32_t baseVertexLocation, CommandList cmd) override;
 			virtual void DrawInstanced(uint32_t vertexCount, uint32_t instanceCount, uint32_t startVertexLocation, uint32_t startInstanceLocation, CommandList cmd) override;

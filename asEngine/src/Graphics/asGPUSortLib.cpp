@@ -12,10 +12,10 @@ namespace as
 	{
 		static GPUBuffer indirectBuffer;
 		static GPUBuffer sortCB;
-		static ComputeShader kickoffSortCS;
-		static ComputeShader sortCS;
-		static ComputeShader sortInnerCS;
-		static ComputeShader sortStepCS;
+		static Shader kickoffSortCS;
+		static Shader sortCS;
+		static Shader sortInnerCS;
+		static Shader sortStepCS;
 
 		void Initialize()
 		{
@@ -41,10 +41,10 @@ namespace as
 		{
 			std::string path = asRenderer::GetShaderPath();
 
-			asRenderer::LoadComputeShader(kickoffSortCS, "gpusortlib_kickoffSortCS.cso");
-			asRenderer::LoadComputeShader(sortCS, "gpusortlib_sortCS.cso");
-			asRenderer::LoadComputeShader(sortInnerCS, "gpusortlib_sortInnerCS.cso");
-			asRenderer::LoadComputeShader(sortStepCS, "gpusortlib_sortStepCS.cso");
+			asRenderer::LoadShader(CS,kickoffSortCS, "gpusortlib_kickoffSortCS.cso");
+			asRenderer::LoadShader(CS,sortCS, "gpusortlib_sortCS.cso");
+			asRenderer::LoadShader(CS,sortInnerCS, "gpusortlib_sortInnerCS.cso");
+			asRenderer::LoadShader(CS,sortStepCS, "gpusortlib_sortStepCS.cso");
 
 		}
 

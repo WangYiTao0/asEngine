@@ -5,12 +5,7 @@ namespace as
 {
 	namespace asGraphics
 	{
-		struct VertexShader;
-		struct PixelShader;
-		struct HullShader;
-		struct DomainShader;
-		struct GeometryShader;
-		struct ComputeShader;
+		struct Shader;
 		struct BlendState;
 		struct RasterizerState;
 		struct DepthStencilState;
@@ -489,11 +484,11 @@ namespace as
 		};
 		struct PipelineStateDesc
 		{
-			const VertexShader* vs = nullptr;
-			const PixelShader* ps = nullptr;
-			const HullShader* hs = nullptr;
-			const DomainShader* ds = nullptr;
-			const GeometryShader* gs = nullptr;
+			const Shader* vs = nullptr;
+			const Shader* ps = nullptr;
+			const Shader* hs = nullptr;
+			const Shader* ds = nullptr;
+			const Shader* gs = nullptr;
 			const BlendState* bs = nullptr;
 			const RasterizerState* rs = nullptr;
 			const DepthStencilState* dss = nullptr;

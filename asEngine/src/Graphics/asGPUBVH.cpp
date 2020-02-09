@@ -26,7 +26,7 @@ enum CSTYPES_BVH
 	CSTYPE_BVH_COUNT
 };
 
-static ComputeShader computeShaders[CSTYPE_BVH_COUNT];
+static Shader computeShaders[CSTYPE_BVH_COUNT];
 static GPUBuffer constantBuffer;
 
 
@@ -592,7 +592,7 @@ void asGPUBVH::LoadShaders()
 {
 	std::string SHADERPATH = as::asRenderer::GetShaderPath();
 
-	as::asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_PRIMITIVES], "bvh_primitivesCS.cso");
-	as::asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_HIERARCHY], "bvh_hierarchyCS.cso");
-	as::asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_PROPAGATEAABB], "bvh_propagateaabbCS.cso");
+	as::asRenderer::LoadShader(CS,computeShaders[CSTYPE_BVH_PRIMITIVES], "bvh_primitivesCS.cso");
+	as::asRenderer::LoadShader(CS,computeShaders[CSTYPE_BVH_HIERARCHY], "bvh_hierarchyCS.cso");
+	as::asRenderer::LoadShader(CS,computeShaders[CSTYPE_BVH_PROPAGATEAABB], "bvh_propagateaabbCS.cso");
 }

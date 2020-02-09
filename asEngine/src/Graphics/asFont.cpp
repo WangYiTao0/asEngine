@@ -36,8 +36,8 @@ namespace as
 		Sampler				sampler;
 
 		VertexLayout		vertexLayout;
-		VertexShader		vertexShader;
-		PixelShader			pixelShader;
+		Shader			vertexShader;
+		Shader			pixelShader;
 		PipelineState		PSO;
 
 		atomic_bool initialized = false;
@@ -298,11 +298,11 @@ void asFont::LoadShaders()
 		{ "POSITION", 0, FORMAT_R16G16_SINT, 0, VertexLayoutDesc::APPEND_ALIGNED_ELEMENT, INPUT_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD", 0, FORMAT_R16G16_FLOAT, 0, VertexLayoutDesc::APPEND_ALIGNED_ELEMENT, INPUT_PER_VERTEX_DATA, 0 },
 	};
-	as::asRenderer::LoadVertexShader(vertexShader, "fontVS.cso");
+	as::asRenderer::LoadShader(VS,vertexShader, "fontVS.cso");
 	as::asRenderer::GetDevice()->CreateInputLayout(layout, arraysize(layout), &vertexShader.code, &vertexLayout);
 
 
-	as::asRenderer::LoadPixelShader(pixelShader, "fontPS.cso");
+	as::asRenderer::LoadShader(PS,pixelShader, "fontPS.cso");
 
 
 	PipelineStateDesc desc;

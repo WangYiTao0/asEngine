@@ -19,21 +19,21 @@ namespace as
 {
 	namespace asScene
 	{
-		static VertexShader			vertexShader;
-		static PixelShader			pixelShader[asEmittedParticle::PARTICLESHADERTYPE_COUNT];
-		static ComputeShader		kickoffUpdateCS;
-		static ComputeShader		finishUpdateCS;
-		static ComputeShader		emitCS;
-		static ComputeShader		emitCS_FROMMESH;
-		static ComputeShader		sphpartitionCS;
-		static ComputeShader		sphpartitionoffsetsCS;
-		static ComputeShader		sphpartitionoffsetsresetCS;
-		static ComputeShader		sphdensityCS;
-		static ComputeShader		sphforceCS;
-		static ComputeShader		simulateCS;
-		static ComputeShader		simulateCS_SORTING;
-		static ComputeShader		simulateCS_DEPTHCOLLISIONS;
-		static ComputeShader		simulateCS_SORTING_DEPTHCOLLISIONS;
+		static Shader			vertexShader;
+		static Shader			pixelShader[asEmittedParticle::PARTICLESHADERTYPE_COUNT];
+		static Shader		kickoffUpdateCS;
+		static Shader		finishUpdateCS;
+		static Shader		emitCS;
+		static Shader		emitCS_FROMMESH;
+		static Shader		sphpartitionCS;
+		static Shader		sphpartitionoffsetsCS;
+		static Shader		sphpartitionoffsetsresetCS;
+		static Shader		sphdensityCS;
+		static Shader		sphforceCS;
+		static Shader		simulateCS;
+		static Shader		simulateCS_SORTING;
+		static Shader		simulateCS_DEPTHCOLLISIONS;
+		static Shader		simulateCS_SORTING_DEPTHCOLLISIONS;
 
 		static BlendState			blendStates[BLENDMODE_COUNT];
 		static RasterizerState		rasterizerState;
@@ -615,25 +615,25 @@ namespace as
 		{
 			std::string path = asRenderer::GetShaderPath();
 
-			asRenderer::LoadVertexShader(vertexShader, "emittedparticleVS.cso");
+			asRenderer::LoadShader(VS,vertexShader, "emittedparticleVS.cso");
 
-			asRenderer::LoadPixelShader(pixelShader[SOFT], "emittedparticlePS_soft.cso");
-			asRenderer::LoadPixelShader(pixelShader[SOFT_DISTORTION], "emittedparticlePS_soft_distortion.cso");
-			asRenderer::LoadPixelShader(pixelShader[SIMPLEST], "emittedparticlePS_simplest.cso");
+			asRenderer::LoadShader(PS,pixelShader[SOFT], "emittedparticlePS_soft.cso");
+			asRenderer::LoadShader(PS,pixelShader[SOFT_DISTORTION], "emittedparticlePS_soft_distortion.cso");
+			asRenderer::LoadShader(PS,pixelShader[SIMPLEST], "emittedparticlePS_simplest.cso");
 
-			asRenderer::LoadComputeShader(kickoffUpdateCS, "emittedparticle_kickoffUpdateCS.cso");
-			asRenderer::LoadComputeShader(finishUpdateCS, "emittedparticle_finishUpdateCS.cso");
-			asRenderer::LoadComputeShader(emitCS, "emittedparticle_emitCS.cso");
-			asRenderer::LoadComputeShader(emitCS_FROMMESH, "emittedparticle_emitCS_FROMMESH.cso");
-			asRenderer::LoadComputeShader(sphpartitionCS, "emittedparticle_sphpartitionCS.cso");
-			asRenderer::LoadComputeShader(sphpartitionoffsetsCS, "emittedparticle_sphpartitionoffsetsCS.cso");
-			asRenderer::LoadComputeShader(sphpartitionoffsetsresetCS, "emittedparticle_sphpartitionoffsetsresetCS.cso");
-			asRenderer::LoadComputeShader(sphdensityCS, "emittedparticle_sphdensityCS.cso");
-			asRenderer::LoadComputeShader(sphforceCS, "emittedparticle_sphforceCS.cso");
-			asRenderer::LoadComputeShader(simulateCS, "emittedparticle_simulateCS.cso");
-			asRenderer::LoadComputeShader(simulateCS_SORTING, "emittedparticle_simulateCS_SORTING.cso");
-			asRenderer::LoadComputeShader(simulateCS_DEPTHCOLLISIONS, "emittedparticle_simulateCS_DEPTHCOLLISIONS.cso");
-			asRenderer::LoadComputeShader(simulateCS_SORTING_DEPTHCOLLISIONS, "emittedparticle_simulateCS_SORTING_DEPTHCOLLISIONS.cso");
+			asRenderer::LoadShader(CS,kickoffUpdateCS, "emittedparticle_kickoffUpdateCS.cso");
+			asRenderer::LoadShader(CS,finishUpdateCS, "emittedparticle_finishUpdateCS.cso");
+			asRenderer::LoadShader(CS,emitCS, "emittedparticle_emitCS.cso");
+			asRenderer::LoadShader(CS,emitCS_FROMMESH, "emittedparticle_emitCS_FROMMESH.cso");
+			asRenderer::LoadShader(CS,sphpartitionCS, "emittedparticle_sphpartitionCS.cso");
+			asRenderer::LoadShader(CS,sphpartitionoffsetsCS, "emittedparticle_sphpartitionoffsetsCS.cso");
+			asRenderer::LoadShader(CS,sphpartitionoffsetsresetCS, "emittedparticle_sphpartitionoffsetsresetCS.cso");
+			asRenderer::LoadShader(CS,sphdensityCS, "emittedparticle_sphdensityCS.cso");
+			asRenderer::LoadShader(CS,sphforceCS, "emittedparticle_sphforceCS.cso");
+			asRenderer::LoadShader(CS,simulateCS, "emittedparticle_simulateCS.cso");
+			asRenderer::LoadShader(CS,simulateCS_SORTING, "emittedparticle_simulateCS_SORTING.cso");
+			asRenderer::LoadShader(CS,simulateCS_DEPTHCOLLISIONS, "emittedparticle_simulateCS_DEPTHCOLLISIONS.cso");
+			asRenderer::LoadShader(CS,simulateCS_SORTING_DEPTHCOLLISIONS, "emittedparticle_simulateCS_SORTING_DEPTHCOLLISIONS.cso");
 
 
 			GraphicsDevice* device = asRenderer::GetDevice();
