@@ -14,9 +14,9 @@
 #include <set>
 #endif // BVH_VALIDATE
 
-using namespace asGraphics;
-using namespace asScene;
-using namespace asECS;
+using namespace as::asGraphics;
+using namespace as::asScene;
+using namespace as::asECS;
 
 enum CSTYPES_BVH
 {
@@ -33,14 +33,14 @@ static GPUBuffer constantBuffer;
 
 void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd)
 {
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
-	using namespace asRectPacker;
+	using namespace as::asRectPacker;
 
 	if (sceneTextures.empty())
 	{
-		sceneTextures.insert(asTextureHelper::getWhite());
-		sceneTextures.insert(asTextureHelper::getNormalMapDefault());
+		sceneTextures.insert(as::asTextureHelper::getWhite());
+		sceneTextures.insert(as::asTextureHelper::getNormalMapDefault());
 	}
 
 	for (size_t i = 0; i < scene.objects.GetCount(); ++i)
@@ -116,12 +116,12 @@ void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd
 
 			for (auto& it : storedTextures)
 			{
-				asRenderer::CopyTexture2D(globalMaterialAtlas, 0, it.second.x + atlasWrapBorder, it.second.y + atlasWrapBorder, *it.first, 0, cmd, asRenderer::BORDEREXPAND_WRAP);
+				as::asRenderer::CopyTexture2D(globalMaterialAtlas, 0, it.second.x + atlasWrapBorder, it.second.y + atlasWrapBorder, *it.first, 0, cmd, as::asRenderer::BORDEREXPAND_WRAP);
 			}
 		}
 		else
 		{
-			asBackLog::post("Tracing atlas packing failed!");
+			as::asBackLog::post("Tracing atlas packing failed!");
 		}
 	}
 
@@ -152,7 +152,7 @@ void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd
 				}
 				else
 				{
-					rect = storedTextures[asTextureHelper::getWhite()];
+					rect = storedTextures[as::asTextureHelper::getWhite()];
 				}
 				// eliminate border expansion:
 				rect.x += atlasWrapBorder;
@@ -170,7 +170,7 @@ void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd
 				}
 				else
 				{
-					rect = storedTextures[asTextureHelper::getWhite()];
+					rect = storedTextures[as::asTextureHelper::getWhite()];
 				}
 				// eliminate border expansion:
 				rect.x += atlasWrapBorder;
@@ -188,7 +188,7 @@ void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd
 				}
 				else
 				{
-					rect = storedTextures[asTextureHelper::getWhite()];
+					rect = storedTextures[as::asTextureHelper::getWhite()];
 				}
 				// eliminate border expansion:
 				rect.x += atlasWrapBorder;
@@ -206,7 +206,7 @@ void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd
 				}
 				else
 				{
-					rect = storedTextures[asTextureHelper::getNormalMapDefault()];
+					rect = storedTextures[as::asTextureHelper::getNormalMapDefault()];
 				}
 				// eliminate border expansion:
 				rect.x += atlasWrapBorder;
@@ -246,7 +246,7 @@ void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd
 
 void asGPUBVH::Build(const Scene& scene, CommandList cmd)
 {
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	if (!constantBuffer.IsValid())
 	{
@@ -366,7 +366,7 @@ void asGPUBVH::Build(const Scene& scene, CommandList cmd)
 	}
 
 
-	auto range = asProfiler::BeginRangeGPU("BVH Rebuild", cmd);
+	auto range = as::asProfiler::BeginRangeGPU("BVH Rebuild", cmd);
 
 	UpdateGlobalMaterialResources(scene, cmd);
 
@@ -432,7 +432,7 @@ void asGPUBVH::Build(const Scene& scene, CommandList cmd)
 	device->EventEnd(cmd);
 
 	device->EventBegin("BVH - Sort Primitive Mortons", cmd);
-	asGPUSortLib::Sort(primitiveCount, primitiveMortonBuffer, primitiveCounterBuffer, 0, primitiveIDBuffer, cmd);
+	as::asGPUSortLib::Sort(primitiveCount, primitiveMortonBuffer, primitiveCounterBuffer, 0, primitiveIDBuffer, cmd);
 	device->EventEnd(cmd);
 
 	device->EventBegin("BVH - Build Hierarchy", cmd);
@@ -485,7 +485,7 @@ void asGPUBVH::Build(const Scene& scene, CommandList cmd)
 	}
 	device->EventEnd(cmd);
 
-	asProfiler::EndRange(range); // BVH rebuild
+	as::asProfiler::EndRange(range); // BVH rebuild
 
 #ifdef BVH_VALIDATE
 
@@ -575,11 +575,11 @@ void asGPUBVH::Build(const Scene& scene, CommandList cmd)
 }
 void asGPUBVH::Bind(SHADERSTAGE stage, CommandList cmd) const
 {
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	const GPUResource* res[] = {
 		&globalMaterialBuffer,
-		(globalMaterialAtlas.IsValid() ? &globalMaterialAtlas : asTextureHelper::getWhite()),
+		(globalMaterialAtlas.IsValid() ? &globalMaterialAtlas : as::asTextureHelper::getWhite()),
 		&primitiveCounterBuffer,
 		&primitiveBuffer,
 		&primitiveDataBuffer,
@@ -590,9 +590,9 @@ void asGPUBVH::Bind(SHADERSTAGE stage, CommandList cmd) const
 
 void asGPUBVH::LoadShaders()
 {
-	std::string SHADERPATH = asRenderer::GetShaderPath();
+	std::string SHADERPATH = as::asRenderer::GetShaderPath();
 
-	asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_PRIMITIVES], "bvh_primitivesCS.cso");
-	asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_HIERARCHY], "bvh_hierarchyCS.cso");
-	asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_PROPAGATEAABB], "bvh_propagateaabbCS.cso");
+	as::asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_PRIMITIVES], "bvh_primitivesCS.cso");
+	as::asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_HIERARCHY], "bvh_hierarchyCS.cso");
+	as::asRenderer::LoadComputeShader(computeShaders[CSTYPE_BVH_PROPAGATEAABB], "bvh_propagateaabbCS.cso");
 }

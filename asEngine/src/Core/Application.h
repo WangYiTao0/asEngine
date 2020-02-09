@@ -2,7 +2,7 @@
 
 int main(int argc, char** argv);
 
-namespace asCore
+namespace as
 {
 	class Application
 	{

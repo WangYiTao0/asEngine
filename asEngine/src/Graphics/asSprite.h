@@ -17,8 +17,8 @@ public:
 
 	virtual void FixedUpdate(float speed);
 	virtual void Update(float dt);
-	void Draw(asGraphics::CommandList cmd) const;
-	void DrawNormal(asGraphics::CommandList cmd) const;
+	void Draw(as::asGraphics::CommandList cmd) const;
+	void DrawNormal(as::asGraphics::CommandList cmd) const;
 
 	asImageParams params;
 
@@ -51,15 +51,15 @@ public:
 			{
 				for (int i = 0; i < 4; ++i)
 				{
-					corner_angles[i] = asRandom::getRandom(0, 1000) / 1000.0f * XM_2PI;
-					corner_speeds[i] = asRandom::getRandom(500, 1000) / 1000.0f;
-					if (asRandom::getRandom(0, 1) == 0)
+					corner_angles[i] = as::asRandom::getRandom(0, 1000) / 1000.0f * XM_2PI;
+					corner_speeds[i] = as::asRandom::getRandom(500, 1000) / 1000.0f;
+					if (as::asRandom::getRandom(0, 1) == 0)
 					{
 						corner_speeds[i] *= -1;
 					}
-					corner_angles2[i] = asRandom::getRandom(0, 1000) / 1000.0f * XM_2PI;
-					corner_speeds2[i] = asRandom::getRandom(500, 1000) / 1000.0f;
-					if (asRandom::getRandom(0, 1) == 0)
+					corner_angles2[i] = as::asRandom::getRandom(0, 1000) / 1000.0f * XM_2PI;
+					corner_speeds2[i] = as::asRandom::getRandom(500, 1000) / 1000.0f;
+					if (as::asRandom::getRandom(0, 1) == 0)
 					{
 						corner_speeds2[i] *= -1;
 					}
@@ -80,8 +80,8 @@ public:
 	};
 	Anim anim;
 
-	const asGraphics::Texture* getTexture() { return textureResource->texture; }
-	void setTexture(const asGraphics::Texture* texture)
+	const as::asGraphics::Texture* getTexture() { return textureResource->texture; }
+	void setTexture(const as::asGraphics::Texture* texture)
 	{
 		textureResource = std::make_shared<asResource>();
 		textureResource->texture = texture;

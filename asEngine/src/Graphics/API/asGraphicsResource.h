@@ -4,199 +4,201 @@
 
 #include <memory>
 #include <vector>
-
-namespace asGraphics
+namespace as
 {
-	class GraphicsDevice;
-
-	struct GraphicsDeviceChild
+	namespace asGraphics
 	{
-		std::shared_ptr<GraphicsDevice> device;
-		inline void Register(std::shared_ptr<GraphicsDevice> dev) { device = dev; }
-		inline bool IsValid() const { return device != nullptr; }
-	};
+		class GraphicsDevice;
 
-	struct ShaderByteCode
-	{
-		uint8_t* data = nullptr;
-		size_t size = 0;
-		~ShaderByteCode() { SAFE_DELETE_ARRAY(data); }
-	};
-
-	struct VertexShader : public GraphicsDeviceChild
-	{
-		~VertexShader();
-
-		ShaderByteCode code;
-		asCPUHandle resource = AS_NULL_HANDLE;
-	};
-
-	struct PixelShader : public GraphicsDeviceChild
-	{
-		~PixelShader();
-
-		ShaderByteCode code;
-		asCPUHandle resource = AS_NULL_HANDLE;
-	};
-
-	struct GeometryShader : public GraphicsDeviceChild
-	{
-		~GeometryShader();
-
-		ShaderByteCode code;
-		asCPUHandle resource = AS_NULL_HANDLE;
-	};
-
-	struct HullShader : public GraphicsDeviceChild
-	{
-		~HullShader();
-
-		ShaderByteCode code;
-		asCPUHandle resource = AS_NULL_HANDLE;
-	};
-
-	struct DomainShader : public GraphicsDeviceChild
-	{
-		~DomainShader();
-
-		ShaderByteCode code;
-		asCPUHandle resource = AS_NULL_HANDLE;
-	};
-
-	struct ComputeShader : public GraphicsDeviceChild
-	{
-		~ComputeShader();
-
-		ShaderByteCode code;
-		asCPUHandle resource = AS_NULL_HANDLE;
-	};
-
-	struct Sampler : public GraphicsDeviceChild
-	{
-		asCPUHandle resource = AS_NULL_HANDLE;
-		SamplerDesc desc;
-
-		~Sampler();
-
-		const SamplerDesc& GetDesc() const { return desc; }
-	};
-
-	struct GPUResource : public GraphicsDeviceChild
-	{
-		enum class GPU_RESOURCE_TYPE
+		struct GraphicsDeviceChild
 		{
-			BUFFER,
-			TEXTURE,
-			UNKNOWN_TYPE,
-		} type = GPU_RESOURCE_TYPE::UNKNOWN_TYPE;
-		inline bool IsTexture() const { return type == GPU_RESOURCE_TYPE::TEXTURE; }
-		inline bool IsBuffer() const { return type == GPU_RESOURCE_TYPE::BUFFER; }
+			std::shared_ptr<GraphicsDevice> device;
+			inline void Register(std::shared_ptr<GraphicsDevice> dev) { device = dev; }
+			inline bool IsValid() const { return device != nullptr; }
+		};
 
-		asCPUHandle SRV = AS_NULL_HANDLE;
-		std::vector<asCPUHandle> subresourceSRVs;
+		struct ShaderByteCode
+		{
+			uint8_t* data = nullptr;
+			size_t size = 0;
+			~ShaderByteCode() { SAFE_DELETE_ARRAY(data); }
+		};
 
-		asCPUHandle UAV = AS_NULL_HANDLE;
-		std::vector<asCPUHandle> subresourceUAVs;
+		struct VertexShader : public GraphicsDeviceChild
+		{
+			~VertexShader();
 
-		asCPUHandle resource = AS_NULL_HANDLE;
+			ShaderByteCode code;
+			asCPUHandle resource = AS_NULL_HANDLE;
+		};
 
-		virtual ~GPUResource();
-	};
+		struct PixelShader : public GraphicsDeviceChild
+		{
+			~PixelShader();
 
-	struct GPUBuffer : public GPUResource
-	{
-		asCPUHandle CBV = AS_NULL_HANDLE;
-		GPUBufferDesc desc;
+			ShaderByteCode code;
+			asCPUHandle resource = AS_NULL_HANDLE;
+		};
 
-		virtual ~GPUBuffer();
+		struct GeometryShader : public GraphicsDeviceChild
+		{
+			~GeometryShader();
 
-		const GPUBufferDesc& GetDesc() const { return desc; }
-	};
+			ShaderByteCode code;
+			asCPUHandle resource = AS_NULL_HANDLE;
+		};
 
-	struct VertexLayout : public GraphicsDeviceChild
-	{
-		asCPUHandle	resource = AS_NULL_HANDLE;
+		struct HullShader : public GraphicsDeviceChild
+		{
+			~HullShader();
 
-		std::vector<VertexLayoutDesc> desc;
+			ShaderByteCode code;
+			asCPUHandle resource = AS_NULL_HANDLE;
+		};
 
-		~VertexLayout();
-	};
+		struct DomainShader : public GraphicsDeviceChild
+		{
+			~DomainShader();
 
-	struct BlendState : public GraphicsDeviceChild
-	{
-		asCPUHandle resource = AS_NULL_HANDLE;
-		BlendStateDesc desc;
+			ShaderByteCode code;
+			asCPUHandle resource = AS_NULL_HANDLE;
+		};
 
-		~BlendState();
+		struct ComputeShader : public GraphicsDeviceChild
+		{
+			~ComputeShader();
 
-		const BlendStateDesc& GetDesc() const { return desc; }
-	};
+			ShaderByteCode code;
+			asCPUHandle resource = AS_NULL_HANDLE;
+		};
 
-	struct DepthStencilState : public GraphicsDeviceChild
-	{
-		asCPUHandle resource = AS_NULL_HANDLE;
-		DepthStencilStateDesc desc;
+		struct Sampler : public GraphicsDeviceChild
+		{
+			asCPUHandle resource = AS_NULL_HANDLE;
+			SamplerDesc desc;
 
-		~DepthStencilState();
+			~Sampler();
 
-		const DepthStencilStateDesc& GetDesc() const { return desc; }
-	};
+			const SamplerDesc& GetDesc() const { return desc; }
+		};
 
-	struct RasterizerState : public GraphicsDeviceChild
-	{
-		asCPUHandle resource = AS_NULL_HANDLE;
-		RasterizerStateDesc desc;
+		struct GPUResource : public GraphicsDeviceChild
+		{
+			enum class GPU_RESOURCE_TYPE
+			{
+				BUFFER,
+				TEXTURE,
+				UNKNOWN_TYPE,
+			} type = GPU_RESOURCE_TYPE::UNKNOWN_TYPE;
+			inline bool IsTexture() const { return type == GPU_RESOURCE_TYPE::TEXTURE; }
+			inline bool IsBuffer() const { return type == GPU_RESOURCE_TYPE::BUFFER; }
 
-		~RasterizerState();
+			asCPUHandle SRV = AS_NULL_HANDLE;
+			std::vector<asCPUHandle> subresourceSRVs;
 
-		const RasterizerStateDesc& GetDesc() const { return desc; }
-	};
+			asCPUHandle UAV = AS_NULL_HANDLE;
+			std::vector<asCPUHandle> subresourceUAVs;
 
-	struct Texture : public GPUResource
-	{
-		TextureDesc	desc;
-		asCPUHandle	RTV = AS_NULL_HANDLE;
-		std::vector<asCPUHandle> subresourceRTVs;
-		asCPUHandle	DSV = AS_NULL_HANDLE;
-		std::vector<asCPUHandle> subresourceDSVs;
+			asCPUHandle resource = AS_NULL_HANDLE;
 
-		~Texture();
+			virtual ~GPUResource();
+		};
 
-		const TextureDesc& GetDesc() const { return desc; }
-	};
+		struct GPUBuffer : public GPUResource
+		{
+			asCPUHandle CBV = AS_NULL_HANDLE;
+			GPUBufferDesc desc;
+
+			virtual ~GPUBuffer();
+
+			const GPUBufferDesc& GetDesc() const { return desc; }
+		};
+
+		struct VertexLayout : public GraphicsDeviceChild
+		{
+			asCPUHandle	resource = AS_NULL_HANDLE;
+
+			std::vector<VertexLayoutDesc> desc;
+
+			~VertexLayout();
+		};
+
+		struct BlendState : public GraphicsDeviceChild
+		{
+			asCPUHandle resource = AS_NULL_HANDLE;
+			BlendStateDesc desc;
+
+			~BlendState();
+
+			const BlendStateDesc& GetDesc() const { return desc; }
+		};
+
+		struct DepthStencilState : public GraphicsDeviceChild
+		{
+			asCPUHandle resource = AS_NULL_HANDLE;
+			DepthStencilStateDesc desc;
+
+			~DepthStencilState();
+
+			const DepthStencilStateDesc& GetDesc() const { return desc; }
+		};
+
+		struct RasterizerState : public GraphicsDeviceChild
+		{
+			asCPUHandle resource = AS_NULL_HANDLE;
+			RasterizerStateDesc desc;
+
+			~RasterizerState();
+
+			const RasterizerStateDesc& GetDesc() const { return desc; }
+		};
+
+		struct Texture : public GPUResource
+		{
+			TextureDesc	desc;
+			asCPUHandle	RTV = AS_NULL_HANDLE;
+			std::vector<asCPUHandle> subresourceRTVs;
+			asCPUHandle	DSV = AS_NULL_HANDLE;
+			std::vector<asCPUHandle> subresourceDSVs;
+
+			~Texture();
+
+			const TextureDesc& GetDesc() const { return desc; }
+		};
 
 
-	struct GPUQuery : public GraphicsDeviceChild
-	{
-		asCPUHandle	resource = AS_NULL_HANDLE;
-		GPUQueryDesc desc;
+		struct GPUQuery : public GraphicsDeviceChild
+		{
+			asCPUHandle	resource = AS_NULL_HANDLE;
+			GPUQueryDesc desc;
 
-		~GPUQuery();
+			~GPUQuery();
 
-		const GPUQueryDesc& GetDesc() const { return desc; }
-	};
-
-
-	struct PipelineState : public GraphicsDeviceChild
-	{
-		size_t hash = 0;
-		PipelineStateDesc desc;
-
-		const PipelineStateDesc& GetDesc() const { return desc; }
-
-		~PipelineState();
-	};
+			const GPUQueryDesc& GetDesc() const { return desc; }
+		};
 
 
-	struct RenderPass : public GraphicsDeviceChild
-	{
-		size_t hash = 0;
-		asCPUHandle	framebuffer = AS_NULL_HANDLE;
-		asCPUHandle	renderpass = AS_NULL_HANDLE;
-		RenderPassDesc desc;
+		struct PipelineState : public GraphicsDeviceChild
+		{
+			size_t hash = 0;
+			PipelineStateDesc desc;
 
-		const RenderPassDesc& GetDesc() const { return desc; }
+			const PipelineStateDesc& GetDesc() const { return desc; }
 
-		~RenderPass();
-	};
+			~PipelineState();
+		};
+
+
+		struct RenderPass : public GraphicsDeviceChild
+		{
+			size_t hash = 0;
+			asCPUHandle	framebuffer = AS_NULL_HANDLE;
+			asCPUHandle	renderpass = AS_NULL_HANDLE;
+			RenderPassDesc desc;
+
+			const RenderPassDesc& GetDesc() const { return desc; }
+
+			~RenderPass();
+		};
+	}
 }

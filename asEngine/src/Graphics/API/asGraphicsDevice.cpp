@@ -1,7 +1,7 @@
 #include "aspch.h"
 #include "asGraphicsDevice.h"
 
-using namespace asGraphics;
+using namespace as::asGraphics;
 
 bool GraphicsDevice::CheckCapability(GRAPHICSDEVICE_CAPABILITY capability) const
 {

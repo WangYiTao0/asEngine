@@ -39,7 +39,7 @@ public:
 	virtual void Render() const {}
 	// Compose the rendered layers (for example blend the layers together as Images)
 	// This will be rendered to the backbuffer
-	virtual void Compose(asGraphics::CommandList cmd) const {}
+	virtual void Compose(as::asGraphics::CommandList cmd) const {}
 
 	inline uint32_t getLayerMask() const { return layerMask; }
 	inline void setlayerMask(uint32_t value) { layerMask = value; }

@@ -161,7 +161,7 @@ AABB AABB::operator* (float a)
 }
 AABB AABB::Merge(const AABB& a, const AABB& b)
 {
-	return AABB(asMath::Min(a.getMin(), b.getMin()), asMath::Max(a.getMax(), b.getMax()));
+	return AABB(as::asMath::Min(a.getMin(), b.getMin()), as::asMath::Max(a.getMax(), b.getMax()));
 }
 void AABB::Serialize(asArchive& archive, uint32_t seed)
 {
@@ -185,12 +185,12 @@ void AABB::Serialize(asArchive& archive, uint32_t seed)
 bool SPHERE::intersects(const AABB& b) const {
 	XMFLOAT3 min = b.getMin();
 	XMFLOAT3 max = b.getMax();
-	XMFLOAT3 closestPointInAabb = asMath::Min(asMath::Max(center, min), max);
-	double distanceSquared = asMath::Distance(closestPointInAabb, center);
+	XMFLOAT3 closestPointInAabb = as::asMath::Min(as::asMath::Max(center, min), max);
+	double distanceSquared = as::asMath::Distance(closestPointInAabb, center);
 	return distanceSquared < radius;
 }
 bool SPHERE::intersects(const SPHERE& b)const {
-	return asMath::Distance(center, b.center) <= radius + b.radius;
+	return as::asMath::Distance(center, b.center) <= radius + b.radius;
 }
 bool SPHERE::intersects(const RAY& b) const {
 	XMVECTOR o = XMLoadFloat3(&b.origin);
@@ -302,5 +302,5 @@ const XMFLOAT4& Frustum::getBottomPlane() const { return planes[5]; }
 
 bool Hitbox2D::intersects(const Hitbox2D& b)
 {
-	return asMath::Collision2D(pos, siz, b.pos, b.siz);
+	return as::asMath::Collision2D(pos, siz, b.pos, b.siz);
 }

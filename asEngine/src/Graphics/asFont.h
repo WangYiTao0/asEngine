@@ -39,7 +39,7 @@ public:
 	static void Initialize();
 
 	static void LoadShaders();
-	static const asGraphics::Texture* GetAtlas();
+	static const as::asGraphics::Texture* GetAtlas();
 
 	// Returns the font directory
 	static const std::string& GetFontPath();
@@ -56,7 +56,7 @@ public:
 	asFont(const std::string& text = "", asFontParams params = asFontParams(), int style = 0);
 	asFont(const std::wstring& text, asFontParams params = asFontParams(), int style = 0);
 
-	void Draw(asGraphics::CommandList cmd) const;
+	void Draw(as::asGraphics::CommandList cmd) const;
 
 	int textWidth() const;
 	int textHeight() const;

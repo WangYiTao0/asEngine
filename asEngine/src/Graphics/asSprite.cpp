@@ -4,26 +4,26 @@
 #include "asRenderer.h"
 #include "Helpers\asRandom.h"
 
-using namespace asGraphics;
+using namespace as::asGraphics;
 
 asSprite::asSprite(const std::string& newTexture, const std::string& newMask)
 {
 	if (!newTexture.empty())
 	{
 		textureName = newTexture;
-		textureResource = asResourceManager::Load(newTexture);
+		textureResource = as::asResourceManager::Load(newTexture);
 	}
 	if (!newMask.empty())
 	{
 		maskName = newMask;
-		maskResource = asResourceManager::Load(newMask);
+		maskResource = as::asResourceManager::Load(newMask);
 		params.setMaskMap(maskResource->texture);
 	}
 }
 
 void asSprite::Draw(CommandList cmd) const
 {
-	asImage::Draw(textureResource->texture, params, cmd);
+	as::asImage::Draw(textureResource->texture, params, cmd);
 }
 void asSprite::DrawNormal(CommandList cmd) const
 {
@@ -32,7 +32,7 @@ void asSprite::DrawNormal(CommandList cmd) const
 		asImageParams effectsMod(params);
 		effectsMod.blendFlag = BLENDMODE_ADDITIVE;
 		effectsMod.enableExtractNormalMap();
-		asImage::Draw(textureResource->texture, effectsMod, cmd);
+		as::asImage::Draw(textureResource->texture, effectsMod, cmd);
 	}
 }
 

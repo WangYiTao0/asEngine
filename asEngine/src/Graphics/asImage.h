@@ -5,14 +5,16 @@
 
 struct asImageParams;
 
-namespace asImage
+namespace as
 {
-	void Draw(const asGraphics::Texture* texture, const asImageParams& params, asGraphics::CommandList cmd);
+	namespace asImage
+	{
+		void Draw(const asGraphics::Texture* texture, const asImageParams& params, asGraphics::CommandList cmd);
 
-	void LoadShaders();
-	void Initialize();
-};
-
+		void LoadShaders();
+		void Initialize();
+	};
+}
 // Do not alter order or value because it is bound to lua manually!
 enum STENCILMODE
 {
@@ -91,9 +93,9 @@ struct asImageParams
 	SAMPLEMODE sampleFlag;
 	QUALITY quality;
 
-	const asGraphics::Texture* maskMap;
+	const as::asGraphics::Texture* maskMap;
 	// Generic texture
-	void setMaskMap(const asGraphics::Texture* tex) { maskMap = tex; }
+	void setMaskMap(const as::asGraphics::Texture* tex) { maskMap = tex; }
 
 	void init()
 	{

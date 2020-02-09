@@ -19,6 +19,12 @@
 #include <stack>
 #include <mutex>
 
+#include <iostream>
 #include <sstream>
 #include <fstream>
+
+#ifdef AS_PLATFORM_WINDOWS
+#define  NOMINMAX
+#include <Windows.h>
+#endif
 

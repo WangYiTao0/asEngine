@@ -35,46 +35,48 @@ For description how to tune the algorithm and how it actually works see the .cpp
 
 
 */
-
-namespace asRectPacker
+namespace as
 {
+	namespace asRectPacker
+	{
 
-	struct rect_ltrb;
-	struct rect_xywh;
+		struct rect_ltrb;
+		struct rect_xywh;
 
-	struct rect_wh {
-		rect_wh(const rect_ltrb&);
-		rect_wh(const rect_xywh&);
-		rect_wh(int w = 0, int h = 0);
-		int w, h, area(), perimeter(),
-			fits(const rect_wh& bigger) const; // 0 - no, 1 - yes, 2 - perfectly
-	};
+		struct rect_wh {
+			rect_wh(const rect_ltrb&);
+			rect_wh(const rect_xywh&);
+			rect_wh(int w = 0, int h = 0);
+			int w, h, area(), perimeter(),
+				fits(const rect_wh& bigger) const; // 0 - no, 1 - yes, 2 - perfectly
+		};
 
-	// rectangle implementing left/top/right/bottom behaviour
+		// rectangle implementing left/top/right/bottom behaviour
 
-	struct rect_ltrb {
-		rect_ltrb();
-		rect_ltrb(int left, int top, int right, int bottom);
-		int l, t, r, b, w() const, h() const, area() const, perimeter() const;
-		void w(int), h(int);
-	};
+		struct rect_ltrb {
+			rect_ltrb();
+			rect_ltrb(int left, int top, int right, int bottom);
+			int l, t, r, b, w() const, h() const, area() const, perimeter() const;
+			void w(int), h(int);
+		};
 
-	struct rect_xywh : public rect_wh {
-		rect_xywh();
-		rect_xywh(const rect_ltrb&);
-		rect_xywh(int x, int y, int width, int height);
-		operator rect_ltrb();
+		struct rect_xywh : public rect_wh {
+			rect_xywh();
+			rect_xywh(const rect_ltrb&);
+			rect_xywh(int x, int y, int width, int height);
+			operator rect_ltrb();
 
-		int x, y, r() const, b() const;
-		void r(int), b(int);
-	};
+			int x, y, r() const, b() const;
+			void r(int), b(int);
+		};
 
 
-	struct bin {
-		rect_wh size;
-		std::vector<rect_xywh*> rects;
-	};
+		struct bin {
+			rect_wh size;
+			std::vector<rect_xywh*> rects;
+		};
 
-	bool pack(rect_xywh* const* v, int n, int max_side, std::vector<bin>& bins);
+		bool pack(rect_xywh* const* v, int n, int max_side, std::vector<bin>& bins);
 
+	}
 }

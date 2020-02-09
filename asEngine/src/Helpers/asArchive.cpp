@@ -37,7 +37,7 @@ asArchive::asArchive(const std::string& fileName, bool readMode) : fileName(file
 				{
 					stringstream ss("");
 					ss << "The archive version (" << version << ") is no longer supported!";
-					asHelper::messageBox(ss.str(), "Error!");
+					as::asHelper::messageBox(ss.str(), "Error!");
 					Close();
 				}
 				if (version > __archiveVersion)
@@ -45,7 +45,7 @@ asArchive::asArchive(const std::string& fileName, bool readMode) : fileName(file
 					stringstream ss("");
 
 					ss << "The archive version (" << version << ") is higher than the program's (" << __archiveVersion << ")!";
-					asHelper::messageBox(ss.str(), "Error!");
+					as::asHelper::messageBox(ss.str(), "Error!");
 					Close();
 				}
 			}
@@ -124,7 +124,7 @@ bool asArchive::SaveFile(const std::string& fileName)
 
 string asArchive::GetSourceDirectory() const
 {
-	return asHelper::GetDirectoryFromPath(fileName);
+	return as::asHelper::GetDirectoryFromPath(fileName);
 }
 
 string asArchive::GetSourceFileName() const

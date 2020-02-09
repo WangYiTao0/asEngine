@@ -15,165 +15,168 @@
 
 
 using namespace std;
-using namespace asGraphics;
-using namespace asRectPacker;
+using namespace as::asGraphics;
+using namespace as::asRectPacker;
 
 #define MAX_TEXT 10000
 #define WHITESPACE_SIZE (int((params.size + params.spacingX) * params.scaling * 0.3f))
 #define TAB_SIZE (WHITESPACE_SIZE * 4)
 #define LINEBREAK_SIZE (int((params.size + params.spacingY) * params.scaling))
 
-namespace asFont_Internal
+namespace as
 {
-	std::string			FONTPATH = asHelper::GetOriginalWorkingDirectory() + "../WickedEngine/fonts/";
-	GPUBuffer			indexBuffer;
-	GPUBuffer			constantBuffer;
-	BlendState			blendState;
-	RasterizerState		rasterizerState;
-	DepthStencilState	depthStencilState;
-	Sampler				sampler;
-
-	VertexLayout		vertexLayout;
-	VertexShader		vertexShader;
-	PixelShader			pixelShader;
-	PipelineState		PSO;
-
-	atomic_bool initialized = false;
-
-	Texture texture;
-
-	struct Glyph
+	namespace asFont_Internal
 	{
-		int16_t x;
-		int16_t y;
-		int16_t width;
-		int16_t height;
-		uint16_t tc_left;
-		uint16_t tc_right;
-		uint16_t tc_top;
-		uint16_t tc_bottom;
-	};
-	unordered_map<int32_t, Glyph> glyph_lookup;
-	unordered_map<int32_t, rect_xywh> rect_lookup;
-	// pack glyph identifiers to a 32-bit hash:
-	//	height:	10 bits	(height supported: 0 - 1023)
-	//	style:	6 bits	(number of font styles supported: 0 - 63)
-	//	code:	16 bits (character code range supported: 0 - 65535)
-	constexpr int32_t glyphhash(int code, int style, int height) { return ((code & 0xFFFF) << 16) | ((style & 0x3F) << 10) | (height & 0x3FF); }
-	constexpr int codefromhash(int64_t hash) { return int((hash >> 16) & 0xFFFF); }
-	constexpr int stylefromhash(int64_t hash) { return int((hash >> 10) & 0x3F); }
-	constexpr int heightfromhash(int64_t hash) { return int((hash >> 0) & 0x3FF); }
-	unordered_set<int32_t> pendingGlyphs;
-	asSpinLock glyphLock;
+		std::string			FONTPATH = asHelper::GetOriginalWorkingDirectory() + "../WickedEngine/fonts/";
+		GPUBuffer			indexBuffer;
+		GPUBuffer			constantBuffer;
+		BlendState			blendState;
+		RasterizerState		rasterizerState;
+		DepthStencilState	depthStencilState;
+		Sampler				sampler;
 
-	struct asFontStyle
-	{
-		string name;
-		vector<uint8_t> fontBuffer;
-		stbtt_fontinfo fontInfo;
-		int ascent, descent, lineGap;
-		void Create(const string& newName)
+		VertexLayout		vertexLayout;
+		VertexShader		vertexShader;
+		PixelShader			pixelShader;
+		PipelineState		PSO;
+
+		atomic_bool initialized = false;
+
+		Texture texture;
+
+		struct Glyph
 		{
-			name = newName;
-			asHelper::readByteData(newName, fontBuffer);
+			int16_t x;
+			int16_t y;
+			int16_t width;
+			int16_t height;
+			uint16_t tc_left;
+			uint16_t tc_right;
+			uint16_t tc_top;
+			uint16_t tc_bottom;
+		};
+		unordered_map<int32_t, Glyph> glyph_lookup;
+		unordered_map<int32_t, rect_xywh> rect_lookup;
+		// pack glyph identifiers to a 32-bit hash:
+		//	height:	10 bits	(height supported: 0 - 1023)
+		//	style:	6 bits	(number of font styles supported: 0 - 63)
+		//	code:	16 bits (character code range supported: 0 - 65535)
+		constexpr int32_t glyphhash(int code, int style, int height) { return ((code & 0xFFFF) << 16) | ((style & 0x3F) << 10) | (height & 0x3FF); }
+		constexpr int codefromhash(int64_t hash) { return int((hash >> 16) & 0xFFFF); }
+		constexpr int stylefromhash(int64_t hash) { return int((hash >> 10) & 0x3F); }
+		constexpr int heightfromhash(int64_t hash) { return int((hash >> 0) & 0x3FF); }
+		unordered_set<int32_t> pendingGlyphs;
+		asSpinLock glyphLock;
 
-			int offset = stbtt_GetFontOffsetForIndex(fontBuffer.data(), 0);
-
-			if (!stbtt_InitFont(&fontInfo, fontBuffer.data(), offset))
-			{
-				stringstream ss("");
-				ss << "Failed to load font: " << name;
-				asHelper::messageBox(ss.str());
-			}
-
-			stbtt_GetFontVMetrics(&fontInfo, &ascent, &descent, &lineGap);
-		}
-	};
-	std::vector<asFontStyle> fontStyles;
-
-	struct FontVertex
-	{
-		XMSHORT2 Pos;
-		XMHALF2 Tex;
-	};
-
-	uint32_t WriteVertices(volatile FontVertex* vertexList, const std::wstring& text, asFontParams params, int style)
-	{
-		uint32_t quadCount = 0;
-
-		int16_t line = 0;
-		int16_t pos = 0;
-		for (auto& code : text)
+		struct asFontStyle
 		{
-			const int32_t hash = glyphhash(code, style, params.size);
-
-			if (glyph_lookup.count(hash) == 0)
+			string name;
+			vector<uint8_t> fontBuffer;
+			stbtt_fontinfo fontInfo;
+			int ascent, descent, lineGap;
+			void Create(const string& newName)
 			{
-				// glyph not packed yet, so add to pending list:
-				glyphLock.lock();
-				pendingGlyphs.insert(hash);
-				glyphLock.unlock();
-				continue;
+				name = newName;
+				asHelper::readByteData(newName, fontBuffer);
+
+				int offset = stbtt_GetFontOffsetForIndex(fontBuffer.data(), 0);
+
+				if (!stbtt_InitFont(&fontInfo, fontBuffer.data(), offset))
+				{
+					stringstream ss("");
+					ss << "Failed to load font: " << name;
+					asHelper::messageBox(ss.str());
+				}
+
+				stbtt_GetFontVMetrics(&fontInfo, &ascent, &descent, &lineGap);
+			}
+		};
+		std::vector<asFontStyle> fontStyles;
+
+		struct FontVertex
+		{
+			XMSHORT2 Pos;
+			XMHALF2 Tex;
+		};
+
+		uint32_t WriteVertices(volatile FontVertex* vertexList, const std::wstring& text, asFontParams params, int style)
+		{
+			uint32_t quadCount = 0;
+
+			int16_t line = 0;
+			int16_t pos = 0;
+			for (auto& code : text)
+			{
+				const int32_t hash = glyphhash(code, style, params.size);
+
+				if (glyph_lookup.count(hash) == 0)
+				{
+					// glyph not packed yet, so add to pending list:
+					glyphLock.lock();
+					pendingGlyphs.insert(hash);
+					glyphLock.unlock();
+					continue;
+				}
+
+				if (code == '\n')
+				{
+					line += LINEBREAK_SIZE;
+					pos = 0;
+				}
+				else if (code == ' ')
+				{
+					pos += WHITESPACE_SIZE;
+				}
+				else if (code == '\t')
+				{
+					pos += TAB_SIZE;
+				}
+				else
+				{
+					const Glyph& glyph = glyph_lookup.at(hash);
+					const int16_t glyphWidth = int16_t(glyph.width * params.scaling);
+					const int16_t glyphHeight = int16_t(glyph.height * params.scaling);
+					const int16_t glyphOffsetX = int16_t(glyph.x * params.scaling);
+					const int16_t glyphOffsetY = int16_t(glyph.y * params.scaling);
+
+					const size_t vertexID = size_t(quadCount) * 4;
+
+					const int16_t left = pos + glyphOffsetX;
+					const int16_t right = left + glyphWidth;
+					const int16_t top = line + glyphOffsetY;
+					const int16_t bottom = top + glyphHeight;
+
+					vertexList[vertexID + 0].Pos.x = left;
+					vertexList[vertexID + 0].Pos.y = top;
+					vertexList[vertexID + 1].Pos.x = right;
+					vertexList[vertexID + 1].Pos.y = top;
+					vertexList[vertexID + 2].Pos.x = left;
+					vertexList[vertexID + 2].Pos.y = bottom;
+					vertexList[vertexID + 3].Pos.x = right;
+					vertexList[vertexID + 3].Pos.y = bottom;
+
+					vertexList[vertexID + 0].Tex.x = glyph.tc_left;
+					vertexList[vertexID + 0].Tex.y = glyph.tc_top;
+					vertexList[vertexID + 1].Tex.x = glyph.tc_right;
+					vertexList[vertexID + 1].Tex.y = glyph.tc_top;
+					vertexList[vertexID + 2].Tex.x = glyph.tc_left;
+					vertexList[vertexID + 2].Tex.y = glyph.tc_bottom;
+					vertexList[vertexID + 3].Tex.x = glyph.tc_right;
+					vertexList[vertexID + 3].Tex.y = glyph.tc_bottom;
+
+					pos += int16_t((glyph.width + params.spacingX) * params.scaling);
+
+					quadCount++;
+				}
+
 			}
 
-			if (code == '\n')
-			{
-				line += LINEBREAK_SIZE;
-				pos = 0;
-			}
-			else if (code == ' ')
-			{
-				pos += WHITESPACE_SIZE;
-			}
-			else if (code == '\t')
-			{
-				pos += TAB_SIZE;
-			}
-			else
-			{
-				const Glyph& glyph = glyph_lookup.at(hash);
-				const int16_t glyphWidth = int16_t(glyph.width * params.scaling);
-				const int16_t glyphHeight = int16_t(glyph.height * params.scaling);
-				const int16_t glyphOffsetX = int16_t(glyph.x * params.scaling);
-				const int16_t glyphOffsetY = int16_t(glyph.y * params.scaling);
-
-				const size_t vertexID = size_t(quadCount) * 4;
-
-				const int16_t left = pos + glyphOffsetX;
-				const int16_t right = left + glyphWidth;
-				const int16_t top = line + glyphOffsetY;
-				const int16_t bottom = top + glyphHeight;
-
-				vertexList[vertexID + 0].Pos.x = left;
-				vertexList[vertexID + 0].Pos.y = top;
-				vertexList[vertexID + 1].Pos.x = right;
-				vertexList[vertexID + 1].Pos.y = top;
-				vertexList[vertexID + 2].Pos.x = left;
-				vertexList[vertexID + 2].Pos.y = bottom;
-				vertexList[vertexID + 3].Pos.x = right;
-				vertexList[vertexID + 3].Pos.y = bottom;
-
-				vertexList[vertexID + 0].Tex.x = glyph.tc_left;
-				vertexList[vertexID + 0].Tex.y = glyph.tc_top;
-				vertexList[vertexID + 1].Tex.x = glyph.tc_right;
-				vertexList[vertexID + 1].Tex.y = glyph.tc_top;
-				vertexList[vertexID + 2].Tex.x = glyph.tc_left;
-				vertexList[vertexID + 2].Tex.y = glyph.tc_bottom;
-				vertexList[vertexID + 3].Tex.x = glyph.tc_right;
-				vertexList[vertexID + 3].Tex.y = glyph.tc_bottom;
-
-				pos += int16_t((glyph.width + params.spacingX) * params.scaling);
-
-				quadCount++;
-			}
-
+			return quadCount;
 		}
 
-		return quadCount;
 	}
-
 }
-using namespace asFont_Internal;
+using namespace as::asFont_Internal;
 
 
 asFont::asFont(const std::string& text, asFontParams params, int style) : params(params), style(style)
@@ -198,7 +201,7 @@ void asFont::Initialize()
 		AddFontStyle(FONTPATH + "arial.ttf");
 	}
 
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	{
 		std::vector<uint16_t> indices(MAX_TEXT * 6);
@@ -282,24 +285,24 @@ void asFont::Initialize()
 
 	LoadShaders();
 
-	asBackLog::post("asFont Initialized");
+	as::asBackLog::post("asFont Initialized");
 	initialized.store(true);
 }
 
 void asFont::LoadShaders()
 {
-	std::string path = asRenderer::GetShaderPath();
+	std::string path = as::asRenderer::GetShaderPath();
 
 	VertexLayoutDesc layout[] =
 	{
 		{ "POSITION", 0, FORMAT_R16G16_SINT, 0, VertexLayoutDesc::APPEND_ALIGNED_ELEMENT, INPUT_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD", 0, FORMAT_R16G16_FLOAT, 0, VertexLayoutDesc::APPEND_ALIGNED_ELEMENT, INPUT_PER_VERTEX_DATA, 0 },
 	};
-	asRenderer::LoadVertexShader(vertexShader, "fontVS.cso");
-	asRenderer::GetDevice()->CreateInputLayout(layout, arraysize(layout), &vertexShader.code, &vertexLayout);
+	as::asRenderer::LoadVertexShader(vertexShader, "fontVS.cso");
+	as::asRenderer::GetDevice()->CreateInputLayout(layout, arraysize(layout), &vertexShader.code, &vertexLayout);
 
 
-	asRenderer::LoadPixelShader(pixelShader, "fontPS.cso");
+	as::asRenderer::LoadPixelShader(pixelShader, "fontPS.cso");
 
 
 	PipelineStateDesc desc;
@@ -309,7 +312,7 @@ void asFont::LoadShaders()
 	desc.bs = &blendState;
 	desc.dss = &depthStencilState;
 	desc.rs = &rasterizerState;
-	asRenderer::GetDevice()->CreatePipelineState(&desc, &PSO);
+	as::asRenderer::GetDevice()->CreatePipelineState(&desc, &PSO);
 }
 
 void UpdatePendingGlyphs()
@@ -413,7 +416,7 @@ void UpdatePendingGlyphs()
 			}
 
 			// Upload the CPU-side texture atlas bitmap to the GPU:
-			asTextureHelper::CreateTexture(texture, bitmap.data(), bitmapWidth, bitmapHeight, FORMAT_R8_UNORM);
+			as::asTextureHelper::CreateTexture(texture, bitmap.data(), bitmapWidth, bitmapHeight, FORMAT_R8_UNORM);
 		}
 	}
 }
@@ -465,7 +468,7 @@ void asFont::Draw(CommandList cmd) const
 
 
 
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	GraphicsDevice::GPUAllocation mem = device->AllocateGPU(sizeof(FontVertex) * text.length() * 4, cmd);
 	if (!mem.IsValid())
@@ -591,7 +594,7 @@ int asFont::textHeight() const
 
 void asFont::SetText(const string& text)
 {
-	asHelper::StringConvert(text, this->text);
+	as::asHelper::StringConvert(text, this->text);
 }
 void asFont::SetText(const wstring& text)
 {
@@ -604,6 +607,6 @@ wstring asFont::GetText() const
 string asFont::GetTextA() const
 {
 	string retval;
-	asHelper::StringConvert(this->text, retval);
+	as::asHelper::StringConvert(this->text, retval);
 	return retval;
 }

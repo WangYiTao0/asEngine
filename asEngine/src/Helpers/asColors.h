@@ -48,7 +48,7 @@ struct asColor
 
 	static constexpr asColor lerp(asColor a, asColor b, float i)
 	{
-		return fromFloat4(asMath::Lerp(a.toFloat4(), b.toFloat4(), i));
+		return fromFloat4(as::asMath::Lerp(a.toFloat4(), b.toFloat4(), i));
 	}
 
 	static constexpr asColor Red() { return asColor(255, 0, 0, 255); }

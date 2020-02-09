@@ -4,7 +4,7 @@
 
 void RenderPath::Update(float dt)
 {
-	if (asRenderer::ResolutionChanged() || !initial_resizebuffer)
+	if (as::asRenderer::ResolutionChanged() || !initial_resizebuffer)
 	{
 		ResizeBuffers();
 		initial_resizebuffer = true;

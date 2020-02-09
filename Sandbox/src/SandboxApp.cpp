@@ -1,7 +1,7 @@
 #include <asEngine.h>
 #include <Core/EntryPoint.h>
 
-class Sandbox : public asCore::Application
+class Sandbox : public as::Application
 {
 public:
 	Sandbox()
@@ -16,7 +16,7 @@ public:
 
 };
 
-asCore::Application* asCore::CreateApplication()
+as::Application* as::CreateApplication()
 {
 	return new Sandbox();
 }

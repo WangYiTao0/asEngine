@@ -13,8 +13,8 @@ struct asResource
 	union 
 	{
 		const void* data = nullptr;
-		const asGraphics::Texture* texture;
-		const asAudio::Sound* Sound;
+		const as::asGraphics::Texture* texture;
+		const as::asAudio::Sound* Sound;
 	};
 
 	enum DATA_TYPE
@@ -27,14 +27,17 @@ struct asResource
 	~asResource();
 };
 
-namespace asResourceManager
+namespace as
 {
-	// Load a resource
-	std::shared_ptr<asResource> Load(const asHashString& name);
-	// Check if a resource is currently loaded
-	bool Contains(const asHashString& name);
-	// Register a pre-created resource
-	std::shared_ptr<asResource> Register(const asHashString& name, void* data, asResource::DATA_TYPE data_type);
-	// Invalidate all resources
-	void Clear();
+	namespace asResourceManager
+	{
+		// Load a resource
+		std::shared_ptr<asResource> Load(const asHashString& name);
+		// Check if a resource is currently loaded
+		bool Contains(const asHashString& name);
+		// Register a pre-created resource
+		std::shared_ptr<asResource> Register(const asHashString& name, void* data, asResource::DATA_TYPE data_type);
+		// Invalidate all resources
+		void Clear();
+	}
 }

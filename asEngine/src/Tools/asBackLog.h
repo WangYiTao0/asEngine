@@ -5,27 +5,30 @@
 #include <string>
 #include <fstream>
 
-namespace asBackLog
+namespace as
 {
-	void Toggle();
-	void Scroll(int direction);
-	void Update();
-	void Draw(asGraphics::CommandList cmd);
+	namespace asBackLog
+	{
+		void Toggle();
+		void Scroll(int direction);
+		void Update();
+		void Draw(asGraphics::CommandList cmd);
 
-	std::string getText();
-	void clear();
-	void post(const char* input);
-	void input(const char& input);
-	void acceptInput();
-	void deletefromInput();
-	void save(std::ofstream& file);
+		std::string getText();
+		void clear();
+		void post(const char* input);
+		void input(const char& input);
+		void acceptInput();
+		void deletefromInput();
+		void save(std::ofstream& file);
 
-	void historyPrev();
-	void historyNext();
+		void historyPrev();
+		void historyNext();
 
-	bool isActive();
+		bool isActive();
 
-	void setBackground(asGraphics::Texture* texture);
-	void setFontSize(int value);
-	void setFontRowspacing(int value);
-};
+		void setBackground(asGraphics::Texture* texture);
+		void setFontSize(int value);
+		void setFontRowspacing(int value);
+	};
+}

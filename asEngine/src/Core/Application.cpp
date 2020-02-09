@@ -1,7 +1,7 @@
 #include "aspch.h"
 #include "Application.h"
 
-namespace asCore
+namespace as
 {
 	Application* Application::s_Instance = nullptr;
 	Application::Application()

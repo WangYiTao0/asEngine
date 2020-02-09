@@ -1,143 +1,145 @@
 #include "aspch.h"
 #include "asGraphicsResource.h"
 #include "asGraphicsDevice.h"
-
-namespace asGraphics
+namespace as
 {
-	VertexShader::~VertexShader()
+	namespace asGraphics
 	{
-		if (device != nullptr)
+		VertexShader::~VertexShader()
 		{
-			device->DestroyVertexShader(this);
+			if (device != nullptr)
+			{
+				device->DestroyVertexShader(this);
+			}
 		}
-	}
 
-	PixelShader::~PixelShader()
-	{
-		if (device != nullptr)
+		PixelShader::~PixelShader()
 		{
-			device->DestroyPixelShader(this);
+			if (device != nullptr)
+			{
+				device->DestroyPixelShader(this);
+			}
 		}
-	}
 
-	GeometryShader::~GeometryShader()
-	{
-		if (device != nullptr)
+		GeometryShader::~GeometryShader()
 		{
-			device->DestroyGeometryShader(this);
+			if (device != nullptr)
+			{
+				device->DestroyGeometryShader(this);
+			}
 		}
-	}
 
-	DomainShader::~DomainShader()
-	{
-		if (device != nullptr)
+		DomainShader::~DomainShader()
 		{
-			device->DestroyDomainShader(this);
+			if (device != nullptr)
+			{
+				device->DestroyDomainShader(this);
+			}
 		}
-	}
 
-	HullShader::~HullShader()
-	{
-		if (device != nullptr)
+		HullShader::~HullShader()
 		{
-			device->DestroyHullShader(this);
+			if (device != nullptr)
+			{
+				device->DestroyHullShader(this);
+			}
 		}
-	}
 
-	ComputeShader::~ComputeShader()
-	{
-		if (device != nullptr)
+		ComputeShader::~ComputeShader()
 		{
-			device->DestroyComputeShader(this);
+			if (device != nullptr)
+			{
+				device->DestroyComputeShader(this);
+			}
 		}
-	}
 
-	Sampler::~Sampler()
-	{
-		if (device != nullptr)
+		Sampler::~Sampler()
 		{
-			device->DestroySamplerState(this);
+			if (device != nullptr)
+			{
+				device->DestroySamplerState(this);
+			}
 		}
-	}
 
-	GPUResource::~GPUResource()
-	{
-		if (device != nullptr)
+		GPUResource::~GPUResource()
 		{
-			device->DestroyResource(this);
+			if (device != nullptr)
+			{
+				device->DestroyResource(this);
+			}
 		}
-	}
 
-	GPUBuffer::~GPUBuffer()
-	{
-		if (device != nullptr)
+		GPUBuffer::~GPUBuffer()
 		{
-			device->DestroyBuffer(this);
+			if (device != nullptr)
+			{
+				device->DestroyBuffer(this);
+			}
 		}
-	}
 
-	VertexLayout::~VertexLayout()
-	{
-		if (device != nullptr)
+		VertexLayout::~VertexLayout()
 		{
-			device->DestroyInputLayout(this);
+			if (device != nullptr)
+			{
+				device->DestroyInputLayout(this);
+			}
 		}
-	}
 
-	BlendState::~BlendState()
-	{
-		if (device != nullptr)
+		BlendState::~BlendState()
 		{
-			device->DestroyBlendState(this);
+			if (device != nullptr)
+			{
+				device->DestroyBlendState(this);
+			}
 		}
-	}
 
-	DepthStencilState::~DepthStencilState()
-	{
-		if (device != nullptr)
+		DepthStencilState::~DepthStencilState()
 		{
-			device->DestroyDepthStencilState(this);
+			if (device != nullptr)
+			{
+				device->DestroyDepthStencilState(this);
+			}
 		}
-	}
 
-	RasterizerState::~RasterizerState()
-	{
-		if (device != nullptr)
+		RasterizerState::~RasterizerState()
 		{
-			device->DestroyRasterizerState(this);
+			if (device != nullptr)
+			{
+				device->DestroyRasterizerState(this);
+			}
 		}
-	}
 
-	Texture::~Texture()
-	{
-		if (device != nullptr)
+		Texture::~Texture()
 		{
-			device->DestroyTexture(this);
+			if (device != nullptr)
+			{
+				device->DestroyTexture(this);
+			}
 		}
-	}
 
-	GPUQuery::~GPUQuery()
-	{
-		if (device != nullptr)
+		GPUQuery::~GPUQuery()
 		{
-			device->DestroyQuery(this);
+			if (device != nullptr)
+			{
+				device->DestroyQuery(this);
+			}
 		}
-	}
 
 
-	PipelineState::~PipelineState()
-	{
-		if (device != nullptr)
+		PipelineState::~PipelineState()
 		{
-			device->DestroyPipelineState(this);
+			if (device != nullptr)
+			{
+				device->DestroyPipelineState(this);
+			}
 		}
-	}
 
-	RenderPass::~RenderPass()
-	{
-		if (device != nullptr)
+		RenderPass::~RenderPass()
 		{
-			device->DestroyRenderPass(this);
+			if (device != nullptr)
+			{
+				device->DestroyRenderPass(this);
+			}
 		}
 	}
 }

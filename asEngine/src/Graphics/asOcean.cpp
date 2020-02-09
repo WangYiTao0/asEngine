@@ -5,29 +5,32 @@
 #include "System\asScene.h"
 #include "Tools\asBackLog.h"
 
-using namespace asGraphics;
-using namespace asScene;
+using namespace as::asGraphics;
+using namespace as::asScene;
 
-namespace asOcean_Internal
+namespace as
 {
-	ComputeShader		updateSpectrumCS;
-	ComputeShader		updateDisplacementMapCS;
-	ComputeShader		updateGradientFoldingCS;
-	VertexShader		oceanSurfVS;
-	PixelShader			wireframePS;
-	PixelShader			oceanSurfPS;
+	namespace asOcean_Internal
+	{
+		ComputeShader		updateSpectrumCS;
+		ComputeShader		updateDisplacementMapCS;
+		ComputeShader		updateGradientFoldingCS;
+		VertexShader		oceanSurfVS;
+		PixelShader			wireframePS;
+		PixelShader			oceanSurfPS;
 
-	GPUBuffer			shadingCB;
-	RasterizerState		rasterizerState;
-	RasterizerState		wireRS;
-	DepthStencilState	depthStencilState;
-	BlendState			blendState;
+		GPUBuffer			shadingCB;
+		RasterizerState		rasterizerState;
+		RasterizerState		wireRS;
+		DepthStencilState	depthStencilState;
+		BlendState			blendState;
 
-	PipelineState PSO, PSO_wire;
+		PipelineState PSO, PSO_wire;
 
-	asFFTGenerator::CSFFT512x512_Plan m_fft_plan;
+		asFFTGenerator::CSFFT512x512_Plan m_fft_plan;
+	}
 }
-using namespace asOcean_Internal;
+using namespace as::asOcean_Internal;
 
 
 #define HALF_SQRT_2	0.7071068f
@@ -68,7 +71,7 @@ float Phillips(XMFLOAT2 K, XMFLOAT2 W, float v, float a, float dir_depend)
 
 asOcean::asOcean(const WeatherComponent& weather)
 {
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	auto& params = weather.oceanParameters;
 
@@ -233,7 +236,7 @@ void asOcean::UpdateDisplacementMap(const WeatherComponent& weather, float time,
 {
 	auto& params = weather.oceanParameters;
 
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	device->EventBegin("Ocean Simulation", cmd);
 
@@ -300,7 +303,7 @@ void asOcean::UpdateDisplacementMap(const WeatherComponent& weather, float time,
 	device->UnbindResources(TEXSLOT_ONDEMAND0, 1, cmd);
 
 
-	asRenderer::GenerateMipChain(gradientMap, asRenderer::MIPGENFILTER_LINEAR, cmd);
+	as::asRenderer::GenerateMipChain(gradientMap, as::asRenderer::MIPGENFILTER_LINEAR, cmd);
 
 	device->EventEnd(cmd);
 }
@@ -310,11 +313,11 @@ void asOcean::Render(const CameraComponent& camera, const WeatherComponent& weat
 {
 	auto& params = weather.oceanParameters;
 
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	device->EventBegin("Ocean Rendering", cmd);
 
-	bool wire = asRenderer::IsWireRender();
+	bool wire = as::asRenderer::IsWireRender();
 
 	if (wire)
 	{
@@ -354,19 +357,19 @@ void asOcean::Render(const CameraComponent& camera, const WeatherComponent& weat
 void asOcean::LoadShaders()
 {
 
-	std::string path = asRenderer::GetShaderPath();
+	std::string path = as::asRenderer::GetShaderPath();
 
-	asRenderer::LoadComputeShader(updateSpectrumCS, "oceanSimulatorCS.cso");
-	asRenderer::LoadComputeShader(updateDisplacementMapCS, "oceanUpdateDisplacementMapCS.cso");
-	asRenderer::LoadComputeShader(updateGradientFoldingCS, "oceanUpdateGradientFoldingCS.cso");
+	as::asRenderer::LoadComputeShader(updateSpectrumCS, "oceanSimulatorCS.cso");
+	as::asRenderer::LoadComputeShader(updateDisplacementMapCS, "oceanUpdateDisplacementMapCS.cso");
+	as::asRenderer::LoadComputeShader(updateGradientFoldingCS, "oceanUpdateGradientFoldingCS.cso");
 
-	asRenderer::LoadVertexShader(oceanSurfVS, "oceanSurfaceVS.cso");
+	as::asRenderer::LoadVertexShader(oceanSurfVS, "oceanSurfaceVS.cso");
 
-	asRenderer::LoadPixelShader(oceanSurfPS, "oceanSurfacePS.cso");
-	asRenderer::LoadPixelShader(wireframePS, "oceanSurfaceSimplePS.cso");
+	as::asRenderer::LoadPixelShader(oceanSurfPS, "oceanSurfacePS.cso");
+	as::asRenderer::LoadPixelShader(wireframePS, "oceanSurfaceSimplePS.cso");
 
 
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 	{
 		PipelineStateDesc desc;
@@ -385,7 +388,7 @@ void asOcean::LoadShaders()
 
 void asOcean::Initialize()
 {
-	GraphicsDevice* device = asRenderer::GetDevice();
+	GraphicsDevice* device = as::asRenderer::GetDevice();
 
 
 	GPUBufferDesc cb_desc;
@@ -438,10 +441,10 @@ void asOcean::Initialize()
 
 
 	LoadShaders();
-	asFFTGenerator::LoadShaders();
+	as::asFFTGenerator::LoadShaders();
 	fft512x512_create_plan(m_fft_plan, 3);
 
-	asBackLog::post("asOcean Initialized");
+	as::asBackLog::post("asOcean Initialized");
 }
 
 const Texture* asOcean::getDisplacementMap() const

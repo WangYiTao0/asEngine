@@ -1,6 +1,6 @@
 #pragma once
 
-extern asCore::Application* asCore::CreateApplication();
+extern as::Application* as::CreateApplication();
 
 int main(int argc, char** argv)
 {
@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 	int a = 5;
 	AS_INFO("Hello! Var={0}", a);
 
-	auto app = asCore::CreateApplication();
+	auto app = as::CreateApplication();
 
 	app->Run();
 

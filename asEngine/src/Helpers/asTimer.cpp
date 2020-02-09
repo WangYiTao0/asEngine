@@ -24,7 +24,7 @@ void asTimer::Start()
 {
 	LARGE_INTEGER li;
 	if (!QueryPerformanceFrequency(&li))
-		asHelper::messageBox("QueryPerformanceFrequence failed!\n");
+		as::asHelper::messageBox("QueryPerformanceFrequence failed!\n");
 
 	PCFreq = double(li.QuadPart) / 1000.0;
 
