@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef AS_PLATFORM_WINDOWS
+
 extern as::Application* as::CreateApplication();
 
 int main(int argc, char** argv)
@@ -16,3 +18,5 @@ int main(int argc, char** argv)
 	delete app;
 
 }
+
+#endif

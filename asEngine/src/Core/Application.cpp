@@ -1,12 +1,14 @@
 #include "aspch.h"
 #include "Application.h"
 
+#include "Events/ApplicationEvent.h"
+#include "Core/Log.h"
+
 namespace as
 {
-	Application* Application::s_Instance = nullptr;
 	Application::Application()
 	{
-
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application()
@@ -16,13 +18,11 @@ namespace as
 
 	void Application::Run()
 	{
+		while (m_Running)
+		{
+			m_Window->OnUpdate();
+		}
 
 	}
-
-
-	//Application* CreateApplication()
-	//{
-	//	return nullptr;
-	//}
 }
 

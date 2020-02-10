@@ -1,6 +1,9 @@
 #pragma once
 
-int main(int argc, char** argv);
+#include "Core/Core.h"
+#include "Events/Event.h"
+#include "Core/Window.h"
+
 
 namespace as
 {
@@ -13,8 +16,8 @@ namespace as
 		void Run();
 
 	private:
-		static Application* s_Instance;
-		friend int ::main(int argc, char** argv);
+		std::unique_ptr<Window> m_Window;
+		bool m_Running = true;
 	};
 
 	Application* CreateApplication();
