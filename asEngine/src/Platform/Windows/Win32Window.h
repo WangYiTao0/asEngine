@@ -2,6 +2,9 @@
 
 #include <Windows.h>
 #include "Core/Window.h"
+#include <optional>
+
+#include <cstring>
 
 namespace as
 {
@@ -15,7 +18,7 @@ namespace as
 
 		void OnUpdate() override;
 
-		bool Shutdown();
+		void Shutdown();
 
 		inline unsigned int GetWidth() const override { return m_Data.Width; }
 		inline unsigned int GetHeight() const override { return m_Data.Height; }
@@ -32,7 +35,7 @@ namespace as
 
 		struct Win32Data
 		{
-			std::string Title;
+			std::wstring Title;
 			unsigned int Width, Height;
 			bool isVSync, isFullScreen;
 

@@ -23,11 +23,11 @@ namespace as
 
 	bool Win32Window::Initialize(const WindowProps& props)
 	{
-		m_Data.Title = props.Title;
+		m_Data.Title = std::wstring(props.Title.begin(),props.Title.end());
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 		m_Data.isVSync = props.isVSync;
-		m_Data.isFullScreen = m_Data.isFullScreen;
+		m_Data.isFullScreen = props.isFullScreen;
 		m_Data.m_AppInstance = GetModuleHandle(NULL);
 
 		AS_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
@@ -44,7 +44,7 @@ namespace as
 		wndClass.hIconSm = wndClass.hIcon;
 		wndClass.hInstance = m_Data.m_AppInstance;
 		wndClass.lpfnWndProc = HandleMsgSetup;
-		wndClass.lpszClassName = m_Data.Title.c_str();
+		wndClass.lpszClassName = (LPCWSTR)m_Data.Title.c_str();
 		wndClass.lpszMenuName = nullptr;
 		wndClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 
@@ -107,31 +107,34 @@ namespace as
 		return true;
 	}
 
+	//std::optional<int> Win32Window::ProcessMessages() 
+	//{
+	//	MSG msg;
+	//	// while queue has messages, remove and dispatch them (but do not block on empty queue)
+	//	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	//	{
+	//		// check for quit because peekmessage does not signal this via return val
+	//		if (msg.message == WM_QUIT)
+	//		{
+	//			// return optional wrapping int (arg to PostQuitMessage is in wparam) signals quit
+	//			return (int)msg.wParam;
+	//		}
+
+	//		// TranslateMessage will post auxilliary WM_CHAR messages from key msgs
+	//		TranslateMessage(&msg);
+	//		DispatchMessage(&msg);
+	//	}
+
+	//	// return empty optional when not quitting app
+	//	return {};
+	//}
+
 	void Win32Window::OnUpdate()
 	{
 
-		MSG msg;
-		memset(&msg, 0, sizeof(msg));
-
-		bool done = false;
-		while (!done)
-		{
-			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-
-			if (WM_QUIT == msg.message)
-				done = true;
-			else
-			{
-
-			}
-		}
 	}
 
-	bool Win32Window::Shutdown()
+	void Win32Window::Shutdown()
 	{
 
 		if (m_Data.isFullScreen)
@@ -140,7 +143,7 @@ namespace as
 		DestroyWindow(m_Data.m_hWnd);
 		m_Data.m_hWnd = NULL;
 
-		UnregisterClass(m_Data.Title.c_str(), m_Data.m_AppInstance);
+		UnregisterClass((LPCTSTR)m_Data.Title.c_str(), m_Data.m_AppInstance);
 		m_Data.m_AppInstance = NULL;
 
 
@@ -195,6 +198,7 @@ namespace as
 	bool Win32Window::IsVSync() const
 	{
 
+		return m_Data.isVSync;
 	}
 
 

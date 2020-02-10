@@ -10,7 +10,7 @@ objdir("..bin-obj/" .. outputdir .. "/%{prj.name}")
 pchheader "aspch.h"
 pchsource "src/aspch.cpp"
 
-characterset("MBCS")
+--characterset("MBCS")
 
 files
 {
