@@ -9,6 +9,7 @@
 namespace as
 {
 	class RenderPath;
+
 	class MainComponent
 	{
 	protected:

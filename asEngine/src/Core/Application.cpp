@@ -17,6 +17,8 @@ namespace as
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		timer.Start();
 
+		//m.SetWindow((HWND)m_Window->GetWindow());
+
 		//m_ImGuiLayer = new ImGuiLayer();
 		//PushOverlay(m_ImGuiLayer);
 	}
@@ -42,6 +44,7 @@ namespace as
 				for (Layer* layer : m_LayerStack)
 					layer->OnUpdate(timer.DeltaTime());
 
+				//m.Run();
 				m_Window->OnUpdate();
 			}
 		}

@@ -17,6 +17,8 @@
     includedirs
     {
         "../asEngine/src",
+        "../asEngine/3rdPart/spdlog/include",
+        "../asEngine/%{IncludeDir.ImGui}",
     }
 
     links

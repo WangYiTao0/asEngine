@@ -77,8 +77,8 @@
 
 //#ifdef _WIN32
 //#ifdef WINSTORE_SUPPORT
-//#pragma comment(lib,"WickedEngine_UWP.lib")
+//#pragma comment(lib,"ASEngine_UWP.lib")
 //#else
-//#pragma comment(lib,"WickedEngine_Windows.lib")
+//#pragma comment(lib,"ASEngine_Windows.lib")
 //#endif // WINSTORE_SUPPORT
 //#endif // _WIN32

@@ -19,7 +19,7 @@ asResource::~asResource()
 			SAFE_DELETE(texture);
 			break;
 		case asResource::SOUND:
-			SAFE_DELETE(Sound);
+			SAFE_DELETE(sound);
 			break;
 		}
 	}

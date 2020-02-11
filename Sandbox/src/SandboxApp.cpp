@@ -1,18 +1,18 @@
 #include <asEngine.h>
 #include <Core/EntryPoint.h>
 
-#include "Test.h"
+//#include "Test.h"
 class Sandbox : public as::Application
 {
 public:
 	Sandbox()
 	{
-		PushLayer(new Test());
+		//PushLayer(new Test());
 	}
 
 	~Sandbox()
 	{
-
+		
 	}
 
 };

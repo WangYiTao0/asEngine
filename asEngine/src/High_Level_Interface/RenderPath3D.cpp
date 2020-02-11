@@ -8,9 +8,9 @@
 #include "Graphics/GPUMapping/ResourceMapping.h"
 #include "Tools/asProfiler.h"
 
+
 namespace as
 {
-
 	using namespace asGraphics;
 
 	void RenderPath3D::ResizeBuffers()

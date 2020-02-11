@@ -2,9 +2,6 @@
 
 #include <Windows.h>
 #include "Core/Window.h"
-#include <optional>
-
-#include <cstring>
 
 namespace as
 {
@@ -30,6 +27,9 @@ namespace as
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
+
+		virtual void* GetWindow() override { return m_Data.m_hWnd; }
+	//	inline HWND GetWin32Handle() { return m_Data.m_hWnd; }
 
 	private:
 

@@ -14,6 +14,7 @@ namespace as
 	Win32Window::Win32Window(const WindowProps& props)
 	{
 		Initialize(props);
+
 	}
 
 	Win32Window::~Win32Window()
@@ -101,33 +102,11 @@ namespace as
 		ShowWindow(m_Data.m_hWnd, SW_SHOW);
 		UpdateWindow(m_Data.m_hWnd);
 		SetFocus(m_Data.m_hWnd);
-
+		
 		ShowCursor(true);
 
 		return true;
 	}
-
-	//std::optional<int> Win32Window::ProcessMessages() 
-	//{
-	//	MSG msg;
-	//	// while queue has messages, remove and dispatch them (but do not block on empty queue)
-	//	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-	//	{
-	//		// check for quit because peekmessage does not signal this via return val
-	//		if (msg.message == WM_QUIT)
-	//		{
-	//			// return optional wrapping int (arg to PostQuitMessage is in wparam) signals quit
-	//			return (int)msg.wParam;
-	//		}
-
-	//		// TranslateMessage will post auxilliary WM_CHAR messages from key msgs
-	//		TranslateMessage(&msg);
-	//		DispatchMessage(&msg);
-	//	}
-
-	//	// return empty optional when not quitting app
-	//	return {};
-	//}
 
 	void Win32Window::OnUpdate()
 	{

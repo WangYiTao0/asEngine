@@ -20,9 +20,6 @@
 #include "Graphics/API/asGraphicsDevice_DX12.h"
 #include "Graphics/API/asGraphicsDevice_Vulkan.h"
 
-#include <sstream>
-#include <algorithm>
-
 using namespace std;
 
 namespace as
@@ -48,7 +45,7 @@ namespace as
 
 			if (asStartupArguments::HasArgument("vulkan"))
 			{
-#ifdef WICKEDENGINE_BUILD_VULKAN
+#ifdef ASENGINE_BUILD_VULKAN
 				asRenderer::SetShaderPath(asRenderer::GetShaderPath() + "spirv/");
 				asRenderer::SetDevice(std::make_shared<GraphicsDevice_Vulkan>(window, fullscreen, debugdevice));
 #else
@@ -271,7 +268,7 @@ namespace as
 				{
 					ss << "[DX12]";
 				}
-#ifdef WICKEDENGINE_BUILD_VULKAN
+#ifdef ASENGINE_BUILD_VULKAN
 				else if (dynamic_cast<GraphicsDevice_Vulkan*>(asRenderer::GetDevice()))
 				{
 					ss << "[Vulkan]";

@@ -1,7 +1,7 @@
 #include "aspch.h"
 #include "asGraphicsDevice_Vulkan.h"
 
-#ifdef WICKEDENGINE_BUILD_VULKAN
+#ifdef ASENGINE_BUILD_VULKAN
 #pragma comment(lib,"vulkan-1.lib")
 
 #include "asGraphicsDevice_SharedInternals.h"
@@ -1428,9 +1428,9 @@ namespace as
 			// Fill out application info:
 			VkApplicationInfo appInfo = {};
 			appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-			appInfo.pApplicationName = "Wicked Engine Application";
+			appInfo.pApplicationName = "AS Engine Application";
 			appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-			appInfo.pEngineName = "Wicked Engine";
+			appInfo.pEngineName = "AS Engine";
 			//appInfo.engineVersion = VK_MAKE_VERSION(wiVersion::GetMajor(), wiVersion::GetMinor(), wiVersion::GetRevision());
 			appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 			appInfo.apiVersion = VK_API_VERSION_1_1;
@@ -1505,7 +1505,7 @@ namespace as
 					assert(0);
 				}
 #else
-#error WICKEDENGINE VULKAN DEVICE ERROR: PLATFORM NOT SUPPORTED
+#error ASENGINE VULKAN DEVICE ERROR: PLATFORM NOT SUPPORTED
 #endif // _WIN32
 			}
 
@@ -4997,6 +4997,6 @@ namespace as
 	}
 }
 
-#endif // WICKEDENGINE_BUILD_VULKAN
+#endif // ASENGINE_BUILD_VULKAN
 
 
