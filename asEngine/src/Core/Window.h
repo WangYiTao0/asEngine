@@ -42,7 +42,6 @@ namespace as
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
-		virtual void* GetWindow() = 0;
 
 		static Window* Create(const WindowProps& props = WindowProps());
 	};

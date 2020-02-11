@@ -28,7 +28,7 @@ namespace as
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-		virtual void* GetWindow() override { return m_Data.m_hWnd; }
+		inline HWND GetWindow()  { return m_Data.m_hWnd; }
 	//	inline HWND GetWin32Handle() { return m_Data.m_hWnd; }
 
 	private:
