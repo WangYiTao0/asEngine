@@ -64,14 +64,21 @@
 
 
 // For use by asEngine applications
-#include "Graphics\asFont.h"
+
 #include "Core/Application.h"
+#include "Core/Layer.h"
+#include "Core\PerfTimer.h"
 #include "Core/Log.h"
+#include "Events\Event.h"
+
+#include "Core/Input.h"
+#include "Core/KeyCodes.h"
+#include "Core/MouseCodes.h"
 
 //#ifdef _WIN32
 //#ifdef WINSTORE_SUPPORT
-//#pragma comment(lib,"WickedEngine_UWP.lib")
+//#pragma comment(lib,"ASEngine_UWP.lib")
 //#else
-//#pragma comment(lib,"WickedEngine_Windows.lib")
+//#pragma comment(lib,"ASEngine_Windows.lib")
 //#endif // WINSTORE_SUPPORT
 //#endif // _WIN32

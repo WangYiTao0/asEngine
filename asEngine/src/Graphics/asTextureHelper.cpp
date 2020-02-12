@@ -26,7 +26,7 @@ namespace as
 		std::unordered_map<unsigned long, asGraphics::Texture*> colorTextures;
 		asSpinLock colorlock;
 
-		void Initilize()
+		void Initialize()
 		{
 			// Random64x64
 			{

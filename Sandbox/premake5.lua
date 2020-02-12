@@ -18,7 +18,7 @@
     {
         "../asEngine/src",
         "../asEngine/3rdPart/spdlog/include",
-        "../asEngine/%{IncludeDir.ImGui}"
+        "../asEngine/%{IncludeDir.ImGui}",
     }
 
     links

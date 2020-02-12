@@ -9,6 +9,7 @@
 namespace as
 {
 	class RenderPath;
+
 	class MainComponent
 	{
 	protected:
@@ -59,7 +60,7 @@ namespace as
 		virtual void Compose(asGraphics::CommandList cmd);
 
 		// You need to call this before calling Run() or Initialize() if you want to render
-		void SetWindow(asPlatform::window_type);
+		static void SetWindow(asPlatform::window_type);
 
 
 		struct InfoDisplayer

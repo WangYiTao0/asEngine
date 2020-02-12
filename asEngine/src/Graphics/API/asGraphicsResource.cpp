@@ -12,9 +12,6 @@ namespace as
 				device->DestroyShader(this);
 			}
 		}
-
-
-
 		Sampler::~Sampler()
 		{
 			if (device != nullptr)

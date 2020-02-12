@@ -13,7 +13,6 @@
 
 #endif // _WIN32
 
-
 namespace asPlatform
 {
 #ifdef _WIN32

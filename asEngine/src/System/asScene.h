@@ -15,10 +15,11 @@
 #include "System\asECS.h"
 #include "System\asScene_Dec1.h"
 
-class asArchive;
 
 namespace as
 {
+	class asArchive;
+
 	namespace asScene
 	{
 		struct NameComponent

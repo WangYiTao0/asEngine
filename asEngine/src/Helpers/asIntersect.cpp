@@ -163,7 +163,7 @@ AABB AABB::Merge(const AABB& a, const AABB& b)
 {
 	return AABB(as::asMath::Min(a.getMin(), b.getMin()), as::asMath::Max(a.getMax(), b.getMax()));
 }
-void AABB::Serialize(asArchive& archive, uint32_t seed)
+void AABB::Serialize(as::asArchive& archive, uint32_t seed)
 {
 	if (archive.IsReadMode())
 	{

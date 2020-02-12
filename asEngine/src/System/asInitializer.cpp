@@ -20,7 +20,7 @@ namespace as
 			initializationStarted = true;
 
 			std::stringstream ss;
-			ss << std::endl << "[asInitializer] Initializing Wicked Engine, please wait..." << std::endl;
+			ss << std::endl << "[asInitializer] Initializing AS Engine, please wait..." << std::endl;
 			//ss << "Version: " << asVersion::GetVersionString() << std::endl;
 			asBackLog::post(ss.str().c_str());
 
@@ -38,7 +38,7 @@ namespace as
 			asJobSystem::Execute(ctx, [] { asOcean::Initialize(); });
 			asJobSystem::Execute(ctx, [] { asGPUSortLib::LoadShaders(); });
 			asJobSystem::Execute(ctx, [] { asGPUBVH::LoadShaders(); });
-			asJobSystem::Execute(ctx, [] { asPhysicsEngine::Initialize(); });
+			///asJobSystem::Execute(ctx, [] { asPhysicsEngine::Initialize(); });
 
 		}
 

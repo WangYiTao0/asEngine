@@ -26,7 +26,7 @@ namespace as
 
 	namespace asFont_Internal
 	{
-		std::string			FONTPATH = asHelper::GetOriginalWorkingDirectory() + "../WickedEngine/fonts/";
+		std::string			FONTPATH = asHelper::GetOriginalWorkingDirectory() + "../asEngine/assets/fonts/";
 		GPUBuffer			indexBuffer;
 		GPUBuffer			constantBuffer;
 		BlendState			blendState;

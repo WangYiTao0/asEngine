@@ -1,10 +1,10 @@
 #pragma once
 
 #if __has_include("vulkan/vulkan.h")
-#define WICKEDENGINE_BUILD_VULKAN
+#define ASENGINE_BUILD_VULKAN
 #endif // HAS VULKAN
 
-#ifdef WICKEDENGINE_BUILD_VULKAN
+#ifdef ASENGINE_BUILD_VULKAN
 #include "CommonInclude.h"
 #include "asGraphicsDevice.h"
 #include "System/asPlatform.h"
@@ -361,4 +361,4 @@ namespace as
 	}
 }
 
-#endif // WICKEDENGINE_BUILD_VULKAN
+#endif // ASENGINE_BUILD_VULKAN

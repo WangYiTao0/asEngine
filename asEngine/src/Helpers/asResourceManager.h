@@ -14,7 +14,7 @@ struct asResource
 	{
 		const void* data = nullptr;
 		const as::asGraphics::Texture* texture;
-		const as::asAudio::Sound* Sound;
+		const as::asAudio::Sound* sound;
 	};
 
 	enum DATA_TYPE
