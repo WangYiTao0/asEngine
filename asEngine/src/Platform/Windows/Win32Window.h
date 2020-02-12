@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 #include "Core/Window.h"
+#include "High_Level_Interface\MainComponent.h"
+
 
 namespace as
 {
@@ -28,8 +30,7 @@ namespace as
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-		inline HWND GetWindow()  { return m_Data.m_hWnd; }
-	//	inline HWND GetWin32Handle() { return m_Data.m_hWnd; }
+		virtual void* GetWindow() const override;
 
 	private:
 

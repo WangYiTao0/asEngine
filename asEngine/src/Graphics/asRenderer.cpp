@@ -64,7 +64,7 @@ namespace as
 		GPUBuffer				resourceBuffers[RBTYPE_COUNT];
 		Sampler					samplers[SSLOT_COUNT];
 
-		string SHADERPATH = asHelper::GetOriginalWorkingDirectory() + "../../asEngine/asset/shaders/";
+		string SHADERPATH = asHelper::GetOriginalWorkingDirectory() + "../asEngine/assets/shaders/";
 
 		LinearAllocator updateFrameAllocator; // can be used by an update thread
 		LinearAllocator renderFrameAllocators[COMMANDLIST_COUNT]; // can be used by graphics threads

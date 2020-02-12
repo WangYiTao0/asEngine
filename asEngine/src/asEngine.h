@@ -69,7 +69,7 @@
 #include "Core/Layer.h"
 #include "Core\PerfTimer.h"
 #include "Core/Log.h"
-//#include "Core\EntryPoint.h"
+#include "Events\Event.h"
 
 #include "Core/Input.h"
 #include "Core/KeyCodes.h"

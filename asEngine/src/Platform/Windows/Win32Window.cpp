@@ -1,7 +1,7 @@
 #include "aspch.h"
 #include "Win32Window.h"
-
 #include "Core/Log.h"
+#include "Helpers/asStartupArguments.h"
 
 namespace as
 {
@@ -32,7 +32,11 @@ namespace as
 		m_Data.m_AppInstance = GetModuleHandle(NULL);
 
 		AS_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
-		
+		LPWSTR szCmdLine;
+		szCmdLine = GetCommandLineW();
+		as::asStartupArguments::Parse(szCmdLine);
+
+		//AS_CORE_INFO("CmdLineInfo--{0}", szCmdLine);
 
 		WNDCLASSEX wndClass;
 		memset(&wndClass, 0, sizeof(wndClass));
@@ -102,7 +106,8 @@ namespace as
 		ShowWindow(m_Data.m_hWnd, SW_SHOW);
 		UpdateWindow(m_Data.m_hWnd);
 		SetFocus(m_Data.m_hWnd);
-		
+
+
 		ShowCursor(true);
 
 		return true;
@@ -180,6 +185,10 @@ namespace as
 		return m_Data.isVSync;
 	}
 
+	void* Win32Window::GetWindow() const
+	{
+		return m_Data.m_hWnd;
+	}
 
 }
 

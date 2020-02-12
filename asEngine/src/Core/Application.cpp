@@ -16,12 +16,9 @@ namespace as
 	Application::Application()
 	{
 		m_Window = std::unique_ptr<Window>(Window::Create());
+		auto hwnd = as::Application::Get().GetWindow().GetHeight();
+
 		timer.Start();
-
-		//m.SetWindow((HWND)m_Window->GetWindow());
-
-		m_ImGuiLayer = new ImGuiLayer("ImGui");
-		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application()
@@ -45,7 +42,6 @@ namespace as
 				for (Layer* layer : m_LayerStack)
 					layer->OnUpdate(timer.DeltaTime());
 
-				//m.Run();
 				m_Window->OnUpdate();
 			}
 		}
@@ -99,20 +95,7 @@ namespace as
 
 	void Application::RenderImGui()
 	{
-		m_ImGuiLayer->Begin();
 
-		ImGui::Begin("Renderer");
-		//auto& caps = RendererAPI::GetCapabilities();
-		//ImGui::Text("Vendor: %s", caps.Vendor.c_str());
-		//ImGui::Text("Renderer: %s", caps.Renderer.c_str());
-		//ImGui::Text("Version: %s", caps.Version.c_str());
-		ImGui::Text("Frame Time: %.2fms\n", timer.GetMilliseconds());
-		ImGui::End();
-
-		for (Layer* layer : m_LayerStack)
-			layer->OnImGuiRender();
-
-		m_ImGuiLayer->End();
 	}
 
 }
