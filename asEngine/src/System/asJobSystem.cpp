@@ -4,6 +4,7 @@
 #include "Tools/asBackLog.h"
 #include "Helpers/asContainers.h"
 #include "System/asPlatform.h"
+#include "Core/Log.h"
 
 #include <thread>
 #include <condition_variable>
@@ -90,6 +91,7 @@ namespace as
 			std::stringstream ss("");
 			ss << "asJobSystem Initialized with [" << numCores << " cores] [" << numThreads << " threads]";
 			asBackLog::post(ss.str().c_str());
+			AS_CORE_INFO(ss.str().c_str());
 		}
 
 		uint32_t GetThreadCount()

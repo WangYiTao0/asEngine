@@ -16,7 +16,6 @@ uint64_t __archiveVersionBarrier = 22;
 
 namespace as
 {
-
 	asArchive::asArchive()
 	{
 		CreateEmpty();

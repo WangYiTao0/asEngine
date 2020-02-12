@@ -1,7 +1,7 @@
 workspace "asEngine"
     architecture "x64"
     targetdir "build"
-    startproject "Sandbox"
+    startproject "Editor"
 
     configurations
     {
@@ -29,3 +29,5 @@ group ""
 include "asEngine"
 include "Sandbox"
 include "Editor"
+include "asEngine_Shaders"
+

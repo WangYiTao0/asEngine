@@ -2193,6 +2193,7 @@ namespace as
 			}
 
 			asBackLog::post("Created GraphicsDevice_Vulkan");
+			AS_CORE_INFO("Created GraphicsDevice_Vulkan");
 		}
 		GraphicsDevice_Vulkan::~GraphicsDevice_Vulkan()
 		{

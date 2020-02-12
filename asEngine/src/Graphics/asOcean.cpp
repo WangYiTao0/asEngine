@@ -445,6 +445,7 @@ void asOcean::Initialize()
 	fft512x512_create_plan(m_fft_plan, 3);
 
 	as::asBackLog::post("asOcean Initialized");
+	AS_CORE_INFO("asOcean Initialized");
 }
 
 const Texture* asOcean::getDisplacementMap() const

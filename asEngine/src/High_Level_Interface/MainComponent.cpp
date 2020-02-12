@@ -4,7 +4,7 @@
 #include "Graphics/asRenderer.h"
 #include "Helpers/asHelper.h"
 #include "Helpers/asTimer.h"
-//#include "wiInput.h"
+#include "Input/asInput.h"
 #include "Tools/asBackLog.h"
 //#include "MainComponent_BindLua.h"
 //#include "wiVersion.h"
@@ -164,7 +164,7 @@ namespace as
 			// Variable-timed update:
 			Update(dt);
 
-			//wiInput::Update();
+			asInput::Update();
 
 			Render();
 		}

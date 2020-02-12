@@ -2637,6 +2637,7 @@ namespace as
 			SetShadowPropsCube(SHADOWRES_CUBE, SHADOWCOUNT_CUBE);
 
 			asBackLog::post("asRenderer Initialized");
+			AS_CORE_INFO("asRenderer Initialized");
 		}
 		void ClearWorld()
 		{
@@ -7667,6 +7668,7 @@ namespace as
 				else
 				{
 					asBackLog::post("Decal atlas packing failed!");
+					AS_CORE_INFO("Decal atlas packing failed!");
 				}
 			}
 
@@ -7855,6 +7857,7 @@ namespace as
 				else
 				{
 					asBackLog::post("Global Lightmap atlas packing failed!");
+					AS_CORE_INFO("Global Lightmap atlas packing failed!");
 				}
 			}
 

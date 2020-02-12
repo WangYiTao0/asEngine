@@ -25,7 +25,7 @@ namespace as
 		if (!device->CheckCapability(GraphicsDevice::GRAPHICSDEVICE_CAPABILITY_UAV_LOAD_FORMAT_R11G11B10_FLOAT))
 		{
 			asBackLog::post("\nWARNING: GRAPHICSDEVICE_CAPABILITY_UAV_LOAD_FORMAT_R11G11B10_FLOAT not supported, Tiled deferred will be using workaround slow path!\n");
-
+			AS_CORE_INFO("\nWARNING: GRAPHICSDEVICE_CAPABILITY_UAV_LOAD_FORMAT_R11G11B10_FLOAT not supported, Tiled deferred will be using workaround slow path!\n");
 			TextureDesc desc;
 			desc = lightbuffer_diffuse.GetDesc();
 			desc.Format = FORMAT_R16G16B16A16_FLOAT;

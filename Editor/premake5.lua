@@ -10,8 +10,12 @@
 
 	files
 	{
-		"src/**.h",
-		"src/**.cpp"
+        "src/**.h",
+        "src/**.hpp",
+        "src/**.cpp",
+        "3rdPart/**.h",
+        "3rdPart/**.hpp",
+        "3rdPart/**.cpp",
     }
     
     includedirs
@@ -23,7 +27,7 @@
 
     libdirs
     {
-        "$(VULKAN_SDK)/Lib",
+        
     }
 
     links
