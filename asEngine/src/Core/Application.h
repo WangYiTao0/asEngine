@@ -8,7 +8,7 @@
 #include "Events\ApplicationEvent.h"
 #include "PerfTimer.h"
 
-
+#include <memory.h>
 #include "High_Level_Interface/MainComponent.h"
 
 int main(int argc, char** argv);
@@ -32,7 +32,7 @@ namespace as
 		void RenderImGui();
 
 		inline Window& GetWindow() { return *m_Window; }
-		inline static Application& Get() { if(s_Instance == nullptr) return *s_Instance; }
+		inline static Application& Get() { return *s_Instance; }
 	private:
 		void Run();
 		bool OnWindowResize(WindowResizeEvent& e);

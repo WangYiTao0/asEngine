@@ -15,8 +15,15 @@ namespace as
 
 	Application::Application()
 	{
+		s_Instance = this;
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		auto hwnd = as::Application::Get().GetWindow().GetHeight();
+	
+		//HWND hw = HWND(m_Window->GetWindow());
+
+		//auto& a = as::Application::Get();
+
+		//auto hwnd = HWND(a.GetWindow().GetWindow());
 
 		timer.Start();
 	}
@@ -97,6 +104,7 @@ namespace as
 	{
 
 	}
+
 
 }
 

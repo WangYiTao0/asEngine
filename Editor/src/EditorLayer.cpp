@@ -7,8 +7,8 @@ EditorLayer::EditorLayer()
 
 void EditorLayer::OnAttach()
 {
-
-	auto hwnd = HWND(as::Application::Get().GetWindow().GetWindow());
+	auto& a = as::Application::Get();
+	auto hwnd = HWND(a.GetWindow().GetWindow());
 
 	m.SetWindow(hwnd);
 	m.Initialize();
