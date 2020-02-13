@@ -238,6 +238,9 @@ namespace as
 			GraphicsDevice_DX12(asPlatform::window_type asndow, bool fullscreen = false, bool debuglayer = false);
 			virtual ~GraphicsDevice_DX12();
 
+			//virtual void* GetNaiveDevice() override { return device; }
+			//virtual void* GetNaiveContext()override { return immediateContext; };
+
 			bool CreateBuffer(const GPUBufferDesc* pDesc, const SubresourceData* pInitialData, GPUBuffer* pBuffer) override;
 			bool CreateTexture(const TextureDesc* pDesc, const SubresourceData* pInitialData, Texture* pTexture) override;
 			bool CreateInputLayout(const VertexLayoutDesc* pInputElementDescs, uint32_t NumElements, const ShaderByteCode* shaderCode, VertexLayout* pInputLayout) override;

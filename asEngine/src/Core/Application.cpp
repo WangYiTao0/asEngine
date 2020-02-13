@@ -5,7 +5,7 @@
 #include "Core/Log.h"
 
 #include "Graphics/API/asGraphicsDevice.h"
-#include "imgui.h"
+//#include "imgui.h"
 
 namespace as
 {
@@ -16,23 +16,12 @@ namespace as
 	Application::Application()
 	{
 		s_Instance = this;
-
-		m_Window = std::unique_ptr<Window>(Window::Create());
-	
-		//HWND hw = HWND(m_Window->GetWindow());
-
-		//auto& a = as::Application::Get();
-
-		//auto hwnd = HWND(a.GetWindow().GetWindow());
-
 		timer.Start();
+		m_Window = std::unique_ptr<Window>(Window::Create());
+
+		//m_ImGuiLayer = new ImGuiLayer();
+	//	PushOverlay(m_ImGuiLayer);
 	}
-
-	Application::~Application()
-	{
-
-	}
-
 
 	void Application::Run()
 	{
@@ -48,12 +37,33 @@ namespace as
 			{
 				for (Layer* layer : m_LayerStack)
 					layer->OnUpdate(timer.DeltaTime());
-
+				
+				RenderImGui();
+			
 				m_Window->OnUpdate();
 			}
 		}
 		OnShutdown();
 	}
+
+	Application::~Application()
+	{
+
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* layer)
+	{
+		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
+	}
+
+
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
@@ -88,21 +98,23 @@ namespace as
 		}
 	}
 
-	void Application::PushLayer(Layer* layer)
-	{
-		m_LayerStack.PushLayer(layer);
-		layer->OnAttach();
-	}
-
-	void Application::PushOverlay(Layer* layer)
-	{
-		m_LayerStack.PushOverlay(layer);
-		layer->OnAttach();
-	}
 
 	void Application::RenderImGui()
 	{
+		//m_ImGuiLayer->Begin();
 
+		//ImGui::Begin("Renderer");
+		////auto& caps = RendererAPI::GetCapabilities();
+		////ImGui::Text("Vendor: %s", caps.Vendor.c_str());
+		////ImGui::Text("Renderer: %s", caps.Renderer.c_str());
+		////ImGui::Text("Version: %s", caps.Version.c_str());
+		////ImGui::Text("Frame Time: %.2fms\n", m_TimeStep.GetMilliseconds());
+		//ImGui::End();
+
+		//for (Layer* layer : m_LayerStack)
+		//	layer->OnImGuiRender();
+
+		//m_ImGuiLayer->End();
 	}
 
 

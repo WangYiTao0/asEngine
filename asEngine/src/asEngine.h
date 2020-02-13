@@ -48,8 +48,8 @@
 //#include "asLua.h"
 //#include "asLuna.h"
 #include "Graphics/API/asGraphicsDevice.h"
-//#include "asGUI.h"
-//#include "asWidget.h"
+#include "GUI/asGUI.h"
+#include "GUI/asWidget.h"
 #include "Helpers/asHashString.h"
 #include "Helpers/asArchive.h"
 #include "Helpers/asSpinLock.h"
@@ -70,6 +70,9 @@
 #include "Core\PerfTimer.h"
 #include "Core/Log.h"
 #include "Events\Event.h"
+
+
+#include "GUI/ImGuiLayer.h"
 
 #include "Core/Input.h"
 #include "Core/KeyCodes.h"

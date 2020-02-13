@@ -73,11 +73,8 @@ namespace as
 			GraphicsDevice_DX11(asPlatform::window_type window, bool fullscreen = false, bool debuglayer = false);
 			virtual ~GraphicsDevice_DX11();
 
-			virtual void ImguiInit() = 0;
-			virtual void ImguiShutDown() = 0;
-			virtual void ImguiBegin() = 0;
-			virtual void ImguiRender() = 0;
-			virtual void ImguiEnd() = 0;
+			virtual void* GetNaiveDevice() override { return device.Get(); }
+			virtual void* GetNaiveContext()override { return immediateContext.Get(); };
 
 			virtual bool CreateBuffer(const GPUBufferDesc* pDesc, const SubresourceData* pInitialData, GPUBuffer* pBuffer) override;
 			virtual bool CreateTexture(const TextureDesc* pDesc, const SubresourceData* pInitialData, Texture* pTexture) override;

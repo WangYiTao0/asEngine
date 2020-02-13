@@ -3,6 +3,7 @@
 #include "Core/Log.h"
 #include "Helpers/asStartupArguments.h"
 
+
 namespace as
 {
 
@@ -106,9 +107,9 @@ namespace as
 		ShowWindow(m_Data.m_hWnd, SW_SHOW);
 		UpdateWindow(m_Data.m_hWnd);
 		SetFocus(m_Data.m_hWnd);
-
-
 		ShowCursor(true);
+
+
 
 		return true;
 	}
@@ -160,8 +161,12 @@ namespace as
 		return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
 	}
 
+	//extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 	LRESULT Win32Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 	{
+		//if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+		//	return true;
 		switch (msg)
 		{
 		case WM_CLOSE:

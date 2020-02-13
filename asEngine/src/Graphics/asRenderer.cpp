@@ -23,7 +23,7 @@
 #include "GPUMapping/ShaderInterop_Raytracing.h"
 #include "GPUMapping/ShaderInterop_BVH.h"
 #include "GPUMapping/ShaderInterop_Utility.h"
-//#include "Widget.h" //GUI
+#include "GUI/asWidget.h" 
 #include "asGPUSortLib.h"
 #include "Helpers/asAllocators.h"
 #include "asGPUBVH.h"
@@ -2595,7 +2595,7 @@ namespace as
 			asImage::LoadShaders();
 			asOcean::LoadShaders();
 			asFFTGenerator::LoadShaders();
-			//asWidget::LoadShaders();
+			asWidget::LoadShaders();
 			asGPUSortLib::LoadShaders();
 			asGPUBVH::LoadShaders();
 		}
