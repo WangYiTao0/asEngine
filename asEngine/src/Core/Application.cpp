@@ -63,14 +63,6 @@ namespace as
 		layer->OnAttach();
 	}
 
-	bool Application::OnWindowResize(WindowResizeEvent& e)
-	{
-		if (e.GetWidth() == 0 || e.GetHeight() == 0)
-		{
-			m_Minimized = true;
-			return false;
-		}
-
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
