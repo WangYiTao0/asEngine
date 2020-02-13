@@ -118,6 +118,7 @@ namespace as
 			}
 
 			asBackLog::post("asTextureHelper Initialized");
+			AS_CORE_INFO("asTextureHelper Initialized");
 		}
 
 

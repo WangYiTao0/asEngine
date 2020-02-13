@@ -122,6 +122,7 @@ void asGPUBVH::UpdateGlobalMaterialResources(const Scene& scene, CommandList cmd
 		else
 		{
 			as::asBackLog::post("Tracing atlas packing failed!");
+			AS_CORE_INFO("Tracing atlas packing failed!");
 		}
 	}
 

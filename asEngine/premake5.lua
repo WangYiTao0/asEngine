@@ -39,7 +39,7 @@ libdirs
 links
 {
     "vulkan-1",
-    --"ImGui",
+    "ImGui",
 }
 
 filter "system:windows"

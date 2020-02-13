@@ -410,6 +410,7 @@ namespace as
 			LoadShaders();
 
 			asBackLog::post("asImage Initialized");
+			AS_CORE_INFO("asImage Initialized");
 			initialized.store(true);
 		}
 

@@ -2,7 +2,6 @@
 
 #include <Windows.h>
 #include "Core/Window.h"
-#include "High_Level_Interface\MainComponent.h"
 
 
 namespace as

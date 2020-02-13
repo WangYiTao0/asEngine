@@ -1218,6 +1218,7 @@ namespace as
 
 
 			asBackLog::post("Created GraphicsDevice_DX11");
+			AS_CORE_INFO("Created GraphicsDevice_DX11");
 		}
 
 		GraphicsDevice_DX11::~GraphicsDevice_DX11()

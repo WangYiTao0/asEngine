@@ -30,6 +30,9 @@ namespace as
 			bool UAV_LOAD_FORMAT_R11G11B10_FLOAT = false;
 			bool RENDERTARGET_AND_VIEWPORT_ARRAYINDEX_WITHOUT_GS = false;
 		public:
+			virtual void* GetNaiveDevice() { return 0; };
+			virtual void* GetNaiveContext() { return 0; };
+
 			virtual bool CreateBuffer(const GPUBufferDesc* pDesc, const SubresourceData* pInitialData, GPUBuffer* pBuffer) = 0;
 			virtual bool CreateTexture(const TextureDesc* pDesc, const SubresourceData* pInitialData, Texture* pTexture) = 0;
 			virtual bool CreateInputLayout(const VertexLayoutDesc* pInputElementDescs, uint32_t NumElements, const ShaderByteCode* shaderCode, VertexLayout* pInputLayout) = 0;

@@ -23,7 +23,7 @@
 #include "GPUMapping/ShaderInterop_Raytracing.h"
 #include "GPUMapping/ShaderInterop_BVH.h"
 #include "GPUMapping/ShaderInterop_Utility.h"
-//#include "Widget.h" //GUI
+#include "GUI/asWidget.h" 
 #include "asGPUSortLib.h"
 #include "Helpers/asAllocators.h"
 #include "asGPUBVH.h"
@@ -2595,7 +2595,7 @@ namespace as
 			asImage::LoadShaders();
 			asOcean::LoadShaders();
 			asFFTGenerator::LoadShaders();
-			//asWidget::LoadShaders();
+			asWidget::LoadShaders();
 			asGPUSortLib::LoadShaders();
 			asGPUBVH::LoadShaders();
 		}
@@ -2637,6 +2637,7 @@ namespace as
 			SetShadowPropsCube(SHADOWRES_CUBE, SHADOWCOUNT_CUBE);
 
 			asBackLog::post("asRenderer Initialized");
+			AS_CORE_INFO("asRenderer Initialized");
 		}
 		void ClearWorld()
 		{
@@ -7667,6 +7668,7 @@ namespace as
 				else
 				{
 					asBackLog::post("Decal atlas packing failed!");
+					AS_CORE_INFO("Decal atlas packing failed!");
 				}
 			}
 
@@ -7855,6 +7857,7 @@ namespace as
 				else
 				{
 					asBackLog::post("Global Lightmap atlas packing failed!");
+					AS_CORE_INFO("Global Lightmap atlas packing failed!");
 				}
 			}
 

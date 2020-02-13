@@ -36,9 +36,9 @@
 #include "Helpers/asResourceManager.h"
 #include "Helpers/asTimer.h"
 #include "Helpers/asHelper.h"
-//#include "asInput.h"
-//#include "asRawInput.h"
-//#include "asXInput.h"
+#include "Input/asInput.h"
+#include "Input/asRawInput.h"
+#include "Input/asXInput.h"
 #include "Graphics/asTextureHelper.h"
 #include "Helpers/asRandom.h"
 #include "Helpers/asColors.h"
@@ -48,8 +48,8 @@
 //#include "asLua.h"
 //#include "asLuna.h"
 #include "Graphics/API/asGraphicsDevice.h"
-//#include "asGUI.h"
-//#include "asWidget.h"
+#include "GUI/asGUI.h"
+#include "GUI/asWidget.h"
 #include "Helpers/asHashString.h"
 #include "Helpers/asArchive.h"
 #include "Helpers/asSpinLock.h"
@@ -70,6 +70,9 @@
 #include "Core\PerfTimer.h"
 #include "Core/Log.h"
 #include "Events\Event.h"
+
+
+#include "GUI/ImGuiLayer.h"
 
 #include "Core/Input.h"
 #include "Core/KeyCodes.h"

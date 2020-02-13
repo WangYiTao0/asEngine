@@ -288,6 +288,7 @@ namespace as
 		LoadShaders();
 
 		as::asBackLog::post("asFont Initialized");
+		AS_CORE_INFO("asFont Initialized");
 		initialized.store(true);
 	}
 

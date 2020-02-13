@@ -2,17 +2,19 @@
 #include <asEngine.h>
 #include "EditorComponent.h"
 
-class EditorLayer:public as::Layer
+namespace as
 {
-public:
-	EditorLayer();
+	class EditorLayer :public as::Layer
+	{
+	public:
+		EditorLayer();
 
-	virtual void OnAttach()override;
-	virtual void OnDetach() override;
-	virtual void OnUpdate(float dt) override;
-	virtual void OnImGuiRender() override;
-	virtual void OnEvent(as::Event& event) override;
-private:
-	EditorComponent m;
-
-};
+		virtual void OnAttach()override;
+		virtual void OnDetach() override;
+		virtual void OnUpdate(float dt) override;
+		virtual void OnImGuiRender() override;
+		virtual void OnEvent(as::Event& event) override;
+	private:
+		EditorGUI m;
+	};
+}

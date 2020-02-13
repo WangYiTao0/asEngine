@@ -8,7 +8,8 @@
 #include "Events\ApplicationEvent.h"
 #include "PerfTimer.h"
 
-
+#include <memory.h>
+#include "GUI/ImGuiLayer.h"
 #include "High_Level_Interface/MainComponent.h"
 
 int main(int argc, char** argv);
@@ -32,7 +33,7 @@ namespace as
 		void RenderImGui();
 
 		inline Window& GetWindow() { return *m_Window; }
-		inline static Application& Get() { if(s_Instance == nullptr) return *s_Instance; }
+		inline static Application& Get() { return *s_Instance; }
 	private:
 		void Run();
 		bool OnWindowResize(WindowResizeEvent& e);
@@ -41,6 +42,7 @@ namespace as
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true, m_Minimized = false;
 		LayerStack m_LayerStack;
+		//ImGuiLayer* m_ImGuiLayer;
 		PerfTimer timer;
 	private:
 		static Application* s_Instance;

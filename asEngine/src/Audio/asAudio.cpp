@@ -1,6 +1,7 @@
 #include "aspch.h"
 #include "asAudio.h"
 #include "Tools/asBackLog.h"
+#include "Core/Log.h"
 #include "Helpers/asHelper.h"
 
 
@@ -189,6 +190,7 @@ namespace as
 			if (audio->success)
 			{
 				asBackLog::post("wiAudio Initialized");
+				AS_CORE_INFO("asInput Initialized");
 			}
 		}
 

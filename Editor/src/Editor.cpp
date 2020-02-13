@@ -1,20 +1,22 @@
-#include <asEngine.h>
-#include <Core\EntryPoint.h>
+﻿#include <asEngine.h>
+#include <Core/EntryPoint.h>
 
 #include "EditorLayer.h"
 
-class Editor : public as::Application
+
+class EditorApp :public as::Application
 {
 public:
-	Editor() {
-		PushLayer(new EditorLayer());
+	EditorApp()
+	{
+		PushLayer(new as::EditorLayer());
 	}
-	~Editor() {
+	~EditorApp()
+	{
 
 	}
 };
-
 as::Application* as::CreateApplication()
 {
-	return new Editor();
+	return new EditorApp();
 }

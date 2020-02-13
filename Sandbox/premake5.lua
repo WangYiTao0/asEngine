@@ -21,6 +21,12 @@
         "../asEngine/%{IncludeDir.ImGui}",
     }
 
+    libdirs
+    {
+        "$(VULKAN_SDK)/Lib",
+    }
+
+
     links
     {
         "asEngine"

@@ -385,6 +385,7 @@ namespace as
 			LoadShaders();
 
 			asBackLog::post("asHairParticle Initialized");
+			AS_CORE_INFO("asHairParticle Initialized!");
 		}
 	}
 }

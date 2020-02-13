@@ -742,6 +742,8 @@ namespace as
 			LoadShaders();
 
 			asBackLog::post("asEmittedParticle Initialized");
+
+			AS_CORE_INFO("asEmittedParticle Initialized");
 		}
 
 

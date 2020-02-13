@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderPath.h"
+#include "GUI/asGUI.h"
 
 #include <string>
 
@@ -42,7 +43,7 @@ namespace as
 		as::asGraphics::RenderPass renderpass_stenciled;
 		as::asGraphics::RenderPass renderpass_final;
 
-		//wiGUI GUI;
+		asGUI GUI;
 		float spriteSpeed = 1.0f;
 
 	protected:
@@ -82,8 +83,8 @@ namespace as
 		void SortLayers();
 		void CleanLayers();
 
-		//const wiGUI& GetGUI() const { return GUI; }
-		//wiGUI& GetGUI() { return GUI; }
+		const asGUI& GetGUI() const { return GUI; }
+		asGUI& GetGUI() { return GUI; }
 	};
 
 }
