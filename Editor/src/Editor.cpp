@@ -9,12 +9,14 @@ class EditorApp :public as::Application
 public:
 	EditorApp()
 	{
-		PushLayer(new as::EditorLayer());
 	}
 	~EditorApp()
 	{
 
 	}
+
+	virtual void OnInit()override final { PushLayer(new as::EditorLayer()); }
+
 };
 as::Application* as::CreateApplication()
 {

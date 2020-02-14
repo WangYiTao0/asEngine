@@ -40,7 +40,6 @@ namespace as
 		infoDisplay.resolution = true;
 
 		asRenderer::GetDevice()->SetVSyncEnabled(true);
-
 		asRenderer::SetOcclusionCullingEnabled(true);
 
 		renderComponent = new EditorComponent;
@@ -227,7 +226,6 @@ namespace as
 		float step = (option_size.y + 5) * -1, x = screenW - option_size.x, y = screenH - option_size.y;
 
 
-
 		asButton* rendererWnd_Toggle = new asButton("Renderer");
 		rendererWnd_Toggle->SetTooltip("Renderer settings window");
 		rendererWnd_Toggle->SetPos(XMFLOAT2(x, y));
@@ -362,7 +360,6 @@ namespace as
 			forceFieldWnd->forceFieldWindow->SetVisible(!forceFieldWnd->forceFieldWindow->IsVisible());
 			});
 		GetGUI().AddWidget(forceFieldWnd_Toggle);
-
 
 		////////////////////////////////////////////////////////////////////////////////////
 

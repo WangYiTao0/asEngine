@@ -22,8 +22,8 @@ namespace as
 	class EditorLoadingScreen : public LoadingScreen
 	{
 	private:
-		as::asSprite sprite;
-		as::asFont font;
+		asSprite sprite;
+		asFont font;
 	public:
 		void Load() override;
 		void Update(float dt) override;
