@@ -26,21 +26,19 @@ namespace as
 		virtual void OnShutdown() {}
 		virtual void OnUpdate(float dt) {}
 
-		virtual void OnEvent(Event& e);
+		virtual void OnEvent(Event& e) {};
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
-		void RenderImGui();
+		void RenderImGui() {};
 
 		inline Window& GetWindow() { return *m_Window; }
 		inline static Application& Get() { return *s_Instance; }
 	private:
 		void Run();
-		bool OnWindowResize(WindowResizeEvent& e);
-		bool OnWindowClose(WindowCloseEvent& e);
 	private:
 		std::unique_ptr<Window> m_Window;
-		bool m_Running = true, m_Minimized = false;
+		bool m_Running = true;
 		LayerStack m_LayerStack;
 		//ImGuiLayer* m_ImGuiLayer;
 		PerfTimer timer;

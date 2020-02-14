@@ -15,6 +15,6 @@ namespace as
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(as::Event& event) override;
 	private:
-		EditorGUI m;
+		Editor m;
 	};
 }

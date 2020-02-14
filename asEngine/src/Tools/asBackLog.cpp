@@ -103,7 +103,7 @@ namespace as
 				font.params.posX = 50;
 				font.params.posY = (int)pos + (int)scroll;
 				font.Draw(cmd);
-				asFont(inputArea.str().c_str(), asFontParams(10, asRenderer::GetDevice()->GetScreenHeight() - 10, ASFONTSIZE_DEFAULT, WIFALIGN_LEFT, WIFALIGN_BOTTOM)).Draw(cmd);
+				asFont(inputArea.str().c_str(), asFontParams(10, asRenderer::GetDevice()->GetScreenHeight() - 10, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_BOTTOM)).Draw(cmd);
 			}
 		}
 

@@ -1,7 +1,13 @@
 #include "aspch.h"
 #include "Win32Window.h"
+#include "Helpers\asHelper.h"
+#include "Tools/asBackLog.h"
 #include "Core/Log.h"
 #include "Helpers/asStartupArguments.h"
+#include "../resource.h"
+#include "Graphics/asRenderer.h"
+#include "GUI\asWidget.h"
+#include "input/asRawInput.h"
 
 
 namespace as
@@ -104,6 +110,8 @@ namespace as
 			return false;
 		}
 
+		HACCEL hAccelTable = LoadAccelerators(m_Data.m_AppInstance, MAKEINTRESOURCE(IDC_ASENGINEGAME));
+
 		ShowWindow(m_Data.m_hWnd, SW_SHOW);
 		UpdateWindow(m_Data.m_hWnd);
 		SetFocus(m_Data.m_hWnd);
@@ -132,6 +140,25 @@ namespace as
 		m_Data.m_AppInstance = NULL;
 
 
+	}
+
+	INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+	{
+		UNREFERENCED_PARAMETER(lParam);
+		switch (message)
+		{
+		case WM_INITDIALOG:
+			return (INT_PTR)TRUE;
+
+		case WM_COMMAND:
+			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				return (INT_PTR)TRUE;
+			}
+			break;
+		}
+		return (INT_PTR)FALSE;
 	}
 
 	LRESULT CALLBACK Win32Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
@@ -169,14 +196,115 @@ namespace as
 		//	return true;
 		switch (msg)
 		{
-		case WM_CLOSE:
-			PostQuitMessage(0);
+		case WM_COMMAND:
+		{
+			int wmId = LOWORD(wParam);
+			// Parse the menu selections:
+			switch (wmId)
+			{
+			case IDM_ABOUT:
+				//DialogBox(m_Data.m_AppInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				break;
+			case IDM_EXIT:
+				DestroyWindow(hWnd);
+				break;
+			default:
+				return DefWindowProc(hWnd, msg, wParam, lParam);
+			}
+		}
+		break;
+		case WM_SIZE:
+		{
+			if (asRenderer::GetDevice() != nullptr)
+			{
+				int width = LOWORD(lParam);
+				int height = HIWORD(lParam);
+
+				asRenderer::GetDevice()->SetResolution(width, height);
+				asRenderer::GetCamera().CreatePerspective((float)asRenderer::GetInternalResolution().x, (float)asRenderer::GetInternalResolution().y, 0.1f, 800);
+			}
+		}
+		break;
+		case WM_KEYDOWN:
+			switch (wParam)
+			{
+			case VK_HOME:
+				asBackLog::Toggle();
+				break;
+			case VK_UP:
+				if (asBackLog::isActive())
+					asBackLog::historyPrev();
+				break;
+			case VK_DOWN:
+				if (asBackLog::isActive())
+					asBackLog::historyNext();
+				break;
+			case VK_NEXT:
+				if (asBackLog::isActive())
+					asBackLog::Scroll(10);
+				break;
+			case VK_PRIOR:
+				if (asBackLog::isActive())
+					asBackLog::Scroll(-10);
+				break;
+			default:
+				break;
+			}
 			break;
+		case WM_HOTKEY:
+			switch (wParam)
+			{
+			case PRINTSCREEN:
+			{
+				asHelper::screenshot();
+			}
+			break;
+			default:
+				break;
+			}
+			break;
+		case WM_CHAR:
+			switch (wParam)
+			{
+			case VK_BACK:
+				if (asBackLog::isActive())
+					asBackLog::deletefromInput();
+				asTextInputField::DeleteFromInput();
+				break;
+			case VK_RETURN:
+				if (asBackLog::isActive())
+					asBackLog::acceptInput();
+				break;
+			default:
+			{
+				const char c = (const char)(TCHAR)wParam;
+				if (asBackLog::isActive())
+				{
+					asBackLog::input(c);
+				}
+				asTextInputField::AddInput(c);
+			}
+			break;
+			}
+			break;
+		case WM_INPUT:
+			asRawInput::ParseMessage((void*)lParam);
+			break;
+		case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
+			HDC hdc = BeginPaint(hWnd, &ps);
+			// TODO: Add any drawing code that uses hdc here...
+			EndPaint(hWnd, &ps);
+		}
+		break;
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
+		default:
+			return DefWindowProc(hWnd, msg, wParam, lParam);
 		}
-		return DefWindowProc(hWnd, msg, wParam, lParam);
+		return 0;
 	}
 
 	void Win32Window::SetVSync(bool enabled)

@@ -460,13 +460,13 @@ namespace as
 
 		asFontParams newProps = params;
 
-		if (params.h_align == WIFALIGN_CENTER)
+		if (params.h_align == ASFALIGN_CENTER)
 			newProps.posX -= textWidth() / 2;
-		else if (params.h_align == WIFALIGN_RIGHT)
+		else if (params.h_align == ASFALIGN_RIGHT)
 			newProps.posX -= textWidth();
-		if (params.v_align == WIFALIGN_CENTER)
+		if (params.v_align == ASFALIGN_CENTER)
 			newProps.posY -= textHeight() / 2;
-		else if (params.v_align == WIFALIGN_BOTTOM)
+		else if (params.v_align == ASFALIGN_BOTTOM)
 			newProps.posY -= textHeight();
 
 

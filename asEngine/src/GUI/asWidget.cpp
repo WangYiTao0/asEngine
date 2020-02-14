@@ -94,7 +94,7 @@ namespace as
 			{
 				tooltipPos.y += 40;
 			}
-			asFontParams fontProps = asFontParams((int)tooltipPos.x, (int)tooltipPos.y, ASFONTSIZE_DEFAULT, WIFALIGN_LEFT, WIFALIGN_TOP);
+			asFontParams fontProps = asFontParams((int)tooltipPos.x, (int)tooltipPos.y, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP);
 			fontProps.color = asColor(25, 25, 25, 255);
 			asFont tooltipFont = asFont(tooltip, fontProps);
 			if (!scriptTip.empty())
@@ -379,7 +379,7 @@ namespace as
 
 
 		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
-		asFont(text, asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_CENTER, WIFALIGN_CENTER, 0, 0,
+		asFont(text, asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 	}
@@ -445,7 +445,7 @@ namespace as
 
 
 		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
-		asFont(text, asFontParams((int)translation.x + 2, (int)translation.y + 2, ASFONTSIZE_DEFAULT, WIFALIGN_LEFT, WIFALIGN_TOP, 0, 0,
+		asFont(text, asFontParams((int)translation.x + 2, (int)translation.y + 2, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 	}
@@ -607,7 +607,7 @@ namespace as
 		{
 			activeText = value;
 		}
-		asFont(activeText, asFontParams((int)(translation.x + 2), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_LEFT, WIFALIGN_CENTER, 0, 0,
+		asFont(activeText, asFontParams((int)(translation.x + 2), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 	}
@@ -793,7 +793,7 @@ namespace as
 			asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 		}
 		// text
-		asFont(text, asFontParams((int)(translation.x - headWidth * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_RIGHT, WIFALIGN_CENTER, 0, 0,
+		asFont(text, asFontParams((int)(translation.x - headWidth * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 		//// value
@@ -928,7 +928,7 @@ namespace as
 		{
 			asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 		}
-		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_RIGHT, WIFALIGN_CENTER, 0, 0,
+		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 	}
@@ -1143,19 +1143,19 @@ namespace as
 		// control-arrow
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x + scale.x + 1, translation.y, scale.y, scale.y, color.toFloat4()), cmd);
-		asFont("V", asFontParams((int)(translation.x + scale.x + scale.y * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_CENTER, WIFALIGN_CENTER, 0, 0,
+		asFont("V", asFontParams((int)(translation.x + scale.x + scale.y * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 		if (parent != gui)
 		{
 			asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 		}
-		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_RIGHT, WIFALIGN_CENTER, 0, 0,
+		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 		if (selected >= 0)
 		{
-			asFont(items[selected], asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_CENTER, WIFALIGN_CENTER, 0, 0,
+			asFont(items[selected], asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
 				textColor, textShadowColor)).Draw(cmd);
 		}
 
@@ -1207,7 +1207,7 @@ namespace as
 				}
 				asImage::Draw(asTextureHelper::getWhite()
 					, asImageParams(translation.x, translation.y + GetItemOffset(i), scale.x, scale.y, col.toFloat4()), cmd);
-				asFont(items[i], asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f + GetItemOffset(i)), ASFONTSIZE_DEFAULT, WIFALIGN_CENTER, WIFALIGN_CENTER, 0, 0,
+				asFont(items[i], asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f + GetItemOffset(i)), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
 					textColor, textShadowColor)).Draw(cmd);
 			}
 		}
@@ -1490,7 +1490,7 @@ namespace as
 		}
 
 		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
-		asFont(text, asFontParams((int)(translation.x + resizeDragger_UpperLeft->scale.x + 2), (int)(translation.y + resizeDragger_UpperLeft->scale.y * 0.5f), ASFONTSIZE_DEFAULT, WIFALIGN_LEFT, WIFALIGN_CENTER, 0, 0,
+		asFont(text, asFontParams((int)(translation.x + resizeDragger_UpperLeft->scale.x + 2), (int)(translation.y + resizeDragger_UpperLeft->scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 	}
@@ -2191,7 +2191,7 @@ namespace as
 		ss << "H: " << int(hue) << endl;
 		ss << "S: " << int(saturation * 100) << endl;
 		ss << "V: " << int(luminance * 100) << endl;
-		asFont(ss.str(), asFontParams((int)(translation.x + 240), (int)(translation.y + 80), ASFONTSIZE_DEFAULT, WIFALIGN_LEFT, WIFALIGN_TOP, 0, 0,
+		asFont(ss.str(), asFontParams((int)(translation.x + 240), (int)(translation.y + 80), ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
 	}

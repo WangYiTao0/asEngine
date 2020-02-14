@@ -19,7 +19,7 @@ namespace as
 	class ForceFieldWindow;
 	class SoundWindow;
 
-	class EditorLoadingScreen : public as::LoadingScreen
+	class EditorLoadingScreen : public LoadingScreen
 	{
 	private:
 		as::asSprite sprite;
@@ -29,7 +29,7 @@ namespace as
 		void Update(float dt) override;
 		void Unload() override;
 	};
-	class EditorGUI;
+	class Editor;
 	class EditorComponent : public RenderPath2D
 	{
 	private:
@@ -51,7 +51,7 @@ namespace as
 		std::unique_ptr<HairParticleWindow>		hairWnd;
 		std::unique_ptr<ForceFieldWindow>		forceFieldWnd;
 
-		EditorGUI* main = nullptr;
+		Editor* main = nullptr;
 
 		asCheckBox* cinemaModeCheckBox = nullptr;
 
@@ -118,13 +118,18 @@ namespace as
 	};
 
 
-	class EditorGUI : public as::MainComponent
+	class Editor : public MainComponent
 	{
 	public:
+		Editor(){}
+		~Editor() {}		
+		
+		EditorComponent* renderComponent = nullptr;
+		EditorLoadingScreen* loader = nullptr;
+
 		virtual void Initialize()override; 
 
-		EditorComponent * renderComponent = nullptr;
-		EditorLoadingScreen* loader = nullptr;
+
 	};
 
 }

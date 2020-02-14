@@ -5,6 +5,8 @@ namespace as
 {
 	EditorLayer::EditorLayer()
 	{
+
+		
 	}
 
 	void EditorLayer::OnAttach()

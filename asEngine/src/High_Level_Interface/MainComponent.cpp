@@ -66,10 +66,7 @@ namespace as
 			{
 				asRenderer::SetDevice(std::make_shared<GraphicsDevice_DX11>(window, fullscreen, debugdevice));
 			}
-
 		}
-
-
 		asInitializer::InitializeComponentsAsync();
 	}
 
@@ -79,7 +76,6 @@ namespace as
 		{
 			return;
 		}
-
 		// Fade manager will activate on fadeout
 		fadeManager.Clear();
 		fadeManager.Start(fadeSeconds, fadeColor, [this, component]() {
@@ -114,13 +110,13 @@ namespace as
 			return;
 		}
 
-		static bool startup_script = false;
-		if (!startup_script)
-		{
-			startup_script = true;
-			//wiLua::GetGlobal()->RegisterObject(MainComponent_BindLua::className, "main", new MainComponent_BindLua(this));
-			//wiLua::GetGlobal()->RunFile("startup.lua");
-		}
+		//static bool startup_script = false;
+		//if (!startup_script)
+		//{
+		//	startup_script = true;
+		//	//wiLua::GetGlobal()->RegisterObject(MainComponent_BindLua::className, "main", new MainComponent_BindLua(this));
+		//	//wiLua::GetGlobal()->RunFile("startup.lua");
+		//}
 
 		asProfiler::BeginFrame();
 
@@ -301,7 +297,7 @@ namespace as
 				}
 			}
 			ss.precision(2);
-			asFont(ss.str(), asFontParams(4, 4, infoDisplay.size, WIFALIGN_LEFT, WIFALIGN_TOP, 0, 0, asColor(255, 255, 255, 255), asColor(0, 0, 0, 255))).Draw(cmd);
+			asFont(ss.str(), asFontParams(4, 4, infoDisplay.size, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0, asColor(255, 255, 255, 255), asColor(0, 0, 0, 255))).Draw(cmd);
 		}
 
 		asProfiler::DrawData(4, 120, cmd);

@@ -6,6 +6,12 @@
 
 namespace as
 {
+	enum Hotkeys
+	{
+		UNUSED = 0,
+		PRINTSCREEN = 1,
+	};
+
 	class Win32Window : public Window
 	{
 	public:
@@ -21,6 +27,7 @@ namespace as
 		inline unsigned int GetWidth() const override { return m_Data.Width; }
 		inline unsigned int GetHeight() const override { return m_Data.Height; }
 
+		INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 		static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 		static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 		LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;

@@ -30,7 +30,7 @@ namespace as
 	using namespace asECS;
 
 
-	void EditorGUI::Initialize()
+	void Editor::Initialize()
 	{
 		__super::Initialize();
 
@@ -61,7 +61,7 @@ namespace as
 	void EditorLoadingScreen::Load()
 	{
 		font = asFont("Loading...", asFontParams((int)(asRenderer::GetDevice()->GetScreenWidth() * 0.5f), (int)(asRenderer::GetDevice()->GetScreenHeight() * 0.5f), 36,
-			WIFALIGN_CENTER, WIFALIGN_CENTER));
+			ASFALIGN_CENTER, ASFALIGN_CENTER));
 		addFont(&font);
 
 		sprite = asSprite("assets/images/as-logo.png");

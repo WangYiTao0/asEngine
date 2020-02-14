@@ -1,28 +1,37 @@
 #pragma once
 
-//#include <asEngine.h>
+#include <asEngine.h>
+class TestComponent : public as::MainComponent
+{
+public:
+	virtual void Initialize() override;
+};
 
-//class TestComponent : public as::MainComponent
-//{
-//public:
-//	virtual void Initialize() override;
-//};
-//
-//class Test : public as::Layer
-//{
-//public:
-//	Test();
-//	virtual ~Test() = default;
-//
-//	virtual void OnAttach() override;
-//	virtual void OnDetach() override;
-//
-//	void OnUpdate(float ts) override;
-//	virtual void OnImGuiRender() override;
-//	void OnEvent(as::Event& e) override;
-//private:
-//	TestComponent test;
-//};
-//
+class Test : public as::Layer
+{
+public:
+	Test();
+	virtual ~Test() = default;
+
+	virtual void OnAttach() override;
+	virtual void OnDetach() override;
+
+	void OnUpdate(float ts) override;
+	virtual void OnImGuiRender() override;
+	void OnEvent(as::Event& e) override;
+private:
+	TestComponent testComponent;
+};
+
+class Test3D : public as::RenderPath3D_Deferred
+{
+public:
+	Test3D();
+
+};
+
+
+
+
 
 

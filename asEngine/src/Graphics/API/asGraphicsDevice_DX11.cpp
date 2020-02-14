@@ -1,12 +1,17 @@
 #include "aspch.h"
 #include "asGraphicsDevice_DX11.h"
 #include "Helpers/asHelper.h"
+#include "Graphics/GPUMapping/ResourceMapping.h"
 #include "Tools/asBackLog.h"
-
 
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"Dxgi.lib")
 #pragma comment(lib,"dxguid.lib")
+
+#include <sstream>
+#include <algorithm>
+
+using namespace std;
 namespace as
 {
 	namespace asGraphics
@@ -729,6 +734,7 @@ namespace as
 			return data;
 		}
 
+
 		// Native -> Engine converters
 
 		constexpr uint32_t _ParseBindFlags_Inv(uint32_t value)
@@ -1068,6 +1074,8 @@ namespace as
 		// Local Helpers:
 		const void* const __nullBlob[128] = {}; // this is initialized to nullptrs and used to unbind resources!
 
+
+
 		// Engine functions
 
 		GraphicsDevice_DX11::GraphicsDevice_DX11(asPlatform::window_type window, bool fullscreen, bool debuglayer)
@@ -1084,6 +1092,7 @@ namespace as
 			SCREENWIDTH = (int)window->Bounds.Width;
 			SCREENHEIGHT = (int)window->Bounds.Height;
 #endif
+
 			HRESULT hr = E_FAIL;
 
 			for (int i = 0; i < COMMANDLIST_COUNT; i++)
@@ -1125,7 +1134,7 @@ namespace as
 			}
 			if (FAILED(hr))
 			{
-				std::stringstream ss("");
+				stringstream ss("");
 				ss << "Failed to create the graphics device! ERROR: " << std::hex << hr;
 				asHelper::messageBox(ss.str(), "Error!");
 				exit(1);
@@ -1163,7 +1172,7 @@ namespace as
 			fullscreenDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED; // needs to be unspecified for correct fullscreen scaling!
 			fullscreenDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE;
 			fullscreenDesc.Windowed = !fullscreen;
-			hr = pIDXGIFactory->CreateSwapChainForHwnd(device.Get(), window, &sd, &fullscreenDesc, nullptr, &swapChain);
+			hr = pIDXGIFactory->CreateSwapChainForHwnd(device, window, &sd, &fullscreenDesc, nullptr, &swapChain);
 #else
 			sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL; // All Windows Store apps must use this SwapEffect.
 			sd.Scaling = DXGI_SCALING_ASPECT_RATIO_STRETCH;
@@ -1218,18 +1227,24 @@ namespace as
 
 
 			asBackLog::post("Created GraphicsDevice_DX11");
-			AS_CORE_INFO("Created GraphicsDevice_DX11");
 		}
-
 		GraphicsDevice_DX11::~GraphicsDevice_DX11()
 		{
+			SAFE_RELEASE(renderTargetView);
+			SAFE_RELEASE(swapChain);
 
+			for (int i = 0; i < COMMANDLIST_COUNT; i++) {
+				SAFE_RELEASE(commandLists[i]);
+				SAFE_RELEASE(deviceContexts[i]);
+			}
+
+			SAFE_RELEASE(device);
 		}
 
 		void GraphicsDevice_DX11::CreateBackBufferResources()
 		{
-			backBuffer.Reset();
-			renderTargetView.Reset();
+			SAFE_RELEASE(backBuffer);
+			SAFE_RELEASE(renderTargetView);
 
 			HRESULT hr;
 
@@ -1239,14 +1254,13 @@ namespace as
 				exit(1);
 			}
 
-			hr = device->CreateRenderTargetView(backBuffer.Get(), nullptr, &renderTargetView);
+			hr = device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView);
 			if (FAILED(hr)) {
 				asHelper::messageBox("Main Rendertarget creation Failed!", "Error!");
 				exit(1);
 			}
 		}
 
-		//Resize
 		void GraphicsDevice_DX11::SetResolution(int width, int height)
 		{
 			if ((width != SCREENWIDTH || height != SCREENHEIGHT) && width > 0 && height > 0)
@@ -1254,9 +1268,8 @@ namespace as
 				SCREENWIDTH = width;
 				SCREENHEIGHT = height;
 
-				backBuffer.Reset();
-				renderTargetView.Reset();
-
+				SAFE_RELEASE(backBuffer);
+				SAFE_RELEASE(renderTargetView);
 				HRESULT hr = swapChain->ResizeBuffers(GetBackBufferCount(), width, height, _ConvertFormat(GetBackBufferFormat()), 0);
 				assert(SUCCEEDED(hr));
 
@@ -1269,7 +1282,7 @@ namespace as
 		Texture GraphicsDevice_DX11::GetBackBuffer()
 		{
 			Texture result;
-			result.resource = (asCPUHandle)backBuffer.Get();
+			result.resource = (asCPUHandle)backBuffer;
 			result.type = GPUResource::GPU_RESOURCE_TYPE::TEXTURE;
 
 			D3D11_TEXTURE2D_DESC desc;
@@ -1278,6 +1291,7 @@ namespace as
 
 			return result;
 		}
+
 		bool GraphicsDevice_DX11::CreateBuffer(const GPUBufferDesc* pDesc, const SubresourceData* pInitialData, GPUBuffer* pBuffer)
 		{
 			DestroyBuffer(pBuffer);
@@ -2307,7 +2321,6 @@ namespace as
 					bool result = SUCCEEDED(hr);
 					if (result)
 					{
-						uint32_t cpycount = std::max(1u, textureToDownload->desc.Width) * std::max(1u, textureToDownload->desc.Height) * std::max(1u, textureToDownload->desc.Depth);
 						uint32_t cpystride = GetFormatStride(textureToDownload->desc.Format);
 						if (mappedResource.RowPitch / cpystride != textureToDownload->desc.Width)
 						{
@@ -2349,7 +2362,7 @@ namespace as
 		{
 			deviceContexts[cmd]->OMSetRenderTargets(1, &renderTargetView, 0);
 			float ClearColor[4] = { 0, 0, 0, 1.0f }; // red,green,blue,alpha
-			deviceContexts[cmd]->ClearRenderTargetView(renderTargetView.Get(), ClearColor);
+			deviceContexts[cmd]->ClearRenderTargetView(renderTargetView, ClearColor);
 		}
 		void GraphicsDevice_DX11::PresentEnd(CommandList cmd)
 		{
@@ -2359,7 +2372,7 @@ namespace as
 				while (active_commandlists.pop_front(cmd))
 				{
 					deviceContexts[cmd]->FinishCommandList(false, &commandLists[cmd]);
-					immediateContext->ExecuteCommandList(commandLists[cmd].Get(), false);
+					immediateContext->ExecuteCommandList(commandLists[cmd], false);
 					commandLists[cmd]->Release();
 
 					free_commandlists.push_back(cmd);
@@ -2395,6 +2408,7 @@ namespace as
 			RESOLUTIONCHANGED = false;
 		}
 
+
 		CommandList GraphicsDevice_DX11::BeginCommandList()
 		{
 			CommandList cmd;
@@ -2408,7 +2422,7 @@ namespace as
 				assert(SUCCEEDED(hr));
 
 				hr = deviceContexts[cmd]->QueryInterface(__uuidof(userDefinedAnnotations[cmd]),
-					reinterpret_cast<void**>(userDefinedAnnotations[cmd].GetAddressOf()));
+					reinterpret_cast<void**>(&userDefinedAnnotations[cmd]));
 				assert(SUCCEEDED(hr));
 
 				// Temporary allocations will use the following buffer type:
@@ -2454,6 +2468,7 @@ namespace as
 		{
 		}
 
+
 		void GraphicsDevice_DX11::commit_allocations(CommandList cmd)
 		{
 			// DX11 needs to unmap allocations before it can execute safely
@@ -2464,6 +2479,7 @@ namespace as
 				frame_allocators[cmd].dirty = false;
 			}
 		}
+
 
 		void GraphicsDevice_DX11::RenderPassBegin(const RenderPass* renderpass, CommandList cmd)
 		{
@@ -2800,38 +2816,38 @@ namespace as
 			const PipelineStateDesc& desc = pso != nullptr ? pso->GetDesc() : PipelineStateDesc();
 
 			ID3D11VertexShader* vs = desc.vs == nullptr ? nullptr : (ID3D11VertexShader*)desc.vs->resource;
-			if (vs != prev_vs[cmd].Get())
+			if (vs != prev_vs[cmd])
 			{
 				deviceContexts[cmd]->VSSetShader(vs, nullptr, 0);
 				prev_vs[cmd] = vs;
 			}
 			ID3D11PixelShader* ps = desc.ps == nullptr ? nullptr : (ID3D11PixelShader*)desc.ps->resource;
-			if (ps != prev_ps[cmd].Get())
+			if (ps != prev_ps[cmd])
 			{
 				deviceContexts[cmd]->PSSetShader(ps, nullptr, 0);
 				prev_ps[cmd] = ps;
 			}
 			ID3D11HullShader* hs = desc.hs == nullptr ? nullptr : (ID3D11HullShader*)desc.hs->resource;
-			if (hs != prev_hs[cmd].Get())
+			if (hs != prev_hs[cmd])
 			{
 				deviceContexts[cmd]->HSSetShader(hs, nullptr, 0);
 				prev_hs[cmd] = hs;
 			}
 			ID3D11DomainShader* ds = desc.ds == nullptr ? nullptr : (ID3D11DomainShader*)desc.ds->resource;
-			if (ds != prev_ds[cmd].Get())
+			if (ds != prev_ds[cmd])
 			{
 				deviceContexts[cmd]->DSSetShader(ds, nullptr, 0);
 				prev_ds[cmd] = ds;
 			}
 			ID3D11GeometryShader* gs = desc.gs == nullptr ? nullptr : (ID3D11GeometryShader*)desc.gs->resource;
-			if (gs != prev_gs[cmd].Get())
+			if (gs != prev_gs[cmd])
 			{
 				deviceContexts[cmd]->GSSetShader(gs, nullptr, 0);
 				prev_gs[cmd] = gs;
 			}
 
 			ID3D11BlendState* bs = desc.bs == nullptr ? nullptr : (ID3D11BlendState*)desc.bs->resource;
-			if (bs != prev_bs[cmd].Get() || desc.sampleMask != prev_samplemask[cmd] ||
+			if (bs != prev_bs[cmd] || desc.sampleMask != prev_samplemask[cmd] ||
 				blendFactor[cmd].x != prev_blendfactor[cmd].x ||
 				blendFactor[cmd].y != prev_blendfactor[cmd].y ||
 				blendFactor[cmd].z != prev_blendfactor[cmd].z ||
@@ -2846,14 +2862,14 @@ namespace as
 			}
 
 			ID3D11RasterizerState* rs = desc.rs == nullptr ? nullptr : (ID3D11RasterizerState*)desc.rs->resource;
-			if (rs != prev_rs[cmd].Get())
+			if (rs != prev_rs[cmd])
 			{
 				deviceContexts[cmd]->RSSetState(rs);
 				prev_rs[cmd] = rs;
 			}
 
 			ID3D11DepthStencilState* dss = desc.dss == nullptr ? nullptr : (ID3D11DepthStencilState*)desc.dss->resource;
-			if (dss != prev_dss[cmd].Get() || stencilRef[cmd] != prev_stencilRef[cmd])
+			if (dss != prev_dss[cmd] || stencilRef[cmd] != prev_stencilRef[cmd])
 			{
 				deviceContexts[cmd]->OMSetDepthStencilState(dss, stencilRef[cmd]);
 				prev_dss[cmd] = dss;
@@ -2861,7 +2877,7 @@ namespace as
 			}
 
 			ID3D11InputLayout* il = desc.il == nullptr ? nullptr : (ID3D11InputLayout*)desc.il->resource;
-			if (il != prev_il[cmd].Get())
+			if (il != prev_il[cmd])
 			{
 				deviceContexts[cmd]->IASetInputLayout(il);
 				prev_il[cmd] = il;
@@ -2902,7 +2918,7 @@ namespace as
 		void GraphicsDevice_DX11::BindComputeShader(const Shader* cs, CommandList cmd)
 		{
 			ID3D11ComputeShader* _cs = cs == nullptr ? nullptr : (ID3D11ComputeShader*)cs->resource;
-			if (_cs != prev_cs[cmd].Get())
+			if (_cs != prev_cs[cmd])
 			{
 				deviceContexts[cmd]->CSSetShader(_cs, nullptr, 0);
 				prev_cs[cmd] = _cs;
@@ -3088,7 +3104,7 @@ namespace as
 
 		void GraphicsDevice_DX11::EventBegin(const std::string& name, CommandList cmd)
 		{
-			userDefinedAnnotations[cmd]->BeginEvent(std::wstring(name.begin(), name.end()).c_str());
+			userDefinedAnnotations[cmd]->BeginEvent(wstring(name.begin(), name.end()).c_str());
 		}
 		void GraphicsDevice_DX11::EventEnd(CommandList cmd)
 		{
@@ -3096,7 +3112,7 @@ namespace as
 		}
 		void GraphicsDevice_DX11::SetMarker(const std::string& name, CommandList cmd)
 		{
-			userDefinedAnnotations[cmd]->SetMarker(std::wstring(name.begin(), name.end()).c_str());
+			userDefinedAnnotations[cmd]->SetMarker(wstring(name.begin(), name.end()).c_str());
 		}
 
 	}

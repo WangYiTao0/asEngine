@@ -18,29 +18,25 @@ namespace as
 		s_Instance = this;
 		timer.Start();
 		m_Window = std::unique_ptr<Window>(Window::Create());
-
-		//m_ImGuiLayer = new ImGuiLayer();
-	//	PushOverlay(m_ImGuiLayer);
 	}
 
 	void Application::Run()
 	{
 		OnInit();
-		MSG msg;
-		BOOL gResult;
-		while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
-		{
-			// TranslateMessage will post auxilliary WM_CHAR messages from key msgs
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			if (!m_Minimized)
+		MSG msg = {0};
+
+		while (msg.message!=WM_QUIT)
+		{ 
+			if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+			{
+				// TranslateMessage will post auxilliary WM_CHAR messages from key msgs
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+			else
 			{
 				for (Layer* layer : m_LayerStack)
-					layer->OnUpdate(timer.DeltaTime());
-				
-				RenderImGui();
-			
-				m_Window->OnUpdate();
+					layer->OnUpdate(0);
 			}
 		}
 		OnShutdown();
@@ -64,57 +60,6 @@ namespace as
 	}
 
 
-	bool Application::OnWindowResize(WindowResizeEvent& e)
-	{
-		if (e.GetWidth() == 0 || e.GetHeight() == 0)
-		{
-			m_Minimized = true;
-			return false;
-		}
-
-		m_Minimized = false;
-	//	Graphics::OnWindowResize(e.GetWidth(), e.GetHeight());
-
-		return false;
-	}
-
-	bool Application::OnWindowClose(WindowCloseEvent& e)
-	{
-		m_Running = false;
-		return true;
-	}
-
-	void Application::OnEvent(Event& e)
-	{
-		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
-		{
-			(*--it)->OnEvent(e);
-			if (e.Handled)
-				break;
-		}
-	}
-
-
-	void Application::RenderImGui()
-	{
-		//m_ImGuiLayer->Begin();
-
-		//ImGui::Begin("Renderer");
-		////auto& caps = RendererAPI::GetCapabilities();
-		////ImGui::Text("Vendor: %s", caps.Vendor.c_str());
-		////ImGui::Text("Renderer: %s", caps.Renderer.c_str());
-		////ImGui::Text("Version: %s", caps.Version.c_str());
-		////ImGui::Text("Frame Time: %.2fms\n", m_TimeStep.GetMilliseconds());
-		//ImGui::End();
-
-		//for (Layer* layer : m_LayerStack)
-		//	layer->OnImGuiRender();
-
-		//m_ImGuiLayer->End();
-	}
 
 
 }

@@ -208,7 +208,7 @@ namespace as
 				}
 			}
 
-			asFont(ss.str(), asFontParams(x, y, ASFONTSIZE_DEFAULT, WIFALIGN_LEFT, WIFALIGN_TOP, 0, 0, asColor(255, 255, 255, 255), asColor(0, 0, 0, 255))).Draw(cmd);
+			asFont(ss.str(), asFontParams(x, y, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0, asColor(255, 255, 255, 255), asColor(0, 0, 0, 255))).Draw(cmd);
 		}
 
 		void SetEnabled(bool value)

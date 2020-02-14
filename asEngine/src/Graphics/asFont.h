@@ -10,11 +10,11 @@ namespace as
 	// Do not alter order because it is bound to lua manually
 	enum asFontAlign
 	{
-		WIFALIGN_LEFT,
-		WIFALIGN_CENTER,
-		WIFALIGN_RIGHT,
-		WIFALIGN_TOP,
-		WIFALIGN_BOTTOM
+		ASFALIGN_LEFT,
+		ASFALIGN_CENTER,
+		ASFALIGN_RIGHT,
+		ASFALIGN_TOP,
+		ASFALIGN_BOTTOM
 	};
 
 	static const int ASFONTSIZE_DEFAULT = 16;
@@ -29,7 +29,7 @@ namespace as
 		asColor color;
 		asColor shadowColor;
 
-		asFontParams(int posX = 0, int posY = 0, int size = 16, asFontAlign h_align = WIFALIGN_LEFT, asFontAlign v_align = WIFALIGN_TOP
+		asFontParams(int posX = 0, int posY = 0, int size = 16, asFontAlign h_align = ASFALIGN_LEFT, asFontAlign v_align = ASFALIGN_TOP
 			, int spacingX = 0, int spacingY = 0, asColor color = asColor(255, 255, 255, 255), asColor shadowColor = asColor(0, 0, 0, 0))
 			:posX(posX), posY(posY), size(size), h_align(h_align), v_align(v_align), spacingX(spacingX), spacingY(spacingY), color(color), shadowColor(shadowColor)
 		{}
