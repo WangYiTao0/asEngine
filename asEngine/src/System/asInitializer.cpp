@@ -32,7 +32,6 @@ namespace as
 			asJobSystem::Execute(ctx, [] { asImage::Initialize(); });
 			asJobSystem::Execute(ctx, [] { asInput::Initialize(); });
 			asJobSystem::Execute(ctx, [] { asRenderer::Initialize(); asWidget::LoadShaders(); });
-			//asJobSystem::Execute(ctx, [] { asRenderer::Initialize(); });
 			asJobSystem::Execute(ctx, [] { asAudio::Initialize(); });
 			//asJobSystem::Execute(ctx, [] { asNetwork::Initialize(); });
 			asJobSystem::Execute(ctx, [] { asTextureHelper::Initialize(); });
@@ -41,7 +40,7 @@ namespace as
 			asJobSystem::Execute(ctx, [] { asOcean::Initialize(); });
 			asJobSystem::Execute(ctx, [] { asGPUSortLib::LoadShaders(); });
 			asJobSystem::Execute(ctx, [] { asGPUBVH::LoadShaders(); });
-			///asJobSystem::Execute(ctx, [] { asPhysicsEngine::Initialize(); });
+			asJobSystem::Execute(ctx, [] { asPhysicsEngine::Initialize(); });
 
 		}
 

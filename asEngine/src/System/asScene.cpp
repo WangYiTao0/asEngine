@@ -5,7 +5,7 @@
 #include "Helpers\asResourceManager.h"
 
 
-//#include "wiPhysicsEngine.h"
+#include "Physics/asPhysicsEngine.h"
 #include "Helpers/asArchive.h"
 #include "Graphics/asRenderer.h"
 #include "asJobSystem.h"
@@ -1032,7 +1032,7 @@ namespace as
 
 			RunAnimationUpdateSystem(ctx, animations, transforms, dt);
 
-			//wiPhysicsEngine::RunPhysicsUpdateSystem(ctx, weather, armatures, transforms, meshes, objects, rigidbodies, softbodies, dt);
+			asPhysicsEngine::RunPhysicsUpdateSystem(ctx, weather, armatures, transforms, meshes, objects, rigidbodies, softbodies, dt);
 
 			RunTransformUpdateSystem(ctx, transforms);
 
@@ -1894,15 +1894,15 @@ namespace as
 								softBody->_flags |= SoftBodyPhysicsComponent::SAFE_TO_REGISTER; // this will be registered as soft body in the next frame
 								softBody->worldMatrix = transform.world;
 
-								//if (asPhysicsEngine::IsEnabled() && softBody->physicsobject != nullptr)
-								//{
-								//	// If physics engine is enabled and this object was registered, it will update soft body vertices in world space, so after that they no longer need to be transformed:
-								//	object.transform_index = -1;
-								//	object.prev_transform_index = -1;
+								if (asPhysicsEngine::IsEnabled() && softBody->physicsobject != nullptr)
+								{
+									// If physics engine is enabled and this object was registered, it will update soft body vertices in world space, so after that they no longer need to be transformed:
+									object.transform_index = -1;
+									object.prev_transform_index = -1;
 
-								//	// mesh aabb will be used for soft bodies
-								//	aabb = mesh->aabb;
-								//}
+									// mesh aabb will be used for soft bodies
+									aabb = mesh->aabb;
+								}
 
 							}
 

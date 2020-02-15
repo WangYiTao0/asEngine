@@ -10,7 +10,7 @@ namespace as
 		void Initialize();
 
 		bool IsEnabled();
-		void SetEnable(bool value);
+		void SetEnabled(bool value);
 		void RunPhysicsUpdateSystem(
 			asJobSystem::context& ctx,
 			const asScene::WeatherComponent& weather,

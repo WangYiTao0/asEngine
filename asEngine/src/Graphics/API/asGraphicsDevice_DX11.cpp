@@ -2361,7 +2361,7 @@ namespace as
 		void GraphicsDevice_DX11::PresentBegin(CommandList cmd)
 		{
 			deviceContexts[cmd]->OMSetRenderTargets(1, &renderTargetView, 0);
-			float ClearColor[4] = { 0, 0, 0, 1.0f }; // red,green,blue,alpha
+			float ClearColor[4] = { 0.0, 0.0, 0.0, 1.0f }; // red,green,blue,alpha
 			deviceContexts[cmd]->ClearRenderTargetView(renderTargetView, ClearColor);
 		}
 		void GraphicsDevice_DX11::PresentEnd(CommandList cmd)

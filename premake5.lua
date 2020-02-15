@@ -19,7 +19,9 @@ workspace "asEngine"
 
 -- Include directories relative to OpenGL-Core
 IncludeDir = {}
-IncludeDir["ImGui"] = "3rdPart//imgui"
+IncludeDir["ImGui"] = "3rdPart/imgui"
+IncludeDir["Bullet"] = "3rdPart/bullet"
+
 
 -- Projects
 group "Dependencies"

@@ -15,7 +15,10 @@ pchsource "src/aspch.cpp"
 files
 {
     "src/**.h",
-    "src/**.cpp"
+    "src/**.cpp",
+--  "3rdPart/bullet/include/**.h",
+--  "3rdPart/bullet/include/**.hpp",
+--  "3rdPart/bullet/include/**.cpp"
 }
 
 defines
@@ -29,11 +32,13 @@ includedirs
     "$(VULKAN_SDK)/include",
     "3rdPart/spdlog/include",
     "%{IncludeDir.ImGui}",
+    "%{IncludeDir.Bullet}/include",
 }
 
 libdirs
 {
     "$(VULKAN_SDK)/Lib",
+   -- "%{IncludeDir.Bullet}/lib",
 }
 
 links
@@ -55,7 +60,33 @@ filter "configurations:Debug"
     runtime "Debug"
     symbols "on"
 
+    libdirs
+    {
+        "%{IncludeDir.Bullet}/lib/Debug",
+    }
+
+    links
+    {
+        "BulletCollision_vs2010_x64_Debug.lib",
+        "BulletDynamics_vs2010_x64_Debug.lib",
+        "BulletSoftBody_vs2010_x64_Debug.lib",
+        "LinearMath_vs2010_x64_Debug.lib",
+    }
+
 filter "configurations:Release"
     defines "AS_RELEASE"
     runtime "Release"
     optimize "on"
+
+    libdirs
+    {
+        "%{IncludeDir.Bullet}/lib/Release",
+    }
+
+    links
+    {
+        "BulletCollision_vs2010_x64_release.lib",
+        "BulletDynamics_vs2010_x64_release.lib",
+        "BulletSoftBody_vs2010_x64_release.lib",
+        "LinearMath_vs2010_x64_release.lib",
+    }

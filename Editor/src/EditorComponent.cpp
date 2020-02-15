@@ -650,15 +650,15 @@ namespace as
 
 
 
-		//asCheckBox* physicsEnabledCheckBox = new asCheckBox("Physics Enabled: ");
-		//physicsEnabledCheckBox->SetSize(XMFLOAT2(18, 18));
-		//physicsEnabledCheckBox->SetPos(XMFLOAT2(screenW - 25, 50));
-		//physicsEnabledCheckBox->SetTooltip("Toggle Physics Engine On/Off");
-		//physicsEnabledCheckBox->OnClick([&](asEventArgs args) {
-		//	asPhysicsEngine::SetEnabled(args.bValue);
-		//	});
-		//physicsEnabledCheckBox->SetCheck(asPhysicsEngine::IsEnabled());
-		//GetGUI().AddWidget(physicsEnabledCheckBox);
+		asCheckBox* physicsEnabledCheckBox = new asCheckBox("Physics Enabled: ");
+		physicsEnabledCheckBox->SetSize(XMFLOAT2(18, 18));
+		physicsEnabledCheckBox->SetPos(XMFLOAT2(screenW - 25, 50));
+		physicsEnabledCheckBox->SetTooltip("Toggle Physics Engine On/Off");
+		physicsEnabledCheckBox->OnClick([&](asEventArgs args) {
+			asPhysicsEngine::SetEnabled(args.bValue);
+			});
+		physicsEnabledCheckBox->SetCheck(asPhysicsEngine::IsEnabled());
+		GetGUI().AddWidget(physicsEnabledCheckBox);
 
 		cinemaModeCheckBox = new asCheckBox("Cinema Mode: ");
 		cinemaModeCheckBox->SetSize(XMFLOAT2(18, 18));
@@ -1071,35 +1071,35 @@ namespace as
 					{
 						if (asInput::Press(asInput::MOUSE_BUTTON_LEFT))
 						{
-							//SoftBodyPhysicsComponent* softBody = scene.softbodies.GetComponent(object->meshID);
-							//if (softBody != nullptr && asInput::Down((asInput::BUTTON)'P'))
-							//{
-							//	MeshComponent* mesh = scene.meshes.GetComponent(object->meshID);
+							SoftBodyPhysicsComponent* softBody = scene.softbodies.GetComponent(object->meshID);
+							if (softBody != nullptr && asInput::Down((asInput::BUTTON)'P'))
+							{
+								MeshComponent* mesh = scene.meshes.GetComponent(object->meshID);
 
-							//	// If softbody, pin the triangle:
-							//	if (softBody->graphicsToPhysicsVertexMapping.empty())
-							//	{
-							//		softBody->CreateFromMesh(*mesh);
-							//	}
-							//	uint32_t physicsIndex0 = softBody->graphicsToPhysicsVertexMapping[hovered.vertexID0];
-							//	uint32_t physicsIndex1 = softBody->graphicsToPhysicsVertexMapping[hovered.vertexID1];
-							//	uint32_t physicsIndex2 = softBody->graphicsToPhysicsVertexMapping[hovered.vertexID2];
-							//	softBody->weights[physicsIndex0] = 0;
-							//	softBody->weights[physicsIndex1] = 0;
-							//	softBody->weights[physicsIndex2] = 0;
-							//}
-							//else
-							//{
-							//	// if not water or softbody, put a decal on it:
-							//	static int decalselector = 0;
-							//	decalselector = (decalselector + 1) % 2;
-							//	Entity entity = scene.Entity_CreateDecal("editorDecal", asHelper::GetOriginalWorkingDirectory() + (decalselector == 0 ? "assets/images/leaf.dds" : "assets/images/blood1.png"));
-							//	TransformComponent& transform = *scene.transforms.GetComponent(entity);
-							//	transform.MatrixTransform(hovered.orientation);
-							//	transform.RotateRollPitchYaw(XMFLOAT3(XM_PIDIV2, 0, 0));
-							//	transform.Scale(XMFLOAT3(2, 2, 2));
-							//	scene.Component_Attach(entity, hovered.entity);
-							//}
+								// If softbody, pin the triangle:
+								if (softBody->graphicsToPhysicsVertexMapping.empty())
+								{
+									softBody->CreateFromMesh(*mesh);
+								}
+								uint32_t physicsIndex0 = softBody->graphicsToPhysicsVertexMapping[hovered.vertexID0];
+								uint32_t physicsIndex1 = softBody->graphicsToPhysicsVertexMapping[hovered.vertexID1];
+								uint32_t physicsIndex2 = softBody->graphicsToPhysicsVertexMapping[hovered.vertexID2];
+								softBody->weights[physicsIndex0] = 0;
+								softBody->weights[physicsIndex1] = 0;
+								softBody->weights[physicsIndex2] = 0;
+							}
+							else
+							{
+								// if not water or softbody, put a decal on it:
+								static int decalselector = 0;
+								decalselector = (decalselector + 1) % 2;
+								Entity entity = scene.Entity_CreateDecal("editorDecal", asHelper::GetOriginalWorkingDirectory() + (decalselector == 0 ? "assets/images/leaf.dds" : "assets/images/blood1.png"));
+								TransformComponent& transform = *scene.transforms.GetComponent(entity);
+								transform.MatrixTransform(hovered.orientation);
+								transform.RotateRollPitchYaw(XMFLOAT3(XM_PIDIV2, 0, 0));
+								transform.Scale(XMFLOAT3(2, 2, 2));
+								scene.Component_Attach(entity, hovered.entity);
+							}
 						}
 					}
 				}

@@ -12,6 +12,7 @@
 	{
         "shader/**.hlsl",
         "shader/**.hlsli",
+        "src/**.CPP",
     }
     
     includedirs

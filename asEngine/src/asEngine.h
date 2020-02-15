@@ -45,6 +45,7 @@
 #include "Physics/asPhysicsEngine.h"
 #include "Graphics/asEnums.h"
 #include "System/asInitializer.h"
+#include "Physics/asPhysicsEngine.h"
 //#include "asLua.h"
 //#include "asLuna.h"
 #include "Graphics/API/asGraphicsDevice.h"
