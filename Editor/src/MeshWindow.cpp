@@ -44,59 +44,59 @@ namespace as
 			});
 		meshWindow->AddWidget(doubleSidedCheckBox);
 
-		//softbodyCheckBox = new asCheckBox("Soft body: ");
-		//softbodyCheckBox->SetTooltip("Enable soft body simulation.");
-		//softbodyCheckBox->SetPos(XMFLOAT2(x, y += step));
-		//softbodyCheckBox->OnClick([&](asEventArgs args) {
+		softbodyCheckBox = new asCheckBox("Soft body: ");
+		softbodyCheckBox->SetTooltip("Enable soft body simulation.");
+		softbodyCheckBox->SetPos(XMFLOAT2(x, y += step));
+		softbodyCheckBox->OnClick([&](asEventArgs args) {
 
-		//	Scene& scene = asScene::GetScene();
-		//	SoftBodyPhysicsComponent* physicscomponent = scene.softbodies.GetComponent(entity);
+			Scene& scene = asScene::GetScene();
+			SoftBodyPhysicsComponent* physicscomponent = scene.softbodies.GetComponent(entity);
 
-		//	if (args.bValue)
-		//	{
-		//		if (physicscomponent == nullptr)
-		//		{
-		//			SoftBodyPhysicsComponent& softbody = scene.softbodies.Create(entity);
-		//			softbody.friction = frictionSlider->GetValue();
-		//			softbody.mass = massSlider->GetValue();
-		//		}
-		//	}
-		//	else
-		//	{
-		//		if (physicscomponent != nullptr)
-		//		{
-		//			scene.softbodies.Remove(entity);
-		//		}
-		//	}
+			if (args.bValue)
+			{
+				if (physicscomponent == nullptr)
+				{
+					SoftBodyPhysicsComponent& softbody = scene.softbodies.Create(entity);
+					softbody.friction = frictionSlider->GetValue();
+					softbody.mass = massSlider->GetValue();
+				}
+			}
+			else
+			{
+				if (physicscomponent != nullptr)
+				{
+					scene.softbodies.Remove(entity);
+				}
+			}
 
-		//	});
-		//meshWindow->AddWidget(softbodyCheckBox);
+			});
+		meshWindow->AddWidget(softbodyCheckBox);
 
-		//massSlider = new asSlider(0, 10, 0, 100000, "Mass: ");
-		//massSlider->SetTooltip("Set the mass amount for the physics engine.");
-		//massSlider->SetSize(XMFLOAT2(100, 30));
-		//massSlider->SetPos(XMFLOAT2(x, y += step));
-		//massSlider->OnSlide([&](asEventArgs args) {
-		//	SoftBodyPhysicsComponent* physicscomponent = asScene::GetScene().softbodies.GetComponent(entity);
-		//	if (physicscomponent != nullptr)
-		//	{
-		//		physicscomponent->mass = args.fValue;
-		//	}
-		//	});
-		//meshWindow->AddWidget(massSlider);
+		massSlider = new asSlider(0, 10, 0, 100000, "Mass: ");
+		massSlider->SetTooltip("Set the mass amount for the physics engine.");
+		massSlider->SetSize(XMFLOAT2(100, 30));
+		massSlider->SetPos(XMFLOAT2(x, y += step));
+		massSlider->OnSlide([&](asEventArgs args) {
+			SoftBodyPhysicsComponent* physicscomponent = asScene::GetScene().softbodies.GetComponent(entity);
+			if (physicscomponent != nullptr)
+			{
+				physicscomponent->mass = args.fValue;
+			}
+			});
+		meshWindow->AddWidget(massSlider);
 
-		//frictionSlider = new asSlider(0, 2, 0, 100000, "Friction: ");
-		//frictionSlider->SetTooltip("Set the friction amount for the physics engine.");
-		//frictionSlider->SetSize(XMFLOAT2(100, 30));
-		//frictionSlider->SetPos(XMFLOAT2(x, y += step));
-		//frictionSlider->OnSlide([&](asEventArgs args) {
-		//	SoftBodyPhysicsComponent* physicscomponent = asScene::GetScene().softbodies.GetComponent(entity);
-		//	if (physicscomponent != nullptr)
-		//	{
-		//		physicscomponent->friction = args.fValue;
-		//	}
-		//	});
-		//meshWindow->AddWidget(frictionSlider);
+		frictionSlider = new asSlider(0, 2, 0, 100000, "Friction: ");
+		frictionSlider->SetTooltip("Set the friction amount for the physics engine.");
+		frictionSlider->SetSize(XMFLOAT2(100, 30));
+		frictionSlider->SetPos(XMFLOAT2(x, y += step));
+		frictionSlider->OnSlide([&](asEventArgs args) {
+			SoftBodyPhysicsComponent* physicscomponent = asScene::GetScene().softbodies.GetComponent(entity);
+			if (physicscomponent != nullptr)
+			{
+				physicscomponent->friction = args.fValue;
+			}
+			});
+		meshWindow->AddWidget(frictionSlider);
 
 		impostorCreateButton = new asButton("Create Impostor");
 		impostorCreateButton->SetTooltip("Create an impostor image of the mesh. The mesh will be replaced by this image when far away, to render faster.");

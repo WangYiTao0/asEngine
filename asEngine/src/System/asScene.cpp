@@ -13,7 +13,7 @@
 
 #include <DirectXCollision.h>
 
-using namespace DirectX;
+//using namespace DirectX;
 
 namespace as
 {

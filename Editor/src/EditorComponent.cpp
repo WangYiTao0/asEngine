@@ -217,7 +217,8 @@ namespace as
 		asJobSystem::Execute(ctx, [this] { soundTex = asResourceManager::Load("assets/images/sound.dds"); });
 		// wait for ctx is at the end of this function!
 
-		translator.enabled = false;
+		//translator.enabled = false;
+		translator.enabled = true;
 
 		float screenW = (float)asRenderer::GetDevice()->GetScreenWidth();
 		float screenH = (float)asRenderer::GetDevice()->GetScreenHeight();
@@ -431,7 +432,7 @@ namespace as
 			asHelper::FileDialogParams params;
 			asHelper::FileDialogResult result;
 			params.type = asHelper::FileDialogParams::SAVE;
-			params.description = "Wicked Scene";
+			params.description = "As Scene";
 			params.extensions.push_back("asScene");
 			asHelper::FileDialog(params, result);
 
@@ -485,7 +486,7 @@ namespace as
 					loader->addLoadingFunction([=] {
 						string extension = asHelper::toUpper(asHelper::GetExtensionFromFileName(fileName));
 
-						if (!extension.compare("asScene")) // engine-serialized
+						if (!extension.compare("ASSCENE")) // engine-serialized
 						{
 							asScene::LoadModel(fileName);
 						}
@@ -520,30 +521,30 @@ namespace as
 		GetGUI().AddWidget(modelButton);
 
 
-		asButton* scriptButton = new asButton("Load Script");
-		scriptButton->SetTooltip("Load a Lua script...");
-		scriptButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 3, 0));
-		scriptButton->SetSize(XMFLOAT2(100, 40));
-		scriptButton->SetColor(asColor(255, 33, 140, 200), asWidget::ASWIDGETSTATE::IDLE);
-		scriptButton->SetColor(asColor(255, 100, 140, 255), asWidget::ASWIDGETSTATE::FOCUS);
-		scriptButton->OnClick([=](asEventArgs args) {
-			thread([&] {
+		//asButton* scriptButton = new asButton("Load Script");
+		//scriptButton->SetTooltip("Load a Lua script...");
+		//scriptButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 3, 0));
+		//scriptButton->SetSize(XMFLOAT2(100, 40));
+		//scriptButton->SetColor(asColor(255, 33, 140, 200), asWidget::ASWIDGETSTATE::IDLE);
+		//scriptButton->SetColor(asColor(255, 100, 140, 255), asWidget::ASWIDGETSTATE::FOCUS);
+		//scriptButton->OnClick([=](asEventArgs args) {
+		//	thread([&] {
 
-				asHelper::FileDialogParams params;
-				asHelper::FileDialogResult result;
-				params.type = asHelper::FileDialogParams::OPEN;
-				params.description = "Lua script";
-				params.extensions.push_back("lua");
-				asHelper::FileDialog(params, result);
+		//		asHelper::FileDialogParams params;
+		//		asHelper::FileDialogResult result;
+		//		params.type = asHelper::FileDialogParams::OPEN;
+		//		params.description = "Lua script";
+		//		params.extensions.push_back("lua");
+		//		asHelper::FileDialog(params, result);
 
-				if (result.ok) {
-					string fileName = result.filenames.front();
-					//wiLua::GetGlobal()->RunFile(fileName);
-				}
-				}).detach();
+		//		if (result.ok) {
+		//			string fileName = result.filenames.front();
+		//			//wiLua::GetGlobal()->RunFile(fileName);
+		//		}
+		//		}).detach();
 
-			});
-		GetGUI().AddWidget(scriptButton);
+		//	});
+		//GetGUI().AddWidget(scriptButton);
 
 
 		asButton* shaderButton = new asButton("Reload Shaders");
@@ -1109,33 +1110,33 @@ namespace as
 			// Visualize soft body pinning:
 			if (asInput::Down((asInput::BUTTON)'P'))
 			{
-				//for (size_t i = 0; i < scene.softbodies.GetCount(); ++i)
-				//{
-				//	const SoftBodyPhysicsComponent& softbody = scene.softbodies[i];
-				//	Entity entity = scene.softbodies.GetEntity(i);
-				//	const MeshComponent& mesh = *scene.meshes.GetComponent(entity);
+				for (size_t i = 0; i < scene.softbodies.GetCount(); ++i)
+				{
+					const SoftBodyPhysicsComponent& softbody = scene.softbodies[i];
+					Entity entity = scene.softbodies.GetEntity(i);
+					const MeshComponent& mesh = *scene.meshes.GetComponent(entity);
 
-				//	XMMATRIX W = XMLoadFloat4x4(&softbody.worldMatrix);
-				//	int physicsIndex = 0;
-				//	for (auto& weight : softbody.weights)
-				//	{
-				//		if (weight == 0)
-				//		{
-				//			asRenderer::RenderablePoint point;
-				//			point.color = XMFLOAT4(1, 0, 0, 1);
-				//			point.size = 0.2f;
-				//			point.position = mesh.vertex_positions[softbody.physicsToGraphicsVertexMapping[physicsIndex]];
-				//			if (!asPhysicsEngine::IsEnabled()) // todo: better
-				//			{
-				//				XMVECTOR P = XMLoadFloat3(&point.position);
-				//				P = XMVector3Transform(P, W);
-				//				XMStoreFloat3(&point.position, P);
-				//			}
-				//			asRenderer::AddRenderablePoint(point);
-				//		}
-				//		++physicsIndex;
-				//	}
-				//}
+					XMMATRIX W = XMLoadFloat4x4(&softbody.worldMatrix);
+					int physicsIndex = 0;
+					for (auto& weight : softbody.weights)
+					{
+						if (weight == 0)
+						{
+							asRenderer::RenderablePoint point;
+							point.color = XMFLOAT4(1, 0, 0, 1);
+							point.size = 0.2f;
+							point.position = mesh.vertex_positions[softbody.physicsToGraphicsVertexMapping[physicsIndex]];
+							if (!asPhysicsEngine::IsEnabled()) // todo: better
+							{
+								XMVECTOR P = XMLoadFloat3(&point.position);
+								P = XMVector3Transform(P, W);
+								XMStoreFloat3(&point.position, P);
+							}
+							asRenderer::AddRenderablePoint(point);
+						}
+						++physicsIndex;
+					}
+				}
 			}
 
 			// Select...

@@ -16,7 +16,7 @@ namespace as
 		bool isFullScreen;
 
 		WindowProps(const std::string& title = "As Engine",
-			unsigned int width = 1280, unsigned int height = 720,
+			unsigned int width = 1600, unsigned int height = 900,
 			bool isVSync = true, bool isFullScreen = false)
 			: Title(title), Width(width), Height(height),
 			isVSync(isVSync), isFullScreen(isFullScreen)

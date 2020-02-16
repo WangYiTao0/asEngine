@@ -105,7 +105,7 @@ namespace as
 	}
 	void RenderPath2D::Update(float dt)
 	{
-		//GetGUI().Update(dt);
+		GetGUI().Update(dt);
 
 		for (auto& x : layers)
 		{
@@ -219,7 +219,7 @@ namespace as
 		}
 		asRenderer::GetDevice()->EventEnd(cmd);
 
-		//GetGUI().Render(cmd);
+		GetGUI().Render(cmd);
 
 		device->RenderPassEnd(cmd);
 

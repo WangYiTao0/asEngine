@@ -2380,8 +2380,6 @@ namespace as
 			}
 
 			swapChain->Present(VSYNC, 0);
-
-
 			immediateContext->ClearState();
 
 			memset(prev_vs, 0, sizeof(prev_vs));

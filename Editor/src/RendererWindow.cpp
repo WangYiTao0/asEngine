@@ -19,7 +19,7 @@ namespace as
 		rendererWindow->SetSize(XMFLOAT2(640, 790));
 		GUI->AddWidget(rendererWindow);
 
-		float x = 260, y = 20, step = 30;
+		float x = 260, y = 20, step = 25;
 
 		vsyncCheckBox = new asCheckBox("VSync: ");
 		vsyncCheckBox->SetTooltip("Toggle vertical sync");

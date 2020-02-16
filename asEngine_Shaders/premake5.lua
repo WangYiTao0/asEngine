@@ -1,6 +1,6 @@
 
     project "asEngine_Shaders"
-	kind "ConsoleApp"
+	kind "None"
 	language "C++"
 	cppdialect "C++17"
 	staticruntime "on"
@@ -18,8 +18,6 @@
     includedirs
     {
         "../asEngine/src",
-        "../asEngine/3rdPart/spdlog/include",
-        "../asEngine/%{IncludeDir.ImGui}",
     }
 
     libdirs
@@ -29,7 +27,7 @@
 
     links
     {
-        "asEngine"
+
     }
 
     filter "system:windows"
