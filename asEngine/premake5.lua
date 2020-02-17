@@ -16,11 +16,9 @@ files
 {
     "src/**.h",
     "src/**.cpp",
---  "3rdPart/bullet/include/**.h",
---  "3rdPart/bullet/include/**.hpp",
---  "3rdPart/bullet/include/**.cpp"
+    "assets/shader/**.hlsl",
+    "assets/shader/**.hlsli",
 }
-
 defines
 {
     "_CRT_SECURE_NO_WARNINGS"

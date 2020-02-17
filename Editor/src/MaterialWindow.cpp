@@ -20,7 +20,10 @@ namespace as
 
 		materialWindow = new asWindow(GUI, "Material Window");
 		materialWindow->SetSize(XMFLOAT2(760, 890));
+		materialWindow->SetColor(asColor::Red());
 		GUI->AddWidget(materialWindow);
+
+		
 
 		materialNameField = new asTextInputField("MaterialName");
 		materialNameField->SetPos(XMFLOAT2(10, 60));
