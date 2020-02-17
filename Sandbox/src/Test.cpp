@@ -29,6 +29,15 @@ Test3D::Test3D()
 	label->SetSize(XMFLOAT2(200, 15));
 	label->SetPos(XMFLOAT2(screenW / 2.f - label->scale.x / 2.f, screenH * 0.95f));
 	GetGUI().AddWidget(label);
+
+	asWindow* testwindow = new asWindow(&GetGUI(),"test");
+	testwindow->SetName("test");
+	testwindow->SetPos(XMFLOAT2(200, 200));
+	testwindow->SetColor(asColor::Red());
+	testwindow->SetSize(XMFLOAT2(200, 200));
+	testwindow->SetVisible(true);
+	GetGUI().AddWidget(testwindow);
+
 }
 
 Test::Test()
