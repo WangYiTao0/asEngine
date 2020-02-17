@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 
 TEXTURECUBE(cubeMap, float4, TEXSLOT_ONDEMAND0);
 

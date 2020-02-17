@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "impostorHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/impostorHF.hlsli"
 
 void main(VSOut input)
 {

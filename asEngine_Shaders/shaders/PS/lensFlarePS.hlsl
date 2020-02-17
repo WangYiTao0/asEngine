@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 
 struct VertextoPixel{
 	float4 pos					: SV_POSITION;

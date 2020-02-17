@@ -1,6 +1,6 @@
-#include "objectHF.hlsli"
-#include "globals.hlsli"
-#include "skyHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/skyHF.hlsli"
 
 float4 main(float4 pos : SV_POSITION, float2 clipspace : TEXCOORD) : SV_TARGET
 {

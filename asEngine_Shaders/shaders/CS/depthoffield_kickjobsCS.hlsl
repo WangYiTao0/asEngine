@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Postprocess.h"
 
 RWRAWBUFFER(tile_statistics, 0);

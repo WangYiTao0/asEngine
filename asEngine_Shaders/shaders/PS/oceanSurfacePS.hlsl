@@ -2,9 +2,9 @@
 #define DISABLE_DECALS
 #define DISABLE_ENVMAPS
 #define DISABLE_TRANSPARENT_SHADOWMAP
-#include "globals.hlsli"
-#include "oceanSurfaceHF.hlsli"
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/oceanSurfaceHF.hlsli"
+#include "../HF/globals.hlsli"
 
 #define xGradientMap		texture_0
 

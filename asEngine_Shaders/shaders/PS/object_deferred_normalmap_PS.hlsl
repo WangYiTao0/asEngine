@@ -1,5 +1,5 @@
 #define COMPILE_OBJECTSHADER_PS
 #define DEFERRED
 #define NORMALMAP
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
 

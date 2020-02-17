@@ -1,6 +1,6 @@
-#include "envMapHF.hlsli"
-#include "lightingHF.hlsli"
-#include "skyHF.hlsli"
+#include "../HF/envMapHF.hlsli"
+#include "../HF/lightingHF.hlsli"
+#include "../HF/skyHF.hlsli"
 
 float4 main(PSIn_Sky_EnvmapRendering input) : SV_TARGET
 {

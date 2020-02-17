@@ -1,6 +1,6 @@
-#include "globals.hlsli"
-#include "impostorHF.hlsli"
-#include "objectInputLayoutHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/impostorHF.hlsli"
+#include "../HF/objectInputLayoutHF.hlsli"
 
 static const float3 BILLBOARD[] = {
 	float3(-1, -1, 0),

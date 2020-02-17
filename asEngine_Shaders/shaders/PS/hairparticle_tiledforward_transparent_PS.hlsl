@@ -1,2 +1,2 @@
 #define TRANSPARENT
-#include "hairparticlePS_tiledforward.hlsl"
+#include "hairparticle_tiledforward_PS.hlsl"

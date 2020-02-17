@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "imageHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/imageHF.hlsli"
 
 VertextoPixel main(uint vI : SV_VERTEXID)
 {

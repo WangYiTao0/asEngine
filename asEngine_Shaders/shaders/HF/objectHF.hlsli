@@ -18,10 +18,10 @@
 #define LIGHTMAP_QUALITY_BICUBIC
 
 
-#include "globals.hlsli"
-#include "objectInputLayoutHF.hlsli"
-#include "brdf.hlsli"
-#include "lightingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/objectInputLayoutHF.hlsli"
+#include "../HF/brdf.hlsli"
+#include "../HF/lightingHF.hlsli"
 
 // DEFINITIONS
 //////////////////

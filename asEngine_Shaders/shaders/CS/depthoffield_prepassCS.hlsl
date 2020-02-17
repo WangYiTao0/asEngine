@@ -1,6 +1,6 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Postprocess.h"
-#include "depthoffieldHF.hlsli"
+#include "../HF/depthoffieldHF.hlsli"
 
 TEXTURE2D(input, float4, TEXSLOT_ONDEMAND0);
 TEXTURE2D(neighborhood_mindepth_maxcoc, float2, TEXSLOT_ONDEMAND1);

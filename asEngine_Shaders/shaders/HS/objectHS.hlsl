@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 
 #define g_f4Eye				g_xCamera_CamPos
 

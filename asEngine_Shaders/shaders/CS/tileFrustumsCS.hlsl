@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "cullingShaderHF.hlsli"
 
 // View space frustums for the grid cells.

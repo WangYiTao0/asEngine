@@ -1,8 +1,8 @@
 #define DISABLE_DECALS
 #define DISABLE_ENVMAPS
-#include "globals.hlsli"
-#include "objectHF.hlsli"
-#include "hairparticleHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/hairparticleHF.hlsli"
 
 #ifndef TRANSPARENT
 [earlydepthstencil]

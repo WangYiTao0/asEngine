@@ -1,6 +1,6 @@
 #ifndef AS_IMAGE_HF
 #define AS_IMAGE_HF
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Image.h"
 
 TEXTURE2D(texture_base, float4, TEXSLOT_ONDEMAND0);

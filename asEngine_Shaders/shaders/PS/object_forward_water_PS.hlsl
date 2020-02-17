@@ -5,5 +5,5 @@
 #define FORWARD
 #define TRANSPARENT
 #define WATER
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
 

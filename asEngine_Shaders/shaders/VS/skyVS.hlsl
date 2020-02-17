@@ -1,6 +1,6 @@
-#include "globals.hlsli"
-#include "icosphere.hlsli"
-#include "skyHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/icosphere.hlsli"
+#include "../HF/skyHF.hlsli"
 
 struct VSOut
 {

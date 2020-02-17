@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "voxelHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/voxelHF.hlsli"
 
 RWSTRUCTUREDBUFFER(input_output, VoxelType, 0);
 

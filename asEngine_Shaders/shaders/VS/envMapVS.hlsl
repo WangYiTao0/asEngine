@@ -1,5 +1,5 @@
-#include "objectInputLayoutHF.hlsli"
-#include "envMapHF.hlsli"
+#include "../HF/objectInputLayoutHF.hlsli"
+#include "../HF/envMapHF.hlsli"
 
 
 PSIn_EnvmapRendering main(Input_Object_ALL input)

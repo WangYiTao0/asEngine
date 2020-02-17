@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "raytracingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/raytracingHF.hlsli"
 
 RAWBUFFER(counterBuffer_READ, TEXSLOT_ONDEMAND7);
 STRUCTUREDBUFFER(rayBuffer_READ, RaytracingStoredRay, TEXSLOT_ONDEMAND8);

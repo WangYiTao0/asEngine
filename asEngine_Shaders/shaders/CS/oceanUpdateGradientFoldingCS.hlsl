@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Ocean.h"
 
 TEXTURE2D(texture_displacementmap, float4, TEXSLOT_ONDEMAND0);

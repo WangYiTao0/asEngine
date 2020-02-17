@@ -1,10 +1,11 @@
 #ifndef AS_BRDF_HF
 #define AS_BRDF_HF
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 
 
 // BRDF from Frostbite presentation:
-// Moving Frostbite to Physically Based Rendering// S´ebastien Lagarde - Electronic Arts Frostbite
+// Moving Frostbite to Physically Based Rendering
+// S´ebastien Lagarde - Electronic Arts Frostbite
 // Charles de Rousiers - Electronic Arts Frostbite
 // SIGGRAPH 2014
 
@@ -166,12 +167,14 @@ float3 BRDF_GetSpecular(in Surface surface, in SurfaceToLight surfaceToLight)
 	float3 F = F_Schlick(surface.f0, f90, surfaceToLight.HdotV);
 	float Vis = V_SmithGGXCorrelated(surface.NdotV, surfaceToLight.NdotL, surface.roughness_brdf);
 	float D = D_GGX(surfaceToLight.NdotH, surface.roughness_brdf);
-	float3 Fr = D * F * Vis / PI;
+	float3 Fr = D * F * Vis / PI;
+
 	return Fr;
 }
 float BRDF_GetDiffuse(in Surface surface, in SurfaceToLight surfaceToLight)
 {
-	float Fd = Fr_DisneyDiffuse(surface.NdotV, surfaceToLight.NdotL, surfaceToLight.HdotV, surface.roughness) / PI;
+	float Fd = Fr_DisneyDiffuse(surface.NdotV, surfaceToLight.NdotL, surfaceToLight.HdotV, surface.roughness) / PI;
+
 	return Fd;
 }
 

@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_EmittedParticle.h"
 
 RWSTRUCTUREDBUFFER(particleBuffer, Particle, 0);

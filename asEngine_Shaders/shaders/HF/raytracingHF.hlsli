@@ -1,11 +1,11 @@
 #ifndef AS_RAYTRACING_HF
 #define AS_RAYTRACING_HF
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Raytracing.h"
 #include "ShaderInterop_BVH.h"
 
 #define NOSUN
-#include "skyHF.hlsli"
+#include "../HF/skyHF.hlsli"
 
 
 static const float INFINITE_RAYHIT = 1000000;

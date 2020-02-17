@@ -1,6 +1,6 @@
 #ifndef AS_VOXEL_CONERACING_HF
 #define AS_VOXEL_CONERACING_HF
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 
 static const float3 CONES[] =
 {

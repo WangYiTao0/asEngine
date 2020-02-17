@@ -1,5 +1,5 @@
-#include "deferredLightHF.hlsli"
-#include "cone.hlsli"
+#include "../HF/deferredLightHF.hlsli"
+#include "../HF/cone.hlsli"
 
 
 VertexToPixel main(uint vid : SV_VERTEXID)

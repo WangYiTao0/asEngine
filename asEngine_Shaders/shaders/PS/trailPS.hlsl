@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 
 //Texture2D<float4> xRefracTexture:register(t0);
 //Texture2D<float4> xDistortionTexture:register(t1);

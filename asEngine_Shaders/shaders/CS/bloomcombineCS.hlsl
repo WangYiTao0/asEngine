@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "Graphics/GPUMapping/ShaderInterop_Postprocess.h"
+#include "ShaderInterop_Postprocess.h"
 
 TEXTURE2D(input, float4, TEXSLOT_ONDEMAND0);
 TEXTURE2D(bloom, float4, TEXSLOT_ONDEMAND1);

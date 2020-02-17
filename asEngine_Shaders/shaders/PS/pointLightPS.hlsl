@@ -1,4 +1,4 @@
-#include "deferredLightHF.hlsli"
+#include "../HF/deferredLightHF.hlsli"
 
 LightOutputType main(VertexToPixel PSIn)
 { 

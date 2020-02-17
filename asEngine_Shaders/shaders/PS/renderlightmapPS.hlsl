@@ -1,6 +1,6 @@
 #define RAY_BACKFACE_CULLING
-#include "globals.hlsli"
-#include "raytracingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/raytracingHF.hlsli"
 
 struct Input
 {

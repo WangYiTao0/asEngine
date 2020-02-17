@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Postprocess.h"
 
 RWTEXTURE2D(tilemax_horizontal, float2, 0);

@@ -1,5 +1,5 @@
-#include "volumeLightHF.hlsli"
-#include "quad.hlsli"
+#include "../HF/volumeLightHF.hlsli"
+#include "../HF/quad.hlsli"
 
 VertexToPixel main(uint vID : SV_VertexID)
 {

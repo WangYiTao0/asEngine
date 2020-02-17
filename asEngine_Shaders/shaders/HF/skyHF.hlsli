@@ -1,7 +1,7 @@
 #ifndef AS_SKY_HF
 #define AS_SKY_HF
-#include "globals.hlsli"
-#include "lightingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/lightingHF.hlsli"
 
 // Atmosphere based on: https://www.shadertoy.com/view/Ml2cWG
 // Cloud noise based on: https://www.shadertoy.com/view/4tdSWr

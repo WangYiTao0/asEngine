@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "voxelHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/voxelHF.hlsli"
 #include "voxelConeTracingHF.hlsli"
 
 TEXTURE3D(input_emission, float4, 0);

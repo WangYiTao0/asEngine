@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_EmittedParticle.h"
 
 RAWBUFFER(counterBuffer, 0);

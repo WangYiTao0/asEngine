@@ -1,6 +1,6 @@
-#include "globals.hlsli"
-#include "cube.hlsli"
-#include "voxelHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/cube.hlsli"
+#include "../HF/voxelHF.hlsli"
 
 struct VSOut
 {

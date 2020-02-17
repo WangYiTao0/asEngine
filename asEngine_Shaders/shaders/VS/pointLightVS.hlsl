@@ -1,5 +1,5 @@
-#include "deferredLightHF.hlsli"
-#include "icosphere.hlsli"
+#include "../HF/deferredLightHF.hlsli"
+#include "../HF/icosphere.hlsli"
 
 VertexToPixel main(uint vid : SV_VERTEXID)
 {

@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "cube.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/cube.hlsli"
 
 float4 main(uint vID : SV_VERTEXID) : SV_Position
 {

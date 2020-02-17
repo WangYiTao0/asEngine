@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "hairparticleHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/hairparticleHF.hlsli"
 
 float4 main(VertexToPixel input) : SV_TARGET
 {

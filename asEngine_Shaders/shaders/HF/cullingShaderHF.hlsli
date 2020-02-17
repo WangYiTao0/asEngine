@@ -1,6 +1,6 @@
 #ifndef AS_CULLING_SHADER_HF
 #define AS_CULLING_SHADER_HF
-#include "ShaderInterop.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop.h"
 
 struct Plane
 {

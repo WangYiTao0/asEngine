@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "raytracingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/raytracingHF.hlsli"
 
 float4 main(float4 pos : SV_POSITION, float2 clipspace : TEXCOORD) : SV_Target
 {

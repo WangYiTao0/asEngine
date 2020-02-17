@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "oceanSurfaceHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/oceanSurfaceHF.hlsli"
 
 TEXTURE2D(texture_displacementmap, float4, TEXSLOT_ONDEMAND0);
 

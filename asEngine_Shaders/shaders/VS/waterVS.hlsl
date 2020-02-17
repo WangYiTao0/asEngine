@@ -1,4 +1,4 @@
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
 
 PixelInputType main(Input_Object_POS_TEX input)
 {

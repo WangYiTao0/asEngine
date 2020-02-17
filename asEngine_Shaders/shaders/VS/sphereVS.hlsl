@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "uvsphere.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/uvsphere.hlsli"
 
 struct VSOut_Sphere
 {

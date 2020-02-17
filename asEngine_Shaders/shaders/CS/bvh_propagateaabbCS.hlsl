@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_BVH.h"
 
 // This shader will traverse the BVH from bottom to up, and propagate AABBs from leaves to internal nodes

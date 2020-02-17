@@ -1,7 +1,7 @@
 #ifndef AS_SHADER_GLOBALS_HF
 #define AS_SHADER_GLOBALS_HF
 
-#include "ShaderInterop.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop.h"
 #include "ShaderInterop_Renderer.h"
 
 TEXTURE2D(texture_depth, float, TEXSLOT_DEPTH)

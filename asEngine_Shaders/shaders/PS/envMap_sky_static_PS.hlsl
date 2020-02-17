@@ -1,5 +1,5 @@
-#include "envMapHF.hlsli"
-#include "skyHF.hlsli"
+#include "../HF/envMapHF.hlsli"
+#include "../HF/skyHF.hlsli"
 
 TEXTURECUBE(texture_sky, float4, TEXSLOT_ONDEMAND0)
 

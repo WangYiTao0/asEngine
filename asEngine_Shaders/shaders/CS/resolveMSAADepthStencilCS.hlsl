@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 // Resolve MSAA depth buffer to a non MSAA texture
 
 TEXTURE2DMS(input, float, TEXSLOT_ONDEMAND0)

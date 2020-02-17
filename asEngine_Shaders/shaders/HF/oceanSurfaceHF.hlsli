@@ -1,6 +1,6 @@
 #ifndef AS_OCEAN_SURFACE_HF
 #define AS_OCEAN_SURFACE_HF
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Ocean.h"
 
 

@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_BVH.h"
 
 // This shader will construct the BVH from sorted primitive morton codes.

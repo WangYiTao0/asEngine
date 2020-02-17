@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/globals.hlsli"
 
 struct VertextoPixel
 {

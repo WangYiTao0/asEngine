@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Utility.h"
 
 #ifndef MIP_OUTPUT_FORMAT

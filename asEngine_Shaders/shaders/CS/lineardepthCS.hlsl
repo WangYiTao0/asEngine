@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Renderer.h"
 #include "ShaderInterop_PostProcess.h"
 

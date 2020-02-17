@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "impostorHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/impostorHF.hlsli"
 
 float4 main(VSOut input) : SV_TARGET
 {

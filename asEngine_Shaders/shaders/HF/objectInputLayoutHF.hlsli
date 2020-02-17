@@ -1,6 +1,6 @@
 #ifndef AS_MESH_INPUT_LAYOUT_HF
 #define AS_MESH_INPUT_LAYOUT_HF
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Renderer.h"
 
 struct Input_Instance

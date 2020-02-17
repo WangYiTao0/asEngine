@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 // Just calculate luminance into power of two texture
 
 RWTEXTURE2D(tex, float, 0);

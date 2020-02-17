@@ -1,6 +1,6 @@
-#include "globals.hlsli"
-#include "brdf.hlsli"
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/brdf.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Postprocess.h"
 
 

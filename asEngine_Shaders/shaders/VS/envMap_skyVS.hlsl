@@ -1,5 +1,5 @@
-#include "envMapHF.hlsli"
-#include "icosphere.hlsli"
+#include "../HF/envMapHF.hlsli"
+#include "../HF/icosphere.hlsli"
 
 PSIn_Sky_EnvmapRendering main(uint vid : SV_VERTEXID, uint instanceID : SV_INSTANCEID)
 {

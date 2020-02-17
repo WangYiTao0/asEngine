@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Raytracing.h"
 
 RWRAWBUFFER(counterBuffer_WRITE, 0);

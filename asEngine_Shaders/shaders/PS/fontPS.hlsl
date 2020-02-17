@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Font.h"
 
 TEXTURE2D(texture_font, float, TEXSLOT_FONTATLAS);

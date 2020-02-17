@@ -1,8 +1,8 @@
 #ifndef AS_LIGHTING_HF
 #define AS_LIGHTING_HF
-#include "globals.hlsli"
-#include "brdf.hlsli"
-#include "voxelConeTracingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/brdf.hlsli"
+#include "../HF/voxelConeTracingHF.hlsli"
 
 struct LightingContribution
 {

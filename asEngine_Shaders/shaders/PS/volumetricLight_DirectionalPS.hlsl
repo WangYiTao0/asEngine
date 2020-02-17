@@ -1,6 +1,6 @@
 #define DISABLE_TRANSPARENT_SHADOWMAP
 #define DISABLE_SOFT_SHADOWS
-#include "deferredLightHF.hlsli"
+#include "../HF/deferredLightHF.hlsli"
 
 float4 main(VertexToPixel input) : SV_TARGET
 {

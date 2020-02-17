@@ -19,6 +19,8 @@
     {
         "../asEngine/src",
     }
+ 
+
 
     libdirs
     {
@@ -39,7 +41,9 @@
 -- Shader Compiler Setting--------------------------
     shaderassembler("AssemblyCode")
     --shaderoptions instead of shaderincluders
-    shaderoptions "./asEngine/src/Graphics/GPUMapping"
+    --shaderdefines "./asEngine/src/Graphics/GPUMapping"
+    shaderoptions "./asEngine/src/Graphics/GPUMapping/"
+    --shaderincludedirs "../asEngine/src/Graphics/GPUMapping"
     filter { "files:**.hlsli" }
     flags "ExcludeFromBuild"
     

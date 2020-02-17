@@ -1,7 +1,7 @@
 #ifndef AS_ENVMAP_HF
 #define AS_ENVMAP_HF
 
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 
 struct PSIn_EnvmapRendering
 {

@@ -3,5 +3,5 @@
 #define TRANSPARENT
 #define NORMALMAP
 #define PLANARREFLECTION
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
 

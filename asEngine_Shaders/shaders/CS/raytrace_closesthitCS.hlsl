@@ -1,7 +1,7 @@
 #define RAY_BACKFACE_CULLING
 #define RAYTRACE_STACK_SHARED
-#include "globals.hlsli"
-#include "raytracingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/raytracingHF.hlsli"
 
 RAWBUFFER(counterBuffer_READ, TEXSLOT_ONDEMAND7);
 STRUCTUREDBUFFER(rayIndexBuffer_READ, uint, TEXSLOT_ONDEMAND8);

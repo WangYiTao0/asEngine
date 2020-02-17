@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 // Calculate average luminance by reduction
 
 RWTEXTURE2D(tex, float, 0);

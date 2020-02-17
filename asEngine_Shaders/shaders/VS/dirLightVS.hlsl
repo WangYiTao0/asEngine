@@ -1,4 +1,4 @@
-#include "deferredLightHF.hlsli"
+#include "../HF/deferredLightHF.hlsli"
 
 VertexToPixel main(uint vid : SV_VERTEXID)
 {

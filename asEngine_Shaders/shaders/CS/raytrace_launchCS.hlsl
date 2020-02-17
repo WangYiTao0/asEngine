@@ -1,5 +1,5 @@
-#include "globals.hlsli"
-#include "raytracingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/raytracingHF.hlsli"
 
 RWSTRUCTUREDBUFFER(rayIndexBuffer, uint, 0);
 RWSTRUCTUREDBUFFER(rayBuffer, RaytracingStoredRay, 1);

@@ -1,6 +1,6 @@
 #define DISABLE_SOFT_SHADOWS
-#include "objectHF.hlsli"
-#include "voxelHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/voxelHF.hlsli"
 
 RWSTRUCTUREDBUFFER(output, VoxelType, 0);
 

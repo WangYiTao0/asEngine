@@ -2,5 +2,5 @@
 #define FORWARD
 #define TRANSPARENT
 #define NORMALMAP
-#include "objectHF.hlsli"
+#include "../HF/globals.hlsli"
 

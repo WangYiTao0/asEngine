@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_BVH.h"
 
 // This shader builds scene triangle data and performs BVH classification:

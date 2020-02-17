@@ -1,8 +1,8 @@
 #ifndef AS_DEFERREDLIGHT_HF
 #define AS_DEFERREDLIGHT_HF
-#include "globals.hlsli"
-#include "brdf.hlsli"
-#include "lightingHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/brdf.hlsli"
+#include "../HF/lightingHF.hlsli"
 
 struct VertexToPixel {
 	float4 pos			: SV_POSITION;

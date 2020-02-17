@@ -1,4 +1,4 @@
-#include "globals.hlsli"
+#include "../HF/globals.hlsli"
 #include "ShaderInterop_Postprocess.h"
 
 TEXTURE2D(input, float4, TEXSLOT_ONDEMAND0);

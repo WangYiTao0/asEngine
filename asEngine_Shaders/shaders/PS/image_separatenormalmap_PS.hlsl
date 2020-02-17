@@ -1,4 +1,4 @@
-#include "imageHF.hlsli"
+#include "../HF/imageHF.hlsli"
 
 float4 main(VertextoPixel input) : SV_TARGET
 {

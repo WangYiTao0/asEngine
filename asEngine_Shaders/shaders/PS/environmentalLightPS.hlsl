@@ -1,4 +1,4 @@
-#include "deferredLightHF.hlsli"
+#include "../HF/deferredLightHF.hlsli"
 
 TEXTURE2D(texture_ssao, float, TEXSLOT_RENDERPATH_SSAO);
 TEXTURE2D(texture_ssr, float4, TEXSLOT_RENDERPATH_SSR);
