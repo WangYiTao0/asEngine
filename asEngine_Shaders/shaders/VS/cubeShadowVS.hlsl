@@ -1,5 +1,5 @@
-#include "HF/globals.hlsli"
-#include "HF/objectInputLayoutHF.hlsli"
+#include "../HF/globals.hlsli"
+#include "../HF/objectInputLayoutHF.hlsli"
 
 struct VertexOut
 {
