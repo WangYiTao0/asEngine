@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_BVH.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_BVH.h"
 
 // This shader will construct the BVH from sorted primitive morton codes.
 //	Output is a list of continuous BVH tree nodes in memory: [parentIndex, leftChildNodeIndex, rightChildNodeIndex]. Additionally, we will reset the BVH Flag Buffer (used for AABB propagation step)

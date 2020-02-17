@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Postprocess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 #define FXAA_PC 1
 #define FXAA_HLSL_4 1
@@ -7,7 +7,7 @@
 //#define FXAA_QUALITY__PRESET 12
 //#define FXAA_QUALITY__PRESET 25
 #define FXAA_QUALITY__PRESET 39
-#include "fxaa.hlsli"
+#include "../HF/fxaa.hlsli"
 
 static const float fxaaSubpix = 0.75;
 static const float fxaaEdgeThreshold = 0.166;

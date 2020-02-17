@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Postprocess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 
 // Gaussian weights for the six samples around the current pixel:

@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Postprocess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 TEXTURE2D(tilemax_horizontal, float2, TEXSLOT_ONDEMAND0);
 TEXTURE2D(tilemin_horizontal, float2, TEXSLOT_ONDEMAND1);

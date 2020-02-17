@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Postprocess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 #include "../HF/depthoffieldHF.hlsli"
 
 // Implementation based on Jorge Jimenez Siggraph 2014 Next Generation Post Processing in Call of Duty Advanced Warfare

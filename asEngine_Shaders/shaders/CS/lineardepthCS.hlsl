@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Renderer.h"
-#include "ShaderInterop_PostProcess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Renderer.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 TEXTURE2D(input, float, TEXSLOT_ONDEMAND0);
 

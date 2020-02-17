@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
-#include "emittedparticleHF.hlsli"
-#include "ShaderInterop_EmittedParticle.h"
+#include "../HF/emittedparticleHF.hlsli"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_EmittedParticle.h"
 
 float4 main(VertextoPixel input) : SV_TARGET
 {

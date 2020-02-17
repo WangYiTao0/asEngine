@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Utility.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Utility.h"
 
 #ifndef MIP_OUTPUT_FORMAT
 #define MIP_OUTPUT_FORMAT float4

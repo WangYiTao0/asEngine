@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Utility.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Utility.h"
 
 
 TEXTURECUBEARRAY(input, float4, TEXSLOT_UNIQUE0);

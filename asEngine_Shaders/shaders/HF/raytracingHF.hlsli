@@ -1,8 +1,8 @@
 #ifndef AS_RAYTRACING_HF
 #define AS_RAYTRACING_HF
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Raytracing.h"
-#include "ShaderInterop_BVH.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Raytracing.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_BVH.h"
 
 #define NOSUN
 #include "../HF/skyHF.hlsli"

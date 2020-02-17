@@ -1,5 +1,5 @@
-#include "ResourceMapping.h"
-#include "ShaderInterop_Skinning.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ResourceMapping.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Skinning.h"
 
 // This will make use of LDS to preload bones into local memory:
 // #define USE_LDS

@@ -29,7 +29,7 @@
 
     links
     {
-
+        asEngine,
     }
     
 
@@ -42,7 +42,7 @@
     shaderassembler("AssemblyCode")
     --shaderoptions instead of shaderincluders
     --shaderdefines "./asEngine/src/Graphics/GPUMapping"
-    shaderoptions "./asEngine/src/Graphics/GPUMapping/"
+    shaderoptions "../asEngine/src/Graphics/GPUMapping/"
     --shaderincludedirs "../asEngine/src/Graphics/GPUMapping"
     filter { "files:**.hlsli" }
     flags "ExcludeFromBuild"

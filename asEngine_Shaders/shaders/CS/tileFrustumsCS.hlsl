@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "cullingShaderHF.hlsli"
+#include "../HF/cullingShaderHF.hlsli"
 
 // View space frustums for the grid cells.
 RWSTRUCTUREDBUFFER(out_Frustums, Frustum, 0);

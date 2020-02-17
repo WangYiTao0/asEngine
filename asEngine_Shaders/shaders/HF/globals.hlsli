@@ -2,7 +2,7 @@
 #define AS_SHADER_GLOBALS_HF
 
 #include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop.h"
-#include "ShaderInterop_Renderer.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Renderer.h"
 
 TEXTURE2D(texture_depth, float, TEXSLOT_DEPTH)
 TEXTURE2D(texture_lineardepth, float, TEXSLOT_LINEARDEPTH)

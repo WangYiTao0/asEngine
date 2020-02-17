@@ -1,7 +1,7 @@
 #ifndef AS_IMAGE_HF
 #define AS_IMAGE_HF
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Image.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Image.h"
 
 TEXTURE2D(texture_base, float4, TEXSLOT_ONDEMAND0);
 TEXTURE2D(texture_mask, float4, TEXSLOT_ONDEMAND1);

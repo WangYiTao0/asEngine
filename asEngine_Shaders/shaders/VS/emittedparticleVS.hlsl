@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_EmittedParticle.h"
-#include "emittedparticleHF.hlsli"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_EmittedParticle.h"
+#include "../HF/emittedparticleHF.hlsli"
 
 static const float3 BILLBOARD[] = {
 	float3(-1, -1, 0),	// 0

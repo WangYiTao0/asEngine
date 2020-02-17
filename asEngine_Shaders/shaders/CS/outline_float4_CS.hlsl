@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Postprocess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 #ifndef OUTLINE_OUTPUT_FORMAT
 #define OUTLINE_OUTPUT_FORMAT float4

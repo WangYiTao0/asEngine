@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Font.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Font.h"
 
 struct VertextoPixel
 {

@@ -23,7 +23,7 @@
 
     libdirs
     {
-        "$(VULKAN_SDK)/Lib",
+      --  "$(VULKAN_SDK)/Lib",
     }
 
 

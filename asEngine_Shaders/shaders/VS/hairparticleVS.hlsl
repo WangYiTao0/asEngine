@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
 #include "../HF/hairparticleHF.hlsli"
-#include "ShaderInterop_HairParticle.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_HairParticle.h"
 
 // billboard cross section:
 static const float3 HAIRPATCH[] = {

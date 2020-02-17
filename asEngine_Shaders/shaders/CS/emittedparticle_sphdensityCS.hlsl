@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_EmittedParticle.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_EmittedParticle.h"
 
 STRUCTUREDBUFFER(aliveBuffer_CURRENT, uint, 0);
 RAWBUFFER(counterBuffer, 1);

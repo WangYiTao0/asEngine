@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
 #include "../HF/voxelHF.hlsli"
-#include "voxelConeTracingHF.hlsli"
+#include "../HF/voxelConeTracingHF.hlsli"
 
 TEXTURE3D(input_emission, float4, 0);
 STRUCTUREDBUFFER(input_voxelscene, VoxelType, 1);

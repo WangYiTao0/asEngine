@@ -1,7 +1,7 @@
 #include "../HF/globals.hlsli"
 #include "../HF/brdf.hlsli"
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Postprocess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 
 float4 main(float4 pos : SV_Position, float2 uv : TEXCOORD) : SV_TARGET

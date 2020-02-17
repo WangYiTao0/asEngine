@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 //
 
-#include "ShaderInterop_GPUSortLib.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_GPUSortLib.h"
 
 //--------------------------------------------------------------------------------------
 // Structured Buffers

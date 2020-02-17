@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_EmittedParticle.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_EmittedParticle.h"
 
 RWSTRUCTUREDBUFFER(cellOffsetBuffer, uint, 0);
 

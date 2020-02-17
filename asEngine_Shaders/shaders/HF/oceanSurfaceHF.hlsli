@@ -1,7 +1,7 @@
 #ifndef AS_OCEAN_SURFACE_HF
 #define AS_OCEAN_SURFACE_HF
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Ocean.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Ocean.h"
 
 
 struct PSIn

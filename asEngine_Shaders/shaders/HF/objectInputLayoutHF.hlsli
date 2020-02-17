@@ -1,7 +1,7 @@
 #ifndef AS_MESH_INPUT_LAYOUT_HF
 #define AS_MESH_INPUT_LAYOUT_HF
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Renderer.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Renderer.h"
 
 struct Input_Instance
 {

@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_BVH.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_BVH.h"
 
 // This shader builds scene triangle data and performs BVH classification:
 //	- This shader is run per object.

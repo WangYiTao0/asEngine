@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_HairParticle.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_HairParticle.h"
 
 RWSTRUCTUREDBUFFER(particleBuffer, Patch, 0);
 RWSTRUCTUREDBUFFER(simulationBuffer, PatchSimulationData, 1);

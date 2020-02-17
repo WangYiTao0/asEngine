@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Postprocess.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 RWTEXTURE2D(tile_mindepth_maxcoc, float2, 0);
 RWTEXTURE2D(tile_mincoc, float, 1);

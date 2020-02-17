@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Raytracing.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Raytracing.h"
 
 RWRAWBUFFER(counterBuffer_WRITE, 0);
 RWRAWBUFFER(indirectBuffer, 1);

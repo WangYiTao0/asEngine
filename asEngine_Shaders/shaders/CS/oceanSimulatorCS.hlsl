@@ -1,4 +1,4 @@
-#include "ShaderInterop_Ocean.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Ocean.h"
 
 #define PI 3.1415926536f
 
