@@ -29,6 +29,7 @@ for shader in root.iter(namespace + "FxCompile"):
         
         print (profile + ":   " + name)
 
+# -T <profile>            Set target profile.
         file.write("..\shadercompilers\dxc " + name + " -T ")
         
         if profile == "Vertex":
@@ -46,6 +47,7 @@ for shader in root.iter(namespace + "FxCompile"):
 
         file.write("_6_1 ")
 
+#-D <value>              Define macro
         file.write(" -D SHADER_MODEL_6 ");
 
         file.write(" -flegacy-macro-expansion -Fo " + "shaders/" + outputdir + "/" + os.path.splitext(name)[0] + ".cso ")
