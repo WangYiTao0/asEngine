@@ -55,6 +55,12 @@ namespace as
 
 		asCheckBox* cinemaModeCheckBox = nullptr;
 
+		asTreeList* outliner = nullptr;
+		std::unordered_set<asECS::Entity> outliner_added_items;
+		std::unordered_set<asECS::Entity> outliner_closed_items;
+		void CreateOutlinerHierarchy(asECS::Entity entity, int level);
+
+
 		EditorLoadingScreen* loader = nullptr;
 		RenderPath3D* renderPath = nullptr;
 		enum RENDERPATH
@@ -99,6 +105,7 @@ namespace as
 		void BeginTranslate();
 		void EndTranslate();
 		void AddSelected(const asScene::PickResult& picked);
+		bool IsSelected(asECS::Entity entity) const;
 
 		asArchive* clipboard = nullptr;
 

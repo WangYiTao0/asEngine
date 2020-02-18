@@ -17,7 +17,7 @@ namespace as
 		ASFALIGN_BOTTOM
 	};
 
-	static const int ASFONTSIZE_DEFAULT = 16;
+	static const int ASFONTSIZE_DEFAULT = 14;
 
 	struct asFontParams
 	{

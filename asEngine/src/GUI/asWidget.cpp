@@ -1266,7 +1266,7 @@ namespace as
 		args.sValue = GetItemText(selected);
 		onSelect(args);
 	}
-	string asComboBox::GetItemText(int index)
+	string asComboBox::GetItemText(int index)const
 	{
 		if (index >= 0)
 		{
@@ -1274,7 +1274,7 @@ namespace as
 		}
 		return "";
 	}
-	int asComboBox::GetSelected()
+	int asComboBox::GetSelected()const
 	{
 		return selected;
 	}
@@ -2226,4 +2226,297 @@ namespace as
 		onColorChanged = move(func);
 	}
 
+	static const float item_height = 20;
+	static const float tree_scrollbar_width = 12;
+	asTreeList::asTreeList(const std::string& name)
+	{
+		SetName(name);
+		SetText(fastName.GetString());
+		OnSelect([](asEventArgs args) {});
+		SetSize(XMFLOAT2(100, 20));
+	}
+	asTreeList::~asTreeList()
+	{
+
+	}
+	float asTreeList::GetItemOffset(int index) const
+	{
+		return 2 + list_offset + index * item_height;
+	}
+	bool asTreeList::HasScrollbar() const
+	{
+		return scale.y < (int)items.size() * item_height;
+	}
+	void asTreeList::Update(asGUI* gui, float dt)
+	{
+		asWidget::Update(gui, dt);
+
+		if (!IsEnabled())
+		{
+			return;
+		}
+
+		if (gui->IsWidgetDisabled(this))
+		{
+			return;
+		}
+
+		if (state == FOCUS)
+		{
+			state = IDLE;
+		}
+		if (state == DEACTIVATING)
+		{
+			state = IDLE;
+		}
+		if (state == ACTIVE)
+		{
+			gui->DeactivateWidget(this);
+		}
+
+		Hitbox2D hitbox = Hitbox2D(XMFLOAT2(translation.x, translation.y), XMFLOAT2(scale.x, scale.y));
+		Hitbox2D pointerHitbox = Hitbox2D(gui->GetPointerPos(), XMFLOAT2(1, 1));
+
+		if (state == IDLE && hitbox.intersects(pointerHitbox))
+		{
+			state = FOCUS;
+		}
+
+		bool clicked = false;
+		if (asInput::Press(asInput::MOUSE_BUTTON_LEFT))
+		{
+			clicked = true;
+		}
+
+		bool click_down = false;
+		if (asInput::Down(asInput::MOUSE_BUTTON_LEFT))
+		{
+			click_down = true;
+			if (state == DEACTIVATING)
+			{
+				// Keep pressed until mouse is released
+				gui->ActivateWidget(this);
+			}
+		}
+
+		// compute control-list height
+		list_height = 0;
+		{
+			int visible_count = 0;
+			int parent_level = 0;
+			bool parent_open = true;
+			for (const Item& item : items)
+			{
+				if (!parent_open && item.level > parent_level)
+				{
+					continue;
+				}
+				visible_count++;
+				parent_open = item.open;
+				parent_level = item.level;
+				list_height += item_height;
+			}
+		}
+
+		const float scrollbar_begin = translation.y + item_height;
+		const float scrollbar_end = scrollbar_begin + scale.y - item_height;
+		const float scrollbar_size = scrollbar_end - scrollbar_begin;
+		const float scrollbar_granularity = std::min(1.0f, scrollbar_size / list_height);
+		scrollbar_height = std::max(tree_scrollbar_width, scrollbar_size * scrollbar_granularity);
+
+		if (!click_down)
+		{
+			scrollbar_state = SCROLLBAR_INACTIVE;
+		}
+
+		Hitbox2D scroll_box;
+		scroll_box.pos = XMFLOAT2(translation.x + scale.x - tree_scrollbar_width, translation.y + item_height + 1);
+		scroll_box.siz = XMFLOAT2(tree_scrollbar_width, scale.y - item_height - 1);
+		if (scroll_box.intersects(pointerHitbox))
+		{
+			if (clicked)
+			{
+				scrollbar_state = SCROLLBAR_GRABBED;
+			}
+			else if (!click_down)
+			{
+				scrollbar_state = SCROLLBAR_HOVER;
+				state = FOCUS;
+			}
+		}
+
+		if (scrollbar_state == SCROLLBAR_GRABBED)
+		{
+			gui->ActivateWidget(this);
+			scrollbar_delta = pointerHitbox.pos.y - scrollbar_height * 0.5f - scrollbar_begin;
+		}
+
+		scrollbar_delta -= asInput::GetPointer().z;
+		scrollbar_delta = asMath::Clamp(scrollbar_delta, 0, scrollbar_size - scrollbar_height);
+		scrollbar_value = asMath::InverseLerp(scrollbar_begin, scrollbar_end, scrollbar_begin + scrollbar_delta);
+
+		list_offset = -scrollbar_value * list_height;
+
+		// control-list
+		if (scrollbar_state == SCROLLBAR_INACTIVE)
+		{
+			int i = -1;
+			int visible_count = 0;
+			int parent_level = 0;
+			bool parent_open = true;
+			for (Item& item : items)
+			{
+				i++;
+				if (!parent_open && item.level > parent_level)
+				{
+					continue;
+				}
+				visible_count++;
+				parent_open = item.open;
+				parent_level = item.level;
+
+				XMFLOAT2 pos = XMFLOAT2(translation.x + 2 + item.level * item_height, translation.y + GetItemOffset(visible_count) + item_height * 0.5f);
+
+				// opened flag box:
+				Hitbox2D open_box = Hitbox2D(XMFLOAT2(pos.x, pos.y - item_height * 0.25f), XMFLOAT2(item_height * 0.5f, item_height * 0.5f));
+				if (clicked && open_box.intersects(pointerHitbox))
+				{
+					item.open = !item.open;
+					gui->ActivateWidget(this);
+				}
+				else
+				{
+					// Item name box:
+					Hitbox2D name_box;
+					name_box.pos = XMFLOAT2(pos.x + item_height * 0.5f + 2, pos.y - item_height * 0.5f);
+					name_box.siz = XMFLOAT2(scale.x - 2 - item_height * 0.5f - 2 - item.level * item_height - tree_scrollbar_width - 2, item_height);
+					if (clicked && name_box.intersects(pointerHitbox))
+					{
+						if (!asInput::Down(asInput::KEYBOARD_BUTTON_LCONTROL) && !asInput::Down(asInput::KEYBOARD_BUTTON_RCONTROL)
+							&& !asInput::Down(asInput::KEYBOARD_BUTTON_LSHIFT) && !asInput::Down(asInput::KEYBOARD_BUTTON_RSHIFT))
+						{
+							ClearSelection();
+						}
+						Select(i);
+						gui->ActivateWidget(this);
+					}
+				}
+			}
+		}
+	}
+	void asTreeList::Render(const asGUI* gui, CommandList cmd) const
+	{
+		assert(gui != nullptr && "Ivalid GUI!");
+
+		if (!IsVisible())
+		{
+			return;
+		}
+
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
+
+		// control-base
+		asImage::Draw(asTextureHelper::getWhite()
+			, asImageParams(translation.x, translation.y, scale.x, item_height, colors[state == IDLE ? IDLE : FOCUS].toFloat4()), cmd);
+
+		asFont(text, asFontParams((int)(translation.x) + 1, (int)(translation.y) + 1, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0,
+			textColor, textShadowColor)).Draw(cmd);
+
+		// scrollbar background
+		asImage::Draw(asTextureHelper::getWhite()
+			, asImageParams(translation.x + scale.x - tree_scrollbar_width, translation.y + item_height + 1, tree_scrollbar_width, scale.y - item_height - 1, colors[IDLE].toFloat4()), cmd);
+
+		// scrollbar
+		asColor scrollbar_color = colors[IDLE];
+		if (scrollbar_state == SCROLLBAR_HOVER)
+		{
+			scrollbar_color = colors[FOCUS];
+		}
+		else if (scrollbar_state == SCROLLBAR_GRABBED)
+		{
+			scrollbar_color = colors[ACTIVE];
+		}
+		asImage::Draw(asTextureHelper::getWhite()
+			, asImageParams(translation.x + scale.x - tree_scrollbar_width, translation.y + item_height + 1 + scrollbar_delta, tree_scrollbar_width, scrollbar_height, scrollbar_color.toFloat4()), cmd);
+
+		// list background
+		asImage::Draw(asTextureHelper::getWhite()
+			, asImageParams(translation.x, translation.y + item_height + 1, scale.x - tree_scrollbar_width - 1, scale.y - item_height - 1, colors[IDLE].toFloat4()), cmd);
+
+		Rect rect_without_scrollbar = scissorRect;
+		rect_without_scrollbar.top += (int32_t)item_height + 1;
+		rect_without_scrollbar.right -= (int32_t)tree_scrollbar_width + 1;
+		asRenderer::GetDevice()->BindScissorRects(1, &rect_without_scrollbar, cmd);
+
+		// control-list
+		int visible_count = 0;
+		int parent_level = 0;
+		bool parent_open = true;
+		for (const Item& item : items)
+		{
+			if (!parent_open && item.level > parent_level)
+			{
+				continue;
+			}
+			visible_count++;
+			parent_open = item.open;
+			parent_level = item.level;
+
+			XMFLOAT2 pos = XMFLOAT2(translation.x + 2 + item.level * item_height, translation.y + GetItemOffset(visible_count) + item_height * 0.5f);
+
+			// selected box:
+			if (item.selected)
+			{
+				asImage::Draw(asTextureHelper::getWhite()
+					, asImageParams(pos.x + item_height * 0.5f + 2, pos.y - item_height * 0.5f, scale.x - item_height * 0.5f - 2 - tree_scrollbar_width, item_height,
+						colors[FOCUS].toFloat4()), cmd);
+			}
+
+			// opened flag box:
+			asImage::Draw(asTextureHelper::getWhite()
+				, asImageParams(pos.x, pos.y - item_height * 0.25f, item_height * 0.5f, item_height * 0.5f,
+					item.open ? colors[ACTIVE].toFloat4() : colors[IDLE].toFloat4()), cmd);
+
+			// Item name text:
+			asFont(item.name, asFontParams((int)pos.x + int(item_height * 0.5f) + 2, (int)pos.y, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_CENTER, 0, 0,
+				textColor, textShadowColor)).Draw(cmd);
+		}
+	}
+	void asTreeList::OnSelect(function<void(asEventArgs args)> func)
+	{
+		onSelect = move(func);
+	}
+	void asTreeList::AddItem(const Item& item)
+	{
+		items.push_back(item);
+	}
+	void asTreeList::ClearItems()
+	{
+		items.clear();
+	}
+	void asTreeList::ClearSelection()
+	{
+		for (Item& item : items)
+		{
+			item.selected = false;
+		}
+
+		asEventArgs args;
+		args.iValue = -1;
+		onSelect(args);
+	}
+	void asTreeList::Select(int index)
+	{
+		items[index].selected = true;
+
+		asEventArgs args;
+		args.iValue = index;
+		args.sValue = items[index].name;
+		args.userdata = items[index].userdata;
+		onSelect(args);
+	}
+	const asTreeList::Item& asTreeList::GetItem(int index) const
+	{
+		return items[index];
+	}
 }

@@ -87,8 +87,6 @@ namespace as
 	{
 
 	}
-
-
 	void EditorComponent::ChangeRenderPath(RENDERPATH path)
 	{
 		SAFE_DELETE(renderPath);
@@ -223,9 +221,10 @@ namespace as
 		float screenW = (float)asRenderer::GetDevice()->GetScreenWidth();
 		float screenH = (float)asRenderer::GetDevice()->GetScreenHeight();
 
-		XMFLOAT2 option_size = XMFLOAT2(100, 28);
-		float step = (option_size.y + 5) * -1, x = screenW - option_size.x, y = screenH - option_size.y;
-
+		XMFLOAT2 option_size = XMFLOAT2(100, 20);
+		float step = (option_size.y + 5) * -1;
+		//float x = screenW - option_size.x, y = screenH - option_size.y;
+		float x = 0, y = screenH - option_size.y;
 
 		asButton* rendererWnd_Toggle = new asButton("Renderer");
 		rendererWnd_Toggle->SetTooltip("Renderer settings window");
@@ -364,68 +363,84 @@ namespace as
 
 		////////////////////////////////////////////////////////////////////////////////////
 
-		asCheckBox* translatorCheckBox = new asCheckBox("Translator: ");
-		translatorCheckBox->SetTooltip("Enable the translator tool");
-		translatorCheckBox->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 5 - 25, 0));
-		translatorCheckBox->SetSize(XMFLOAT2(18, 18));
-		translatorCheckBox->OnClick([&](asEventArgs args) {
-			EndTranslate();
-			translator.enabled = args.bValue;
-			BeginTranslate();
+		//asCheckBox* translatorCheckBox = new asCheckBox("Translator: ");
+		//translatorCheckBox->SetTooltip("Enable the translator tool");
+		//translatorCheckBox->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 5 - 25, 0));
+		//translatorCheckBox->SetSize(XMFLOAT2(18, 18));
+		//translatorCheckBox->OnClick([&](asEventArgs args) {
+		//	EndTranslate();
+		//	translator.enabled = args.bValue;
+		//	BeginTranslate();
+		//	});
+		//GetGUI().AddWidget(translatorCheckBox);
+
+		//asButton* scriptButton = new asButton("Load Script");
+		//scriptButton->SetTooltip("Load a Lua script...");
+		//scriptButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 3, 0));
+		//scriptButton->SetSize(XMFLOAT2(100, 40));
+		//scriptButton->SetColor(asColor(255, 33, 140, 200), asWidget::ASWIDGETSTATE::IDLE);
+		//scriptButton->SetColor(asColor(255, 100, 140, 255), asWidget::ASWIDGETSTATE::FOCUS);
+		//scriptButton->OnClick([=](asEventArgs args) {
+		//	thread([&] {
+
+		//		asHelper::FileDialogParams params;
+		//		asHelper::FileDialogResult result;
+		//		params.type = asHelper::FileDialogParams::OPEN;
+		//		params.description = "Lua script";
+		//		params.extensions.push_back("lua");
+		//		asHelper::FileDialog(params, result);
+
+		//		if (result.ok) {
+		//			string fileName = result.filenames.front();
+		//			//wiLua::GetGlobal()->RunFile(fileName);
+		//		}
+		//		}).detach();
+
+		//	});
+		//GetGUI().AddWidget(scriptButton);
+
+
+		asButton* shaderButton = new asButton("Reload Shaders");
+		shaderButton->SetTooltip("Reload shaders from the default directory...");
+		shaderButton->SetPos(XMFLOAT2(x, y += step));
+		shaderButton->SetSize(option_size);
+		shaderButton->OnClick([=](asEventArgs args) {
+
+			asRenderer::ReloadShaders();
+
+			Translator::LoadShaders();
+
 			});
-		GetGUI().AddWidget(translatorCheckBox);
+		GetGUI().AddWidget(shaderButton);
 
-		asCheckBox* isScalatorCheckBox = new asCheckBox("S:");
-		asCheckBox* isRotatorCheckBox = new asCheckBox("R:");
-		asCheckBox* isTranslatorCheckBox = new asCheckBox("T:");
-		{
-			isScalatorCheckBox->SetTooltip("Scale");
-			isScalatorCheckBox->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 5 - 25 - 40 * 2, 22));
-			isScalatorCheckBox->SetSize(XMFLOAT2(18, 18));
-			isScalatorCheckBox->OnClick([&, isTranslatorCheckBox, isRotatorCheckBox](asEventArgs args) {
-				translator.isScalator = args.bValue;
-				translator.isTranslator = false;
-				translator.isRotator = false;
-				isTranslatorCheckBox->SetCheck(false);
-				isRotatorCheckBox->SetCheck(false);
-				});
-			isScalatorCheckBox->SetCheck(translator.isScalator);
-			GetGUI().AddWidget(isScalatorCheckBox);
 
-			isRotatorCheckBox->SetTooltip("Rotate");
-			isRotatorCheckBox->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 5 - 25 - 40 * 1, 22));
-			isRotatorCheckBox->SetSize(XMFLOAT2(18, 18));
-			isRotatorCheckBox->OnClick([&, isTranslatorCheckBox, isScalatorCheckBox](asEventArgs args) {
-				translator.isRotator = args.bValue;
-				translator.isScalator = false;
-				translator.isTranslator = false;
-				isScalatorCheckBox->SetCheck(false);
-				isTranslatorCheckBox->SetCheck(false);
-				});
-			isRotatorCheckBox->SetCheck(translator.isRotator);
-			GetGUI().AddWidget(isRotatorCheckBox);
-
-			isTranslatorCheckBox->SetTooltip("Translate");
-			isTranslatorCheckBox->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 5 - 25, 22));
-			isTranslatorCheckBox->SetSize(XMFLOAT2(18, 18));
-			isTranslatorCheckBox->OnClick([&, isScalatorCheckBox, isRotatorCheckBox](asEventArgs args) {
-				translator.isTranslator = args.bValue;
-				translator.isScalator = false;
-				translator.isRotator = false;
-				isScalatorCheckBox->SetCheck(false);
-				isRotatorCheckBox->SetCheck(false);
-				});
-			isTranslatorCheckBox->SetCheck(translator.isTranslator);
-			GetGUI().AddWidget(isTranslatorCheckBox);
-		}
+		asButton* clearButton = new asButton("Clear World");
+		clearButton->SetTooltip("Delete every model from the scene");
+		clearButton->SetPos(XMFLOAT2(x, y += step));
+		clearButton->SetSize(option_size);
+		clearButton->OnClick([&](asEventArgs args) {
+			selected.clear();
+			EndTranslate();
+			asRenderer::ClearWorld();
+			objectWnd->SetEntity(INVALID_ENTITY);
+			meshWnd->SetEntity(INVALID_ENTITY);
+			lightWnd->SetEntity(INVALID_ENTITY);
+			soundWnd->SetEntity(INVALID_ENTITY);
+			decalWnd->SetEntity(INVALID_ENTITY);
+			envProbeWnd->SetEntity(INVALID_ENTITY);
+			materialWnd->SetEntity(INVALID_ENTITY);
+			emitterWnd->SetEntity(INVALID_ENTITY);
+			hairWnd->SetEntity(INVALID_ENTITY);
+			forceFieldWnd->SetEntity(INVALID_ENTITY);
+			cameraWnd->SetEntity(INVALID_ENTITY);
+			});
+		GetGUI().AddWidget(clearButton);
 
 
 		asButton* saveButton = new asButton("Save");
 		saveButton->SetTooltip("Save the current scene");
-		saveButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 5, 0));
-		saveButton->SetSize(XMFLOAT2(100, 40));
-		saveButton->SetColor(asColor(0, 198, 101, 200), asWidget::ASWIDGETSTATE::IDLE);
-		saveButton->SetColor(asColor(0, 255, 140, 255), asWidget::ASWIDGETSTATE::FOCUS);
+		saveButton->SetPos(XMFLOAT2(x, y += step));
+		saveButton->SetSize(option_size);
 		saveButton->OnClick([=](asEventArgs args) {
 			EndTranslate();
 
@@ -462,10 +477,8 @@ namespace as
 
 		asButton* modelButton = new asButton("Load Model");
 		modelButton->SetTooltip("Load a scene / import model into the editor...");
-		modelButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 4, 0));
-		modelButton->SetSize(XMFLOAT2(100, 40));
-		modelButton->SetColor(asColor(0, 89, 255, 200), asWidget::ASWIDGETSTATE::IDLE);
-		modelButton->SetColor(asColor(112, 155, 255, 255), asWidget::ASWIDGETSTATE::FOCUS);
+		modelButton->SetPos(XMFLOAT2(x, y += step));
+		modelButton->SetSize(option_size);
 		modelButton->OnClick([=](asEventArgs args) {
 			thread([&] {
 
@@ -520,166 +533,9 @@ namespace as
 			});
 		GetGUI().AddWidget(modelButton);
 
-
-		//asButton* scriptButton = new asButton("Load Script");
-		//scriptButton->SetTooltip("Load a Lua script...");
-		//scriptButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 3, 0));
-		//scriptButton->SetSize(XMFLOAT2(100, 40));
-		//scriptButton->SetColor(asColor(255, 33, 140, 200), asWidget::ASWIDGETSTATE::IDLE);
-		//scriptButton->SetColor(asColor(255, 100, 140, 255), asWidget::ASWIDGETSTATE::FOCUS);
-		//scriptButton->OnClick([=](asEventArgs args) {
-		//	thread([&] {
-
-		//		asHelper::FileDialogParams params;
-		//		asHelper::FileDialogResult result;
-		//		params.type = asHelper::FileDialogParams::OPEN;
-		//		params.description = "Lua script";
-		//		params.extensions.push_back("lua");
-		//		asHelper::FileDialog(params, result);
-
-		//		if (result.ok) {
-		//			string fileName = result.filenames.front();
-		//			//wiLua::GetGlobal()->RunFile(fileName);
-		//		}
-		//		}).detach();
-
-		//	});
-		//GetGUI().AddWidget(scriptButton);
-
-
-		asButton* shaderButton = new asButton("Reload Shaders");
-		shaderButton->SetTooltip("Reload shaders from the default directory...");
-		shaderButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 2, 0));
-		shaderButton->SetSize(XMFLOAT2(100, 40));
-		shaderButton->SetColor(asColor(255, 33, 140, 200), asWidget::ASWIDGETSTATE::IDLE);
-		shaderButton->SetColor(asColor(255, 100, 140, 255), asWidget::ASWIDGETSTATE::FOCUS);
-		shaderButton->OnClick([=](asEventArgs args) {
-
-			asRenderer::ReloadShaders();
-
-			Translator::LoadShaders();
-
-			});
-		GetGUI().AddWidget(shaderButton);
-
-
-		asButton* clearButton = new asButton("Clear World");
-		clearButton->SetTooltip("Delete every model from the scene");
-		clearButton->SetPos(XMFLOAT2(screenW - 50 - 55 - 105 * 1, 0));
-		clearButton->SetSize(XMFLOAT2(100, 40));
-		clearButton->SetColor(asColor(255, 205, 43, 200), asWidget::ASWIDGETSTATE::IDLE);
-		clearButton->SetColor(asColor(255, 235, 173, 255), asWidget::ASWIDGETSTATE::FOCUS);
-		clearButton->OnClick([&](asEventArgs args) {
-			selected.clear();
-			EndTranslate();
-			asRenderer::ClearWorld();
-			objectWnd->SetEntity(INVALID_ENTITY);
-			meshWnd->SetEntity(INVALID_ENTITY);
-			lightWnd->SetEntity(INVALID_ENTITY);
-			soundWnd->SetEntity(INVALID_ENTITY);
-			decalWnd->SetEntity(INVALID_ENTITY);
-			envProbeWnd->SetEntity(INVALID_ENTITY);
-			materialWnd->SetEntity(INVALID_ENTITY);
-			emitterWnd->SetEntity(INVALID_ENTITY);
-			hairWnd->SetEntity(INVALID_ENTITY);
-			forceFieldWnd->SetEntity(INVALID_ENTITY);
-			cameraWnd->SetEntity(INVALID_ENTITY);
-			});
-		GetGUI().AddWidget(clearButton);
-
-
-		asButton* helpButton = new asButton("?");
-		helpButton->SetTooltip("Help");
-		helpButton->SetPos(XMFLOAT2(screenW - 50 - 55, 0));
-		helpButton->SetSize(XMFLOAT2(50, 40));
-		helpButton->SetColor(asColor(34, 158, 214, 200), asWidget::ASWIDGETSTATE::IDLE);
-		helpButton->SetColor(asColor(113, 183, 214, 255), asWidget::ASWIDGETSTATE::FOCUS);
-		helpButton->OnClick([=](asEventArgs args) {
-			static asLabel* helpLabel = nullptr;
-			if (helpLabel == nullptr)
-			{
-				stringstream ss("");
-				ss << "Help:   " << endl << "############" << endl << endl;
-				ss << "Move camera: WASD" << endl;
-				ss << "Look: Middle mouse button / arrow keys" << endl;
-				ss << "Select: Right mouse button" << endl;
-				ss << "Place decal, interact with water: Left mouse button when nothing is selected" << endl;
-				ss << "Camera speed: SHIFT button" << endl;
-				ss << "Camera up: E, down: Q" << endl;
-				ss << "Duplicate entity: Ctrl + D" << endl;
-				ss << "Select All: Ctrl + A" << endl;
-				ss << "Undo: Ctrl + Z" << endl;
-				ss << "Redo: Ctrl + Y" << endl;
-				ss << "Copy: Ctrl + C" << endl;
-				ss << "Paste: Ctrl + V" << endl;
-				ss << "Delete: DELETE button" << endl;
-				ss << "Place Instances: Ctrl + Shift + Left mouse click (place clipboard onto clicked surface)" << endl;
-				ss << "Pin soft body triangle: Hold P while nothing is selected and click on soft body with Left mouse button" << endl;
-				ss << "Script Console / backlog: HOME button" << endl;
-				ss << endl;
-				ss << "You can find sample scenes in the models directory. Try to load one." << endl;
-				ss << "You can also import models from .OBJ, .GLTF, .GLB files." << endl;
-				ss << "You can find a program configuration file at Editor/config.ini" << endl;
-				ss << "You can find sample LUA scripts in the scripts directory. Try to load one." << endl;
-				ss << "You can find a startup script at Editor/startup.lua (this will be executed on program start)" << endl;
-				ss << endl << endl << "For questions, bug reports, feedback, requests, please open an issue at:" << endl;
-				ss << "https://github.com/turanszkij/WickedEngine" << endl;
-
-				helpLabel = new asLabel("HelpLabel");
-				helpLabel->SetText(ss.str());
-				helpLabel->SetSize(XMFLOAT2(screenW / 3.0f, screenH / 2.2f));
-				helpLabel->SetPos(XMFLOAT2(screenW / 2.0f - helpLabel->scale.x / 2.0f, screenH / 2.0f - helpLabel->scale.y / 2.0f));
-				helpLabel->SetVisible(false);
-				GetGUI().AddWidget(helpLabel);
-			}
-
-			helpLabel->SetVisible(!helpLabel->IsVisible());
-			});
-		GetGUI().AddWidget(helpButton);
-
-
-		asButton* exitButton = new asButton("X");
-		exitButton->SetTooltip("Exit");
-		exitButton->SetPos(XMFLOAT2(screenW - 50, 0));
-		exitButton->SetSize(XMFLOAT2(50, 40));
-		exitButton->SetColor(asColor(190, 0, 0, 200), asWidget::ASWIDGETSTATE::IDLE);
-		exitButton->SetColor(asColor(255, 0, 0, 255), asWidget::ASWIDGETSTATE::FOCUS);
-		exitButton->OnClick([](asEventArgs args) {
-			exit(0);
-			});
-		GetGUI().AddWidget(exitButton);
-
-
-
-		asCheckBox* physicsEnabledCheckBox = new asCheckBox("Physics Enabled: ");
-		physicsEnabledCheckBox->SetSize(XMFLOAT2(18, 18));
-		physicsEnabledCheckBox->SetPos(XMFLOAT2(screenW - 25, 50));
-		physicsEnabledCheckBox->SetTooltip("Toggle Physics Engine On/Off");
-		physicsEnabledCheckBox->OnClick([&](asEventArgs args) {
-			asPhysicsEngine::SetEnabled(args.bValue);
-			});
-		physicsEnabledCheckBox->SetCheck(asPhysicsEngine::IsEnabled());
-		GetGUI().AddWidget(physicsEnabledCheckBox);
-
-		cinemaModeCheckBox = new asCheckBox("Cinema Mode: ");
-		cinemaModeCheckBox->SetSize(XMFLOAT2(18, 18));
-		cinemaModeCheckBox->SetPos(XMFLOAT2(screenW - 25, 72));
-		cinemaModeCheckBox->SetTooltip("Toggle Cinema Mode (All HUD disabled). Press ESC to exit.");
-		cinemaModeCheckBox->OnClick([&](asEventArgs args) {
-			if (renderPath != nullptr)
-			{
-				renderPath->GetGUI().SetVisible(false);
-			}
-			GetGUI().SetVisible(false);
-			asProfiler::SetEnabled(false);
-			main->infoDisplay.active = false;
-			});
-		GetGUI().AddWidget(cinemaModeCheckBox);
-
-
 		asComboBox* renderPathComboBox = new asComboBox("Render Path: ");
-		renderPathComboBox->SetSize(XMFLOAT2(100, 20));
-		renderPathComboBox->SetPos(XMFLOAT2(screenW - 128, 94));
+		renderPathComboBox->SetSize(option_size);
+		renderPathComboBox->SetPos(XMFLOAT2(x, y += step));
 		renderPathComboBox->AddItem("Forward");
 		renderPathComboBox->AddItem("Deferred");
 		renderPathComboBox->AddItem("Tiled Forward");
@@ -713,6 +569,151 @@ namespace as
 		GetGUI().AddWidget(renderPathComboBox);
 
 
+		asCheckBox* physicsEnabledCheckBox = new asCheckBox("Physics Enabled: ");
+		physicsEnabledCheckBox->SetSize(XMFLOAT2(18, 18));
+		physicsEnabledCheckBox->SetPos(XMFLOAT2(100, y += step));
+		physicsEnabledCheckBox->SetTooltip("Toggle Physics Engine On/Off");
+		physicsEnabledCheckBox->OnClick([&](asEventArgs args) {
+			asPhysicsEngine::SetEnabled(args.bValue);
+			});
+		physicsEnabledCheckBox->SetCheck(asPhysicsEngine::IsEnabled());
+		GetGUI().AddWidget(physicsEnabledCheckBox);
+
+		cinemaModeCheckBox = new asCheckBox("Cinema Mode: ");
+		cinemaModeCheckBox->SetSize(XMFLOAT2(18, 18));
+		cinemaModeCheckBox->SetPos(XMFLOAT2(100, y += step));
+		cinemaModeCheckBox->SetTooltip("Toggle Cinema Mode (All HUD disabled). Press ESC to exit.");
+		cinemaModeCheckBox->OnClick([&](asEventArgs args) {
+			if (renderPath != nullptr)
+			{
+				renderPath->GetGUI().SetVisible(false);
+			}
+			GetGUI().SetVisible(false);
+			asProfiler::SetEnabled(false);
+			main->infoDisplay.active = false;
+			});
+		GetGUI().AddWidget(cinemaModeCheckBox);
+
+		asCheckBox* isScalatorCheckBox = new asCheckBox("S: ");
+		asCheckBox* isRotatorCheckBox = new asCheckBox("R: ");
+		asCheckBox* isTranslatorCheckBox = new asCheckBox("T: ");
+		{
+			isScalatorCheckBox->SetTooltip("Scale");
+			isScalatorCheckBox->SetPos(XMFLOAT2(x += 15, y += step));
+			isScalatorCheckBox->SetSize(XMFLOAT2(18, 18));
+			isScalatorCheckBox->OnClick([&, isTranslatorCheckBox, isRotatorCheckBox](asEventArgs args) {
+				translator.isScalator = args.bValue;
+				translator.isTranslator = false;
+				translator.isRotator = false;
+				isTranslatorCheckBox->SetCheck(false);
+				isRotatorCheckBox->SetCheck(false);
+				});
+			isScalatorCheckBox->SetCheck(translator.isScalator);
+			GetGUI().AddWidget(isScalatorCheckBox);
+
+			isRotatorCheckBox->SetTooltip("Rotate");
+			isRotatorCheckBox->SetPos(XMFLOAT2(x , y += step));
+			isRotatorCheckBox->SetSize(XMFLOAT2(18, 18));
+			isRotatorCheckBox->OnClick([&, isTranslatorCheckBox, isScalatorCheckBox](asEventArgs args) {
+				translator.isRotator = args.bValue;
+				translator.isScalator = false;
+				translator.isTranslator = false;
+				isScalatorCheckBox->SetCheck(false);
+				isTranslatorCheckBox->SetCheck(false);
+				});
+			isRotatorCheckBox->SetCheck(translator.isRotator);
+			GetGUI().AddWidget(isRotatorCheckBox);
+
+			isTranslatorCheckBox->SetTooltip("Translate");
+			isTranslatorCheckBox->SetPos(XMFLOAT2(x , y += step));
+			isTranslatorCheckBox->SetSize(XMFLOAT2(18, 18));
+			isTranslatorCheckBox->OnClick([&, isScalatorCheckBox, isRotatorCheckBox](asEventArgs args) {
+				translator.isTranslator = args.bValue;
+				translator.isScalator = false;
+				translator.isRotator = false;
+				isScalatorCheckBox->SetCheck(false);
+				isRotatorCheckBox->SetCheck(false);
+				});
+			isTranslatorCheckBox->SetCheck(translator.isTranslator);
+			GetGUI().AddWidget(isTranslatorCheckBox);
+		}
+
+		asButton* helpButton = new asButton("Help");
+		helpButton->SetTooltip("Help");
+		helpButton->SetPos(XMFLOAT2(0, y+= step));
+		helpButton->SetSize(XMFLOAT2(50, 20));
+		helpButton->OnClick([=](asEventArgs args) {
+			static asLabel* helpLabel = nullptr;
+			if (helpLabel == nullptr)
+			{
+				stringstream ss("");
+				ss << "Help:   " << endl << "############" << endl << endl;
+				ss << "Move camera: WASD" << endl;
+				ss << "Look: Middle mouse button / arrow keys" << endl;
+				ss << "Select: Right mouse button" << endl;
+				ss << "Place decal, interact with water: Left mouse button when nothing is selected" << endl;
+				ss << "Camera speed: SHIFT button" << endl;
+				ss << "Camera up: E, down: Q" << endl;
+				ss << "Duplicate entity: Ctrl + D" << endl;
+				ss << "Select All: Ctrl + A" << endl;
+				ss << "Undo: Ctrl + Z" << endl;
+				ss << "Redo: Ctrl + Y" << endl;
+				ss << "Copy: Ctrl + C" << endl;
+				ss << "Paste: Ctrl + V" << endl;
+				ss << "Delete: DELETE button" << endl;
+				ss << "Place Instances: Ctrl + Shift + Left mouse click (place clipboard onto clicked surface)" << endl;
+				ss << "Pin soft body triangle: Hold P while nothing is selected and click on soft body with Left mouse button" << endl;
+				ss << "Script Console / backlog: HOME button" << endl;
+				ss << endl;
+
+				helpLabel = new asLabel("HelpLabel");
+				helpLabel->SetText(ss.str());
+				helpLabel->SetSize(XMFLOAT2(screenW / 3.0f, screenH / 2.2f));
+				helpLabel->SetPos(XMFLOAT2(screenW / 2.0f - helpLabel->scale.x / 2.0f, screenH / 2.0f - helpLabel->scale.y / 2.0f));
+				helpLabel->SetVisible(false);
+				GetGUI().AddWidget(helpLabel);
+			}
+
+			helpLabel->SetVisible(!helpLabel->IsVisible());
+			});
+		GetGUI().AddWidget(helpButton);
+
+
+		//asButton* exitButton = new asButton("X");
+		//exitButton->SetTooltip("Exit");
+		//exitButton->SetPos(XMFLOAT2(screenW - 50, 0));
+		//exitButton->SetSize(XMFLOAT2(30, 20));
+		//exitButton->SetColor(asColor(190, 0, 0, 200), asWidget::ASWIDGETSTATE::IDLE);
+		//exitButton->SetColor(asColor(255, 0, 0, 255), asWidget::ASWIDGETSTATE::FOCUS);
+		//exitButton->OnClick([](asEventArgs args) {
+		//	exit(0);
+		//	});
+		//GetGUI().AddWidget(exitButton);
+
+
+		//outliner = new asTreeList("Scene Hieraechy");
+		//outliner->SetPos(XMFLOAT2(0, screenH - 200));
+		//outliner->SetSize(XMFLOAT2(260, 200));
+		//outliner->OnSelect([this](asEventArgs args) {
+
+		//	EndTranslate();
+		//	selected.clear(); // endtranslate would clear it, but not if translator is not enabled
+
+		//	for (int i = 0; i < outliner->GetItemCount(); ++i)
+		//	{
+		//		const asTreeList::Item& item = outliner->GetItem(i);
+		//		if (item.selected)
+		//		{
+		//			asScene::PickResult pick;
+		//			pick.entity = (Entity)item.userdata;
+		//			AddSelected(pick);
+		//		}
+		//	}
+
+		//	BeginTranslate();
+		//	});
+		//GetGUI().AddWidget(outliner);
+
 		cameraWnd->ResetCam();
 
 		asJobSystem::Wait(ctx);
@@ -727,8 +728,46 @@ namespace as
 
 		renderPath->FixedUpdate();
 	}
+
+	void EditorComponent::CreateOutlinerHierarchy(asECS::Entity entity, int level)
+	{
+		if (outliner_added_items.count(entity) != 0)
+		{
+			return;
+		}
+		const Scene& scene = asScene::GetScene();
+
+		asTreeList::Item item;
+		item.level = level;
+		item.userdata = entity;
+		item.selected = IsSelected(entity);
+		item.open = outliner_closed_items.count(entity) == 0;
+		item.name = "(" + std::to_string(entity) + ")";
+		const NameComponent* name = scene.names.GetComponent(entity);
+		if (name != nullptr)
+		{
+			item.name = name->name + " " + item.name;
+		}
+		if (entity == translator.entityID)
+		{
+			item.name = "[EDITOR_TRANSLATOR] " + item.name;
+		}
+		outliner->AddItem(item);
+
+		outliner_added_items.insert(entity);
+
+		for (size_t i = 0; i < scene.hierarchy.GetCount(); ++i)
+		{
+			if (scene.hierarchy[i].parentID == entity)
+			{
+				CreateOutlinerHierarchy(scene.hierarchy.GetEntity(i), level + 1);
+			}
+		}
+	}
+
 	void EditorComponent::Update(float dt)
 	{
+		asProfiler::range_id profrange = asProfiler::BeginRangeCPU("Editor Update");
 		Scene& scene = asScene::GetScene();
 		CameraComponent& camera = asRenderer::GetCamera();
 
@@ -736,6 +775,82 @@ namespace as
 		weatherWnd->Update();
 
 		selectionOutlineTimer += dt;
+
+		// Update scene graph outliner:
+		if (outliner != nullptr)
+		{
+			for (int i = 0; i < outliner->GetItemCount(); ++i)
+			{
+				const asTreeList::Item& item = outliner->GetItem(i);
+				if (!item.open)
+				{
+					outliner_closed_items.insert((Entity)item.userdata);
+				}
+			}
+
+			outliner->ClearItems();
+
+			// Add transforms:
+			for (size_t i = 0; i < scene.hierarchy.GetCount(); ++i)
+			{
+				CreateOutlinerHierarchy(scene.hierarchy[i].parentID, 0);
+			}
+			for (size_t i = 0; i < scene.transforms.GetCount(); ++i)
+			{
+				CreateOutlinerHierarchy(scene.transforms.GetEntity(i), 0);
+			}
+
+			// Add materials:
+			for (size_t i = 0; i < scene.materials.GetCount(); ++i)
+			{
+				Entity entity = scene.materials.GetEntity(i);
+				if (outliner_added_items.count(entity) != 0)
+				{
+					continue;
+				}
+
+				asTreeList::Item item;
+				item.userdata = entity;
+				item.selected = IsSelected(entity);
+				item.open = outliner_closed_items.count(entity) == 0;
+				item.name = "(" + std::to_string(entity) + ")";
+				const NameComponent* name = scene.names.GetComponent(entity);
+				if (name != nullptr)
+				{
+					item.name = name->name + " " + item.name;
+				}
+				outliner->AddItem(item);
+
+				outliner_added_items.insert(entity);
+			}
+
+			// Add meshes:
+			for (size_t i = 0; i < scene.meshes.GetCount(); ++i)
+			{
+				Entity entity = scene.meshes.GetEntity(i);
+				if (outliner_added_items.count(entity) != 0)
+				{
+					continue;
+				}
+
+				asTreeList::Item item;
+				item.userdata = entity;
+				item.selected = IsSelected(entity);
+				item.open = outliner_closed_items.count(entity) == 0;
+				item.name = "(" + std::to_string(entity) + ")";
+				const NameComponent* name = scene.names.GetComponent(entity);
+				if (name != nullptr)
+				{
+					item.name = name->name + " " + item.name;
+				}
+				outliner->AddItem(item);
+
+				outliner_added_items.insert(entity);
+			}
+
+			outliner_added_items.clear();
+			outliner_closed_items.clear();
+		}
 
 		// Exit cinema mode:
 		if (asInput::Down(asInput::KEYBOARD_BUTTON_ESCAPE))
@@ -1227,121 +1342,7 @@ namespace as
 				savedHierarchy.Serialize(*archive);
 			}
 
-			// Update window data bindings...
-			if (selected.empty())
-			{
-				objectWnd->SetEntity(INVALID_ENTITY);
-				emitterWnd->SetEntity(INVALID_ENTITY);
-				hairWnd->SetEntity(INVALID_ENTITY);
-				meshWnd->SetEntity(INVALID_ENTITY);
-				materialWnd->SetEntity(INVALID_ENTITY);
-				lightWnd->SetEntity(INVALID_ENTITY);
-				soundWnd->SetEntity(INVALID_ENTITY);
-				decalWnd->SetEntity(INVALID_ENTITY);
-				envProbeWnd->SetEntity(INVALID_ENTITY);
-				forceFieldWnd->SetEntity(INVALID_ENTITY);
-				cameraWnd->SetEntity(INVALID_ENTITY);
-			}
-			else
-			{
-				const asScene::PickResult& picked = selected.back();
 
-				assert(picked.entity != INVALID_ENTITY);
-
-				objectWnd->SetEntity(INVALID_ENTITY);
-				for (auto& x : selected)
-				{
-					if (scene.objects.GetComponent(x.entity) != nullptr)
-					{
-						objectWnd->SetEntity(x.entity);
-						break;
-					}
-				}
-
-				emitterWnd->SetEntity(picked.entity);
-				hairWnd->SetEntity(picked.entity);
-				lightWnd->SetEntity(picked.entity);
-				soundWnd->SetEntity(picked.entity);
-				decalWnd->SetEntity(picked.entity);
-				envProbeWnd->SetEntity(picked.entity);
-				forceFieldWnd->SetEntity(picked.entity);
-				cameraWnd->SetEntity(picked.entity);
-
-				if (picked.subsetIndex >= 0)
-				{
-					const ObjectComponent* object = scene.objects.GetComponent(picked.entity);
-					if (object != nullptr) // maybe it was deleted...
-					{
-						meshWnd->SetEntity(object->meshID);
-
-						const MeshComponent* mesh = scene.meshes.GetComponent(object->meshID);
-						if (mesh != nullptr && (int)mesh->subsets.size() > picked.subsetIndex)
-						{
-							materialWnd->SetEntity(mesh->subsets[picked.subsetIndex].materialID);
-						}
-					}
-				}
-				else
-				{
-					materialWnd->SetEntity(picked.entity);
-				}
-
-			}
-
-			// Clear highlite state:
-			for (size_t i = 0; i < scene.materials.GetCount(); ++i)
-			{
-				scene.materials[i].SetUserStencilRef(EDITORSTENCILREF_CLEAR);
-			}
-			for (size_t i = 0; i < scene.objects.GetCount(); ++i)
-			{
-				scene.objects[i].SetUserStencilRef(EDITORSTENCILREF_CLEAR);
-			}
-			for (auto& x : selected)
-			{
-				if (x.subsetIndex >= 0)
-				{
-					ObjectComponent* object = scene.objects.GetComponent(x.entity);
-					if (object != nullptr) // maybe it was deleted...
-					{
-						object->SetUserStencilRef(EDITORSTENCILREF_HIGHLIGHT_OBJECT);
-						const MeshComponent* mesh = scene.meshes.GetComponent(object->meshID);
-						if (mesh != nullptr && (int)mesh->subsets.size() > x.subsetIndex)
-						{
-							MaterialComponent* material = scene.materials.GetComponent(mesh->subsets[x.subsetIndex].materialID);
-							if (material != nullptr)
-							{
-								material->SetUserStencilRef(EDITORSTENCILREF_HIGHLIGHT_MATERIAL);
-							}
-						}
-					}
-				}
-			}
-
-			// Delete
-			if (asInput::Press(asInput::KEYBOARD_BUTTON_DELETE))
-			{
-
-				asArchive* archive = AdvanceHistory();
-				*archive << HISTORYOP_DELETE;
-
-				*archive << selected.size();
-				for (auto& x : selected)
-				{
-					*archive << x.entity;
-				}
-				for (auto& x : selected)
-				{
-					scene.Entity_Serialize(*archive, x.entity);
-				}
-				for (auto& x : selected)
-				{
-					scene.Entity_Remove(x.entity);
-					savedHierarchy.Remove_KeepSorted(x.entity);
-				}
-
-				EndTranslate();
-			}
 
 			// Control operations...
 			if (asInput::Down(asInput::KEYBOARD_BUTTON_LCONTROL))
@@ -1432,6 +1433,125 @@ namespace as
 
 		}
 
+
+		// Delete
+		if (asInput::Press(asInput::KEYBOARD_BUTTON_DELETE))
+		{
+
+			asArchive* archive = AdvanceHistory();
+			*archive << HISTORYOP_DELETE;
+
+			*archive << selected.size();
+			for (auto& x : selected)
+			{
+				*archive << x.entity;
+			}
+			for (auto& x : selected)
+			{
+				scene.Entity_Serialize(*archive, x.entity);
+			}
+			for (auto& x : selected)
+			{
+				scene.Entity_Remove(x.entity);
+				savedHierarchy.Remove_KeepSorted(x.entity);
+			}
+
+			EndTranslate();
+		}
+
+		// Update window data bindings...
+		if (selected.empty())
+		{
+			objectWnd->SetEntity(INVALID_ENTITY);
+			emitterWnd->SetEntity(INVALID_ENTITY);
+			hairWnd->SetEntity(INVALID_ENTITY);
+			meshWnd->SetEntity(INVALID_ENTITY);
+			materialWnd->SetEntity(INVALID_ENTITY);
+			lightWnd->SetEntity(INVALID_ENTITY);
+			soundWnd->SetEntity(INVALID_ENTITY);
+			decalWnd->SetEntity(INVALID_ENTITY);
+			envProbeWnd->SetEntity(INVALID_ENTITY);
+			forceFieldWnd->SetEntity(INVALID_ENTITY);
+			cameraWnd->SetEntity(INVALID_ENTITY);
+		}
+		else
+		{
+			const asScene::PickResult& picked = selected.back();
+
+			assert(picked.entity != INVALID_ENTITY);
+
+			objectWnd->SetEntity(INVALID_ENTITY);
+			for (auto& x : selected)
+			{
+				if (scene.objects.GetComponent(x.entity) != nullptr)
+				{
+					objectWnd->SetEntity(x.entity);
+					break;
+				}
+			}
+
+			emitterWnd->SetEntity(picked.entity);
+			hairWnd->SetEntity(picked.entity);
+			lightWnd->SetEntity(picked.entity);
+			soundWnd->SetEntity(picked.entity);
+			decalWnd->SetEntity(picked.entity);
+			envProbeWnd->SetEntity(picked.entity);
+			forceFieldWnd->SetEntity(picked.entity);
+			cameraWnd->SetEntity(picked.entity);
+
+			if (picked.subsetIndex >= 0)
+			{
+				const ObjectComponent* object = scene.objects.GetComponent(picked.entity);
+				if (object != nullptr) // maybe it was deleted...
+				{
+					meshWnd->SetEntity(object->meshID);
+
+					const MeshComponent* mesh = scene.meshes.GetComponent(object->meshID);
+					if (mesh != nullptr && (int)mesh->subsets.size() > picked.subsetIndex)
+					{
+						materialWnd->SetEntity(mesh->subsets[picked.subsetIndex].materialID);
+					}
+				}
+			}
+			else
+			{
+				materialWnd->SetEntity(picked.entity);
+			}
+
+		}
+
+		// Clear highlite state:
+		for (size_t i = 0; i < scene.materials.GetCount(); ++i)
+		{
+			scene.materials[i].SetUserStencilRef(EDITORSTENCILREF_CLEAR);
+		}
+		for (size_t i = 0; i < scene.objects.GetCount(); ++i)
+		{
+			scene.objects[i].SetUserStencilRef(EDITORSTENCILREF_CLEAR);
+		}
+		for (auto& x : selected)
+		{
+			ObjectComponent* object = scene.objects.GetComponent(x.entity);
+			if (object != nullptr) // maybe it was deleted...
+			{
+				object->SetUserStencilRef(EDITORSTENCILREF_HIGHLIGHT_OBJECT);
+				if (x.subsetIndex >= 0)
+				{
+					const MeshComponent* mesh = scene.meshes.GetComponent(object->meshID);
+					if (mesh != nullptr && (int)mesh->subsets.size() > x.subsetIndex)
+					{
+						MaterialComponent* material = scene.materials.GetComponent(mesh->subsets[x.subsetIndex].materialID);
+						if (material != nullptr)
+						{
+							material->SetUserStencilRef(EDITORSTENCILREF_HIGHLIGHT_MATERIAL);
+						}
+					}
+				}
+			}
+		}
+
+
+
 		translator.Update();
 
 		if (translator.IsDragEnded())
@@ -1459,10 +1579,13 @@ namespace as
 		camera.TransformCamera(cameraWnd->camera_transform);
 		camera.UpdateCamera();
 
+		asProfiler::EndRange(profrange);
+
 		__super::Update(dt);
 
 		renderPath->Update(dt);
 	}
+
 	void EditorComponent::Render() const
 	{
 		Scene& scene = asScene::GetScene();
@@ -1622,6 +1745,7 @@ namespace as
 
 			// Objects outline (orange):
 			{
+				device->UnbindResources(TEXSLOT_ONDEMAND0, 1, cmd);
 				device->RenderPassBegin(&renderpass_selectionOutline[0], cmd);
 
 				// Draw solid blocks of selected objects
@@ -2095,6 +2219,18 @@ namespace as
 		}
 
 		selected.push_back(picked);
+	}
+
+	bool EditorComponent::IsSelected(Entity entity) const
+	{
+		for (auto& x : selected)
+		{
+			if (x.entity == entity)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void EditorComponent::ResetHistory()
