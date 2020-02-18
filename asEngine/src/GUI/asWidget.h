@@ -57,10 +57,10 @@ namespace as
 		asGraphics::Rect scissorRect;
 
 		asColor colors[ASWIDGETSTATE_COUNT] = {
-			asColor::Booger(),
-			asColor::Gray(),
-			asColor::White(),
-			asColor::Gray(),
+			asColor::defaultButtonIdle(),
+			asColor::defaultButtonFocus(),
+			asColor::defaultButtonActive(),
+			asColor::defaultButtonFocus(),
 		};
 		static_assert(arraysize(colors) == ASWIDGETSTATE_COUNT, "Every ASWIDGETSTATE needs a default color!");
 

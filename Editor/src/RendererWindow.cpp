@@ -16,10 +16,13 @@ namespace as
 		asRenderer::SetToDrawDebugCameras(true);
 
 		rendererWindow = new asWindow(GUI, "Renderer Window");
-		rendererWindow->SetSize(XMFLOAT2(640, 790));
+		rendererWindow->SetSize(XMFLOAT2(640, 700));
+		float windowX = screenW / 3.0f - rendererWindow->GetScale().x / 2.0f;
+		float windowY = 50;
+		rendererWindow->SetPos(XMFLOAT2(windowX, windowY));
 		GUI->AddWidget(rendererWindow);
 
-		float x = 260, y = 20, step = 25;
+		float x = 260 + windowX, y = 20 + windowY, step = 25;
 
 		vsyncCheckBox = new asCheckBox("VSync: ");
 		vsyncCheckBox->SetTooltip("Toggle vertical sync");
@@ -100,7 +103,7 @@ namespace as
 		voxelRadianceVoxelSizeSlider = new asSlider(0.25, 2, 1, 7, "Voxel GI Voxel Size: ");
 		voxelRadianceVoxelSizeSlider->SetTooltip("Adjust the voxel size for Voxel GI calculations.");
 		voxelRadianceVoxelSizeSlider->SetSize(XMFLOAT2(100, 30));
-		voxelRadianceVoxelSizeSlider->SetPos(XMFLOAT2(x, y += 30));
+		voxelRadianceVoxelSizeSlider->SetPos(XMFLOAT2(x, y += step));
 		voxelRadianceVoxelSizeSlider->SetValue(asRenderer::GetVoxelRadianceVoxelSize());
 		voxelRadianceVoxelSizeSlider->OnSlide([&](asEventArgs args) {
 			asRenderer::SetVoxelRadianceVoxelSize(args.fValue);
@@ -110,7 +113,7 @@ namespace as
 		voxelRadianceConeTracingSlider = new asSlider(1, 16, 8, 15, "Voxel GI NumCones: ");
 		voxelRadianceConeTracingSlider->SetTooltip("Adjust the number of cones sampled in the radiance gathering phase.");
 		voxelRadianceConeTracingSlider->SetSize(XMFLOAT2(100, 30));
-		voxelRadianceConeTracingSlider->SetPos(XMFLOAT2(x, y += 30));
+		voxelRadianceConeTracingSlider->SetPos(XMFLOAT2(x, y += step));
 		voxelRadianceConeTracingSlider->SetValue((float)asRenderer::GetVoxelRadianceNumCones());
 		voxelRadianceConeTracingSlider->OnSlide([&](asEventArgs args) {
 			asRenderer::SetVoxelRadianceNumCones(args.iValue);
@@ -120,7 +123,7 @@ namespace as
 		voxelRadianceRayStepSizeSlider = new asSlider(0.5f, 2.0f, 0.5f, 10000, "Voxel GI Ray Step Size: ");
 		voxelRadianceRayStepSizeSlider->SetTooltip("Adjust the precision of ray marching for cone tracing step. Lower values = more precision but slower performance.");
 		voxelRadianceRayStepSizeSlider->SetSize(XMFLOAT2(100, 30));
-		voxelRadianceRayStepSizeSlider->SetPos(XMFLOAT2(x, y += 30));
+		voxelRadianceRayStepSizeSlider->SetPos(XMFLOAT2(x, y += step));
 		voxelRadianceRayStepSizeSlider->SetValue(asRenderer::GetVoxelRadianceRayStepSize());
 		voxelRadianceRayStepSizeSlider->OnSlide([&](asEventArgs args) {
 			asRenderer::SetVoxelRadianceRayStepSize(args.fValue);
@@ -130,7 +133,7 @@ namespace as
 		voxelRadianceMaxDistanceSlider = new asSlider(0, 100, 10, 10000, "Voxel GI Max Distance: ");
 		voxelRadianceMaxDistanceSlider->SetTooltip("Adjust max raymarching distance for voxel GI.");
 		voxelRadianceMaxDistanceSlider->SetSize(XMFLOAT2(100, 30));
-		voxelRadianceMaxDistanceSlider->SetPos(XMFLOAT2(x, y += 30));
+		voxelRadianceMaxDistanceSlider->SetPos(XMFLOAT2(x, y += step));
 		voxelRadianceMaxDistanceSlider->SetValue(asRenderer::GetVoxelRadianceMaxDistance());
 		voxelRadianceMaxDistanceSlider->OnSlide([&](asEventArgs args) {
 			asRenderer::SetVoxelRadianceMaxDistance(args.fValue);
@@ -195,7 +198,7 @@ namespace as
 		speedMultiplierSlider = new asSlider(0, 4, 1, 100000, "Speed: ");
 		speedMultiplierSlider->SetTooltip("Adjust the global speed (time multiplier)");
 		speedMultiplierSlider->SetSize(XMFLOAT2(100, 30));
-		speedMultiplierSlider->SetPos(XMFLOAT2(x, y += 30));
+		speedMultiplierSlider->SetPos(XMFLOAT2(x, y += step));
 		speedMultiplierSlider->SetValue(asRenderer::GetGameSpeed());
 		speedMultiplierSlider->OnSlide([&](asEventArgs args) {
 			asRenderer::SetGameSpeed(args.fValue);
@@ -390,7 +393,7 @@ namespace as
 		mipLodBiasSlider = new asSlider(-2, 2, 0, 100000, "MipLOD Bias: ");
 		mipLodBiasSlider->SetTooltip("Bias the rendered mip map level of the material textures.");
 		mipLodBiasSlider->SetSize(XMFLOAT2(100, 30));
-		mipLodBiasSlider->SetPos(XMFLOAT2(x, y += 30));
+		mipLodBiasSlider->SetPos(XMFLOAT2(x, y += step));
 		mipLodBiasSlider->OnSlide([&](asEventArgs args) {
 			asGraphics::SamplerDesc desc = asRenderer::GetSampler(SSLOT_OBJECTSHADER)->GetDesc();
 			desc.MipLODBias = args.fValue;
@@ -401,7 +404,7 @@ namespace as
 		raytraceBounceCountSlider = new asSlider(0, 10, 1, 10, "Raytrace Bounces: ");
 		raytraceBounceCountSlider->SetTooltip("How many indirect light bounces to compute when doing ray tracing.");
 		raytraceBounceCountSlider->SetSize(XMFLOAT2(100, 30));
-		raytraceBounceCountSlider->SetPos(XMFLOAT2(x, y += 30));
+		raytraceBounceCountSlider->SetPos(XMFLOAT2(x, y += step));
 		raytraceBounceCountSlider->SetValue((float)asRenderer::GetRaytraceBounceCount());
 		raytraceBounceCountSlider->OnSlide([&](asEventArgs args) {
 			asRenderer::SetRaytraceBounceCount((uint32_t)args.iValue);
@@ -411,7 +414,7 @@ namespace as
 
 
 		// Visualizer toggles:
-		x = 600, y = 20;
+		x += 300; y = 20 + windowY;
 
 		partitionBoxesCheckBox = new asCheckBox("SPTree visualizer: ");
 		partitionBoxesCheckBox->SetTooltip("Visualize the world space partitioning tree as boxes");

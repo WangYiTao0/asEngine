@@ -13,14 +13,20 @@ namespace as
 		float screenW = (float)asRenderer::GetDevice()->GetScreenWidth();
 		float screenH = (float)asRenderer::GetDevice()->GetScreenHeight();
 
-
+		XMFLOAT2 option_size = XMFLOAT2(100, 20);
+		XMFLOAT2 slider_size = XMFLOAT2(200, 20);
 		animWindow = new asWindow(GUI, "Animation Window");
-		animWindow->SetSize(XMFLOAT2(600, 450));
+		animWindow->SetSize(XMFLOAT2(500, 250));
+
+		float windowX = screenW / 3.0f - animWindow->GetScale().x / 2.0f;
+		float windowY = 50;
+
+		animWindow->SetPos(XMFLOAT2(windowX, windowY));
 		GUI->AddWidget(animWindow);
 
-		float x = 200;
-		float y = 0;
-		float step = 35;
+		float x = 150 + windowX;;
+		float y = 0 + windowY;
+		float step = 22;
 
 
 		animationsComboBox = new asComboBox("Animation: ");
@@ -35,7 +41,7 @@ namespace as
 
 		loopedCheckBox = new asCheckBox("Looped: ");
 		loopedCheckBox->SetTooltip("Toggle animation looping behaviour.");
-		loopedCheckBox->SetPos(XMFLOAT2(150, y += step));
+		loopedCheckBox->SetPos(XMFLOAT2(x-50, y += step * 2));
 		loopedCheckBox->OnClick([&](asEventArgs args) {
 			AnimationComponent* animation = asScene::GetScene().animations.GetComponent(entity);
 			if (animation != nullptr)
@@ -47,7 +53,9 @@ namespace as
 
 		playButton = new asButton("Play");
 		playButton->SetTooltip("Play/Pause animation.");
-		playButton->SetPos(XMFLOAT2(200, y));
+		playButton->SetSize(XMFLOAT2(80, 20));
+		playButton->SetPos(XMFLOAT2(x+=50, y));
+
 		playButton->OnClick([&](asEventArgs args) {
 			AnimationComponent* animation = asScene::GetScene().animations.GetComponent(entity);
 			if (animation != nullptr)
@@ -66,7 +74,8 @@ namespace as
 
 		stopButton = new asButton("Stop");
 		stopButton->SetTooltip("Stop animation.");
-		stopButton->SetPos(XMFLOAT2(310, y));
+		stopButton->SetPos(XMFLOAT2(x+=100, y));
+		stopButton->SetSize(XMFLOAT2(80, 20));
 		stopButton->OnClick([&](asEventArgs args) {
 			AnimationComponent* animation = asScene::GetScene().animations.GetComponent(entity);
 			if (animation != nullptr)
@@ -78,7 +87,7 @@ namespace as
 
 		timerSlider = new asSlider(0, 1, 0, 100000, "Timer: ");
 		timerSlider->SetSize(XMFLOAT2(250, 30));
-		timerSlider->SetPos(XMFLOAT2(x, y += step * 2));
+		timerSlider->SetPos(XMFLOAT2(x - 200, y += step * 2));
 		timerSlider->OnSlide([&](asEventArgs args) {
 			AnimationComponent* animation = asScene::GetScene().animations.GetComponent(entity);
 			if (animation != nullptr)

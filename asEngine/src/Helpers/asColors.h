@@ -64,6 +64,14 @@ namespace as
 		static constexpr asColor Gray() { return asColor(127, 127, 127, 255); }
 		static constexpr asColor Ghost() { return asColor(127, 127, 127, 127); }
 		static constexpr asColor Booger() { return asColor(127, 127, 127, 200); }
+
+		//rgba(72, 84, 96,1.0)
+		//rgba(83, 92, 104,1.0)
+		//rgba(149, 175, 192,1.0)
+		static constexpr asColor defaultButtonIdle() { return asColor(83, 92, 104, 200);}
+		static constexpr asColor defaultButtonFocus() { return asColor(149, 175, 192, 200); }
+		static constexpr asColor defaultButtonActive() { return asColor(199, 236, 238, 200); }
+		//static constexpr asColor defaultButtonDeActive() { return asColor(199, 236, 238, 200); }
 	};
 }
 

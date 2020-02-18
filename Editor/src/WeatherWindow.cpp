@@ -14,6 +14,9 @@ namespace as
 	{
 		assert(GUI && "Invalid GUI!");
 
+		XMFLOAT2 option_size = XMFLOAT2(100, 20);
+		XMFLOAT2 slider_size = XMFLOAT2(100, 20);
+
 		float screenW = (float)asRenderer::GetDevice()->GetScreenWidth();
 		float screenH = (float)asRenderer::GetDevice()->GetScreenHeight();
 
@@ -27,7 +30,7 @@ namespace as
 		float step = 32;
 
 		fogStartSlider = new asSlider(0, 5000, 0, 100000, "Fog Start: ");
-		fogStartSlider->SetSize(XMFLOAT2(100, 30));
+		fogStartSlider->SetSize(slider_size);
 		fogStartSlider->SetPos(XMFLOAT2(x, y += step));
 		fogStartSlider->OnSlide([&](asEventArgs args) {
 			GetWeather().fogStart = args.fValue;
@@ -35,7 +38,7 @@ namespace as
 		weatherWindow->AddWidget(fogStartSlider);
 
 		fogEndSlider = new asSlider(1, 5000, 1000, 10000, "Fog End: ");
-		fogEndSlider->SetSize(XMFLOAT2(100, 30));
+		fogEndSlider->SetSize(slider_size);
 		fogEndSlider->SetPos(XMFLOAT2(x, y += step));
 		fogEndSlider->OnSlide([&](asEventArgs args) {
 			GetWeather().fogEnd = args.fValue;
@@ -43,7 +46,7 @@ namespace as
 		weatherWindow->AddWidget(fogEndSlider);
 
 		fogHeightSlider = new asSlider(0, 1, 0, 10000, "Fog Height: ");
-		fogHeightSlider->SetSize(XMFLOAT2(100, 30));
+		fogHeightSlider->SetSize(slider_size);
 		fogHeightSlider->SetPos(XMFLOAT2(x, y += step));
 		fogHeightSlider->OnSlide([&](asEventArgs args) {
 			GetWeather().fogHeight = args.fValue;
@@ -51,7 +54,7 @@ namespace as
 		weatherWindow->AddWidget(fogHeightSlider);
 
 		cloudinessSlider = new asSlider(0, 1, 0.0f, 10000, "Cloudiness: ");
-		cloudinessSlider->SetSize(XMFLOAT2(100, 30));
+		cloudinessSlider->SetSize(slider_size);
 		cloudinessSlider->SetPos(XMFLOAT2(x, y += step));
 		cloudinessSlider->OnSlide([&](asEventArgs args) {
 			GetWeather().cloudiness = args.fValue;
@@ -59,7 +62,7 @@ namespace as
 		weatherWindow->AddWidget(cloudinessSlider);
 
 		cloudScaleSlider = new asSlider(0.00005f, 0.001f, 0.0005f, 10000, "Cloud Scale: ");
-		cloudScaleSlider->SetSize(XMFLOAT2(100, 30));
+		cloudScaleSlider->SetSize(slider_size);
 		cloudScaleSlider->SetPos(XMFLOAT2(x, y += step));
 		cloudScaleSlider->OnSlide([&](asEventArgs args) {
 			GetWeather().cloudScale = args.fValue;
@@ -67,7 +70,7 @@ namespace as
 		weatherWindow->AddWidget(cloudScaleSlider);
 
 		cloudSpeedSlider = new asSlider(0.001f, 0.2f, 0.1f, 10000, "Cloud Speed: ");
-		cloudSpeedSlider->SetSize(XMFLOAT2(100, 30));
+		cloudSpeedSlider->SetSize(slider_size);
 		cloudSpeedSlider->SetPos(XMFLOAT2(x, y += step));
 		cloudSpeedSlider->OnSlide([&](asEventArgs args) {
 			GetWeather().cloudSpeed = args.fValue;
@@ -75,12 +78,12 @@ namespace as
 		weatherWindow->AddWidget(cloudSpeedSlider);
 
 		windSpeedSlider = new asSlider(0.001f, 0.2f, 0.1f, 10000, "Wind Speed: ");
-		windSpeedSlider->SetSize(XMFLOAT2(100, 30));
+		windSpeedSlider->SetSize(slider_size);
 		windSpeedSlider->SetPos(XMFLOAT2(x, y += step));
 		weatherWindow->AddWidget(windSpeedSlider);
 
 		windDirectionSlider = new asSlider(0, 1, 0, 10000, "Wind Direction: ");
-		windDirectionSlider->SetSize(XMFLOAT2(100, 30));
+		windDirectionSlider->SetSize(slider_size);
 		windDirectionSlider->SetPos(XMFLOAT2(x, y += step));
 		windDirectionSlider->OnSlide([&](asEventArgs args) {
 			XMMATRIX rot = XMMatrixRotationY(args.fValue * XM_PI * 2);
@@ -128,10 +131,6 @@ namespace as
 			});
 		weatherWindow->AddWidget(skyButton);
 
-
-
-
-
 		asButton* preset0Button = new asButton("WeatherPreset - Default");
 		preset0Button->SetTooltip("Apply this weather preset to the world.");
 		preset0Button->SetSize(XMFLOAT2(240, 30));
@@ -140,6 +139,8 @@ namespace as
 
 			Scene& scene = asScene::GetScene();
 			scene.weathers.Clear();
+
+
 			scene.weather = WeatherComponent();
 
 			InvalidateProbes();
@@ -245,7 +246,6 @@ namespace as
 
 
 
-
 		ambientColorPicker = new asColorPicker(GUI, "Ambient Color");
 		ambientColorPicker->SetPos(XMFLOAT2(360, 40));
 		ambientColorPicker->RemoveWidgets();
@@ -301,7 +301,7 @@ namespace as
 
 
 		ocean_patchSizeSlider = new asSlider(1, 1000, 1000, 100000, "Patch size: ");
-		ocean_patchSizeSlider->SetSize(XMFLOAT2(100, 30));
+		ocean_patchSizeSlider->SetSize(slider_size);
 		ocean_patchSizeSlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_patchSizeSlider->SetValue(asScene::GetScene().weather.oceanParameters.patch_length);
 		ocean_patchSizeSlider->SetTooltip("Adjust water tiling patch size");
@@ -319,7 +319,7 @@ namespace as
 		weatherWindow->AddWidget(ocean_patchSizeSlider);
 
 		ocean_waveAmplitudeSlider = new asSlider(0, 1000, 1000, 100000, "Wave amplitude: ");
-		ocean_waveAmplitudeSlider->SetSize(XMFLOAT2(100, 30));
+		ocean_waveAmplitudeSlider->SetSize(slider_size);
 		ocean_waveAmplitudeSlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_waveAmplitudeSlider->SetValue(asScene::GetScene().weather.oceanParameters.wave_amplitude);
 		ocean_waveAmplitudeSlider->SetTooltip("Adjust wave size");
@@ -337,7 +337,7 @@ namespace as
 		weatherWindow->AddWidget(ocean_waveAmplitudeSlider);
 
 		ocean_choppyScaleSlider = new asSlider(0, 10, 1000, 100000, "Choppiness: ");
-		ocean_choppyScaleSlider->SetSize(XMFLOAT2(100, 30));
+		ocean_choppyScaleSlider->SetSize(slider_size);
 		ocean_choppyScaleSlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_choppyScaleSlider->SetValue(asScene::GetScene().weather.oceanParameters.choppy_scale);
 		ocean_choppyScaleSlider->SetTooltip("Adjust wave choppiness");
@@ -351,7 +351,7 @@ namespace as
 		weatherWindow->AddWidget(ocean_choppyScaleSlider);
 
 		ocean_windDependencySlider = new asSlider(0, 1, 1000, 100000, "Wind dependency: ");
-		ocean_windDependencySlider->SetSize(XMFLOAT2(100, 30));
+		ocean_windDependencySlider->SetSize(slider_size);
 		ocean_windDependencySlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_windDependencySlider->SetValue(asScene::GetScene().weather.oceanParameters.wind_dependency);
 		ocean_windDependencySlider->SetTooltip("Adjust wind contribution");
@@ -369,7 +369,7 @@ namespace as
 		weatherWindow->AddWidget(ocean_windDependencySlider);
 
 		ocean_timeScaleSlider = new asSlider(0, 4, 1000, 100000, "Time scale: ");
-		ocean_timeScaleSlider->SetSize(XMFLOAT2(100, 30));
+		ocean_timeScaleSlider->SetSize(slider_size);
 		ocean_timeScaleSlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_timeScaleSlider->SetValue(asScene::GetScene().weather.oceanParameters.time_scale);
 		ocean_timeScaleSlider->SetTooltip("Adjust simulation speed");
@@ -383,7 +383,7 @@ namespace as
 		weatherWindow->AddWidget(ocean_timeScaleSlider);
 
 		ocean_heightSlider = new asSlider(-100, 100, 0, 100000, "Water level: ");
-		ocean_heightSlider->SetSize(XMFLOAT2(100, 30));
+		ocean_heightSlider->SetSize(slider_size);
 		ocean_heightSlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_heightSlider->SetValue(0);
 		ocean_heightSlider->SetTooltip("Adjust water level");
@@ -397,7 +397,7 @@ namespace as
 		weatherWindow->AddWidget(ocean_heightSlider);
 
 		ocean_detailSlider = new asSlider(1, 10, 0, 9, "Surface Detail: ");
-		ocean_detailSlider->SetSize(XMFLOAT2(100, 30));
+		ocean_detailSlider->SetSize(slider_size);
 		ocean_detailSlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_detailSlider->SetValue(4);
 		ocean_detailSlider->SetTooltip("Adjust surface tessellation resolution. High values can decrease performance.");
@@ -411,7 +411,7 @@ namespace as
 		weatherWindow->AddWidget(ocean_detailSlider);
 
 		ocean_toleranceSlider = new asSlider(1, 10, 0, 1000, "Displacement Tolerance: ");
-		ocean_toleranceSlider->SetSize(XMFLOAT2(100, 30));
+		ocean_toleranceSlider->SetSize(slider_size);
 		ocean_toleranceSlider->SetPos(XMFLOAT2(x, y += step));
 		ocean_toleranceSlider->SetValue(2);
 		ocean_toleranceSlider->SetTooltip("Big waves can introduce glitches on screen borders, this can fix that but surface detail will decrease.");

@@ -124,7 +124,6 @@ namespace as
 		renderPath->setDepthOfFieldEnabled(false);
 		renderPath->setLightShaftsEnabled(false);
 
-
 		renderPath->Initialize();
 		renderPath->Load();
 		renderPath->Update(0);
@@ -722,6 +721,8 @@ namespace as
 	void EditorComponent::Start()
 	{
 		__super::Start();
+		
+		
 	}
 	void EditorComponent::FixedUpdate()
 	{

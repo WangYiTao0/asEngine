@@ -914,9 +914,14 @@ namespace as
 
 			XMFLOAT3 sunColor = XMFLOAT3(0, 0, 0);
 			XMFLOAT3 sunDirection = XMFLOAT3(0, 1, 0);
-			XMFLOAT3 horizon = XMFLOAT3(0.0f, 0.0f, 0.0f);
-			XMFLOAT3 zenith = XMFLOAT3(0.0f, 0.0f, 0.0f);
-			XMFLOAT3 ambient = XMFLOAT3(0.2f, 0.2f, 0.2f);
+			//rgba(15, 188, 249, 1.0)
+
+			XMFLOAT3 ambient = XMFLOAT3(0.1f, 0.1f, 0.1f);
+			XMFLOAT3 horizon = XMFLOAT3(0.3f, 0.3f, 0.4f);
+			XMFLOAT3 zenith = XMFLOAT3(37.0f / 255.0f, 61.0f / 255.0f, 190.0f / 255.0f);
+			//XMFLOAT3 horizon = XMFLOAT3(0.0f, 0.0f, 0.0f);
+			//XMFLOAT3 zenith = XMFLOAT3(0.0f, 0.0f, 0.0f);
+			//XMFLOAT3 ambient = XMFLOAT3(0.2f, 0.2f, 0.2f);
 			float fogStart = 100;
 			float fogEnd = 1000;
 			float fogHeight = 0;

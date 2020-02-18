@@ -15,15 +15,15 @@ namespace as
 	{
 		assert(GUI && "Invalid GUI!");
 
+		XMFLOAT2 option_size = XMFLOAT2(100, 20);
+		XMFLOAT2 slider_size = XMFLOAT2(200, 20);
+
 		float screenW = (float)asRenderer::GetDevice()->GetScreenWidth();
 		float screenH = (float)asRenderer::GetDevice()->GetScreenHeight();
 
 		materialWindow = new asWindow(GUI, "Material Window");
-		materialWindow->SetSize(XMFLOAT2(760, 890));
-		materialWindow->SetColor(asColor::Red());
+		materialWindow->SetSize(XMFLOAT2(760, 800));
 		GUI->AddWidget(materialWindow);
-
-		
 
 		materialNameField = new asTextInputField("MaterialName");
 		materialNameField->SetPos(XMFLOAT2(10, 60));
@@ -37,8 +37,8 @@ namespace as
 			});
 		materialWindow->AddWidget(materialNameField);
 
-		float x = 540, y = 30;
-		float step = 25;
+		float x = 540, y = 20;
+		float step = 21;
 
 		waterCheckBox = new asCheckBox("Water: ");
 		waterCheckBox->SetTooltip("Set material as special water material.");
@@ -121,11 +121,11 @@ namespace as
 		materialWindow->AddWidget(occlusionSecondaryCheckBox);
 
 
-		step = 35;
+		step = 23;
 
 		normalMapSlider = new asSlider(0, 4, 1, 4000, "Normalmap: ");
 		normalMapSlider->SetTooltip("How much the normal map should distort the face normals (bumpiness).");
-		normalMapSlider->SetSize(XMFLOAT2(100, 30));
+		normalMapSlider->SetSize(XMFLOAT2(100, 20));
 		normalMapSlider->SetPos(XMFLOAT2(x, y += step));
 		normalMapSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -136,7 +136,7 @@ namespace as
 
 		roughnessSlider = new asSlider(0, 1, 0.5f, 1000, "Roughness: ");
 		roughnessSlider->SetTooltip("Adjust the surface roughness. Rough surfaces are less shiny, more matte.");
-		roughnessSlider->SetSize(XMFLOAT2(100, 30));
+		roughnessSlider->SetSize(XMFLOAT2(100, 20));
 		roughnessSlider->SetPos(XMFLOAT2(x, y += step));
 		roughnessSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -147,7 +147,7 @@ namespace as
 
 		reflectanceSlider = new asSlider(0, 1, 0.5f, 1000, "Reflectance: ");
 		reflectanceSlider->SetTooltip("Adjust the overall surface reflectivity.");
-		reflectanceSlider->SetSize(XMFLOAT2(100, 30));
+		reflectanceSlider->SetSize(XMFLOAT2(100, 20));
 		reflectanceSlider->SetPos(XMFLOAT2(x, y += step));
 		reflectanceSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -158,7 +158,7 @@ namespace as
 
 		metalnessSlider = new asSlider(0, 1, 0.0f, 1000, "Metalness: ");
 		metalnessSlider->SetTooltip("The more metal-like the surface is, the more the its color will contribute to the reflection color.");
-		metalnessSlider->SetSize(XMFLOAT2(100, 30));
+		metalnessSlider->SetSize(XMFLOAT2(100, 20));
 		metalnessSlider->SetPos(XMFLOAT2(x, y += step));
 		metalnessSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -169,7 +169,7 @@ namespace as
 
 		alphaSlider = new asSlider(0, 1, 1.0f, 1000, "Alpha: ");
 		alphaSlider->SetTooltip("Adjusts the overall transparency of the surface. No effect when BlendMode is set to OPAQUE.");
-		alphaSlider->SetSize(XMFLOAT2(100, 30));
+		alphaSlider->SetSize(XMFLOAT2(100, 20));
 		alphaSlider->SetPos(XMFLOAT2(x, y += step));
 		alphaSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -180,7 +180,7 @@ namespace as
 
 		alphaRefSlider = new asSlider(0, 1, 1.0f, 1000, "AlphaRef: ");
 		alphaRefSlider->SetTooltip("Adjust the alpha cutoff threshold. Some performance optimizations will be disabled.");
-		alphaRefSlider->SetSize(XMFLOAT2(100, 30));
+		alphaRefSlider->SetSize(XMFLOAT2(100, 20));
 		alphaRefSlider->SetPos(XMFLOAT2(x, y += step));
 		alphaRefSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -191,7 +191,7 @@ namespace as
 
 		refractionIndexSlider = new asSlider(0, 1.0f, 0.02f, 1000, "Refraction Index: ");
 		refractionIndexSlider->SetTooltip("Adjust the IOR (index of refraction). It controls the amount of distortion of the scene visible through the transparent object. No effect when BlendMode is set to OPAQUE.");
-		refractionIndexSlider->SetSize(XMFLOAT2(100, 30));
+		refractionIndexSlider->SetSize(XMFLOAT2(100, 20));
 		refractionIndexSlider->SetPos(XMFLOAT2(x, y += step));
 		refractionIndexSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -202,7 +202,7 @@ namespace as
 
 		emissiveSlider = new asSlider(0, 1, 0.0f, 1000, "Emissive: ");
 		emissiveSlider->SetTooltip("Adjust the light emission of the surface. The color of the light emitted is that of the color of the material.");
-		emissiveSlider->SetSize(XMFLOAT2(100, 30));
+		emissiveSlider->SetSize(XMFLOAT2(100, 20));
 		emissiveSlider->SetPos(XMFLOAT2(x, y += step));
 		emissiveSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -213,7 +213,7 @@ namespace as
 
 		sssSlider = new asSlider(0, 1, 0.0f, 1000, "Subsurface Scattering: ");
 		sssSlider->SetTooltip("Adjust how much the light is scattered when entered inside the surface of the object. (SSS postprocess must be enabled)");
-		sssSlider->SetSize(XMFLOAT2(100, 30));
+		sssSlider->SetSize(XMFLOAT2(100, 20));
 		sssSlider->SetPos(XMFLOAT2(x, y += step));
 		sssSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -224,7 +224,7 @@ namespace as
 
 		pomSlider = new asSlider(0, 0.1f, 0.0f, 1000, "Parallax Occlusion Mapping: ");
 		pomSlider->SetTooltip("Adjust how much the bump map should modulate the surface parallax effect.");
-		pomSlider->SetSize(XMFLOAT2(100, 30));
+		pomSlider->SetSize(XMFLOAT2(100, 20));
 		pomSlider->SetPos(XMFLOAT2(x, y += step));
 		pomSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -235,7 +235,7 @@ namespace as
 
 		displacementMappingSlider = new asSlider(0, 0.1f, 0.0f, 1000, "Displacement Mapping: ");
 		displacementMappingSlider->SetTooltip("Adjust how much the bump map should modulate the geometry when using tessellation.");
-		displacementMappingSlider->SetSize(XMFLOAT2(100, 30));
+		displacementMappingSlider->SetSize(XMFLOAT2(100, 20));
 		displacementMappingSlider->SetPos(XMFLOAT2(x, y += step));
 		displacementMappingSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -246,7 +246,7 @@ namespace as
 
 		texAnimFrameRateSlider = new asSlider(0, 60, 0, 60, "Texcoord anim FPS: ");
 		texAnimFrameRateSlider->SetTooltip("Adjust the texture animation frame rate (frames per second). Any value above 0 will make the material dynamic.");
-		texAnimFrameRateSlider->SetSize(XMFLOAT2(100, 30));
+		texAnimFrameRateSlider->SetSize(XMFLOAT2(100, 20));
 		texAnimFrameRateSlider->SetPos(XMFLOAT2(x, y += step));
 		texAnimFrameRateSlider->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -259,7 +259,7 @@ namespace as
 
 		texAnimDirectionSliderU = new asSlider(-0.05f, 0.05f, 0, 1000, "Texcoord anim U: ");
 		texAnimDirectionSliderU->SetTooltip("Adjust the texture animation speed along the U direction in texture space.");
-		texAnimDirectionSliderU->SetSize(XMFLOAT2(100, 30));
+		texAnimDirectionSliderU->SetSize(XMFLOAT2(100, 20));
 		texAnimDirectionSliderU->SetPos(XMFLOAT2(x, y += step));
 		texAnimDirectionSliderU->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -272,7 +272,7 @@ namespace as
 
 		texAnimDirectionSliderV = new asSlider(-0.05f, 0.05f, 0, 1000, "Texcoord anim V: ");
 		texAnimDirectionSliderV->SetTooltip("Adjust the texture animation speed along the V direction in texture space.");
-		texAnimDirectionSliderV->SetSize(XMFLOAT2(100, 30));
+		texAnimDirectionSliderV->SetSize(XMFLOAT2(100, 20));
 		texAnimDirectionSliderV->SetPos(XMFLOAT2(x, y += step));
 		texAnimDirectionSliderV->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -285,7 +285,7 @@ namespace as
 
 		texMulSliderX = new asSlider(0.01f, 10.0f, 0, 1000, "Texture TileSize X: ");
 		texMulSliderX->SetTooltip("Adjust the texture mapping size.");
-		texMulSliderX->SetSize(XMFLOAT2(100, 30));
+		texMulSliderX->SetSize(XMFLOAT2(100, 20));
 		texMulSliderX->SetPos(XMFLOAT2(x, y += step));
 		texMulSliderX->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
@@ -299,7 +299,7 @@ namespace as
 
 		texMulSliderY = new asSlider(0.01f, 10.0f, 0, 1000, "Texture TileSize Y: ");
 		texMulSliderY->SetTooltip("Adjust the texture mapping size.");
-		texMulSliderY->SetSize(XMFLOAT2(100, 30));
+		texMulSliderY->SetSize(XMFLOAT2(100, 20));
 		texMulSliderY->SetPos(XMFLOAT2(x, y += step));
 		texMulSliderY->OnSlide([&](asEventArgs args) {
 			MaterialComponent* material = asScene::GetScene().materials.GetComponent(entity);
