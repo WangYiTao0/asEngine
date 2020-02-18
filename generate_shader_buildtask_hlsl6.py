@@ -59,7 +59,7 @@ for shader in root.iter(namespace + "FxCompile"):
         file.write(" -flegacy-macro-expansion -Fo " + "../../asEngine_Shaders/shaderCSO/" + outputdir + "/"+ filename + ".cso ")
 
         ## Append to error log:
-        file.write(" 2>>../build_HLSL6_errors.log \n")
+        file.write(" 2>>../../build_HLSL6_errors.log \n")
 
         
 file.write("cd .. \n")

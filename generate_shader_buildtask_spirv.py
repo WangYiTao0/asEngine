@@ -1,7 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 
-tree = ET.parse('WickedEngine/WickedEngine_SHADERS.vcxproj')
+tree = ET.parse('asEngine_Shaders/asEngine_Shaders.vcxproj')
 root = tree.getroot()
 
 ## Hardcode visual studio namespace for now...
@@ -15,10 +15,13 @@ outputdir = "spirv"
 file.write("2>build_SPIRV_errors.log cls \n")
 
 ## Then, ensure that we have the output directory:
-file.write("mkdir WickedEngine\shaders \n")
-file.write("cd WickedEngine\shaders \n")
+file.write("mkdir asEngine_Shaders\shaderCSO \n")
+file.write("cd asEngine_Shaders\shaderCSO \n")
 file.write("mkdir " + outputdir + "\n")
 file.write("cd .. \n")
+file.write("cd .. \n")
+file.write("cd 3rdPart \n")
+file.write("cd shadercompilers \n")
 
 ## Then we parse the default shader project and generate build task for an other shader compiler:
 for shader in root.iter(namespace + "FxCompile"):
@@ -29,7 +32,7 @@ for shader in root.iter(namespace + "FxCompile"):
         
         print (profile + ":   " + name)
 
-        file.write("..\shadercompilers\dxc " + name + " -T ")
+        file.write("dxc " " ../../asEngine_Shaders/" + name + " -T ")
         
         if profile == "Vertex":
             file.write("vs")
@@ -61,7 +64,10 @@ for shader in root.iter(namespace + "FxCompile"):
         if profile == "Compute":
             file.write("SPIRV_SHADERTYPE_CS")
 
-        file.write(" -spirv -fvk-use-dx-layout -flegacy-macro-expansion -Fo " + "shaders/" + outputdir + "/" + os.path.splitext(name)[0] + ".cso ")
+        filepath,fullflname = os.path.split(name)
+        filename,ext = os.path.splitext(fullflname)
+
+        file.write(" -spirv -fvk-use-dx-layout -flegacy-macro-expansion -Fo " + "../../asEngine_Shaders/shaderCSO/" + outputdir + "/" + filename + ".cso ")
 
         ## Append to error log:
         file.write(" 2>>../build_SPIRV_errors.log \n")
