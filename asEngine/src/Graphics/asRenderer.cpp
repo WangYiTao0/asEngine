@@ -2624,7 +2624,7 @@ namespace as
 
 		void Initialize()
 		{
-			GetCamera().CreatePerspective((float)GetInternalResolution().x, (float)GetInternalResolution().y, 0.1f, 800);
+			GetCamera().CreatePerspective((float)GetInternalResolution().x, (float)GetInternalResolution().y, 0.1f, 1200);
 
 			frameCullings.insert(make_pair(&GetCamera(), FrameCulling()));
 			frameCullings.insert(make_pair(&GetRefCamera(), FrameCulling()));
