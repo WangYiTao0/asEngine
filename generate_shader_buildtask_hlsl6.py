@@ -15,8 +15,8 @@ outputdir = "hlsl6"
 file.write("2>build_HLSL6_errors.log cls \n")
 
 ## Then, ensure that we have the output directory:
-file.write("mkdir asEngine\assets\shaders \n")
-file.write("cd asEngine\assets\shaders \n")
+file.write("mkdir asEngine_Shaders/shaderCSO \n")
+file.write("cd asEngine_Shaders/shaderCSO \n")
 file.write("mkdir " + outputdir + "\n")
 file.write("cd .. \n")
 
@@ -29,7 +29,8 @@ for shader in root.iter(namespace + "FxCompile"):
         
         print (profile + ":   " + name)
 
-        file.write("..\3rdPart\shadercompilers\dxc " + name + " -T ")
+        file.write("..\shadercompilers\dxc " + name + " -T ")
+
         
         if profile == "Vertex":
             file.write("vs")
@@ -48,7 +49,10 @@ for shader in root.iter(namespace + "FxCompile"):
 
         file.write(" -D SHADER_MODEL_6 ");
 
-        file.write(" -flegacy-macro-expansion -Fo " + "shaders/" + outputdir + "/" + os.path.splitext(name)[0] + ".cso ")
+        # filepath[0],fullflname[0] = os.path.splitext(name)[0]
+        # filename[0],ext[0] = os.path.splitext(fullflname[0])
+
+        file.write(" -flegacy-macro-expansion -Fo " + "shaderCSO/" + outputdir + "/"+ os.path.splitext(name)[0]  + ".cso ")
 
         ## Append to error log:
         file.write(" 2>>../build_HLSL6_errors.log \n")
