@@ -63,7 +63,7 @@ namespace as
 			ASFALIGN_CENTER, ASFALIGN_CENTER));
 		addFont(&font);
 
-		sprite = asSprite("assets/images/as-logo.png");
+		sprite = asSprite("assets/images/as-logo.jpg");
 		sprite.anim.opa = 1;
 		sprite.anim.repeatable = true;
 		sprite.params.pos = XMFLOAT3(asRenderer::GetDevice()->GetScreenWidth() * 0.5f, asRenderer::GetDevice()->GetScreenHeight() * 0.5f - font.textHeight(), 0);
@@ -647,13 +647,14 @@ namespace as
 			if (helpLabel == nullptr)
 			{
 				stringstream ss("");
-				ss << "Help:   " << endl << "############" << endl << endl;
-				ss << "Move camera: WASD" << endl;
+				ss << "Help:   " << endl  << endl;
+				ss << "Move camera: WASD" << endl;	
+				ss << "Camera up: E, down: Q" << endl;	
+				ss << "Camera speedUp: SHIFT button" << endl;
+
 				ss << "Look: Middle mouse button / arrow keys" << endl;
 				ss << "Select: Right mouse button" << endl;
-				ss << "Place decal, interact with water: Left mouse button when nothing is selected" << endl;
-				ss << "Camera speed: SHIFT button" << endl;
-				ss << "Camera up: E, down: Q" << endl;
+				//ss << "Place decal, interact with water: Left mouse button when nothing is selected" << endl;
 				ss << "Duplicate entity: Ctrl + D" << endl;
 				ss << "Select All: Ctrl + A" << endl;
 				ss << "Undo: Ctrl + Z" << endl;
@@ -661,14 +662,14 @@ namespace as
 				ss << "Copy: Ctrl + C" << endl;
 				ss << "Paste: Ctrl + V" << endl;
 				ss << "Delete: DELETE button" << endl;
-				ss << "Place Instances: Ctrl + Shift + Left mouse click (place clipboard onto clicked surface)" << endl;
-				ss << "Pin soft body triangle: Hold P while nothing is selected and click on soft body with Left mouse button" << endl;
-				ss << "Script Console / backlog: HOME button" << endl;
+				//ss << "Place Instances: Ctrl + Shift + Left mouse click (place clipboard onto clicked surface)" << endl;
+				//ss << "Pin soft body triangle: Hold P while nothing is selected and click on soft body with Left mouse button" << endl;
+				//ss << "Script Console / backlog: HOME button" << endl;
 				ss << endl;
 
 				helpLabel = new asLabel("HelpLabel");
 				helpLabel->SetText(ss.str());
-				helpLabel->SetSize(XMFLOAT2(screenW / 3.0f, screenH / 2.2f));
+				helpLabel->SetSize(XMFLOAT2(screenW / 5.5f, screenH / 4.3f));
 				helpLabel->SetPos(XMFLOAT2(screenW / 2.0f - helpLabel->scale.x / 2.0f, screenH / 2.0f - helpLabel->scale.y / 2.0f));
 				helpLabel->SetVisible(false);
 				GetGUI().AddWidget(helpLabel);
