@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "Graphics/API/asGraphicsDevice.h"
 #include "Audio/asAudio.h"
 #include "asHashString.h"

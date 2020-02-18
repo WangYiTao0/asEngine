@@ -2,5 +2,5 @@
 #define FORWARD
 #define NORMALMAP
 #define PLANARREFLECTION
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 

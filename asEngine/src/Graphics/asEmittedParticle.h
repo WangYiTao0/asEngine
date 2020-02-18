@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "Graphics\API\asGraphicsDevice.h"
 #include "Helpers\asIntersect.h"
 #include "GPUMapping\ShaderInterop_EmittedParticle.h"

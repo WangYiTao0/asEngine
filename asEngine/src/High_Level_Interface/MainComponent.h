@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "System/asPlatform.h"
 #include "Helpers/asResourceManager.h"
 #include "Helpers/asColors.h"

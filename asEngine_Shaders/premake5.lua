@@ -17,32 +17,38 @@
     
     includedirs
     {
-        "../asEngine/src",
     }
  
-
-
     libdirs
     {
-        
     }
 
     links
     {
-        asEngine,
     }
     
-
+    defines
+    {
+    }
 
     filter "system:windows"
     systemversion "latest"
 
+    configurations
+    {
+        "Release",
+    }
+    filter "configurations:Release"
+    defines "AS_RELEASE"
+    runtime "Release"
+    optimize "on"
 
--- Shader Compiler Setting--------------------------
-    shaderassembler("AssemblyCode")
+------Shader Compiler Setting--------------------------
+    --shaderassembler("AssemblyCode")
     --shaderoptions instead of shaderincluders
     --shaderdefines "./asEngine/src/Graphics/GPUMapping"
-    shaderoptions "../asEngine/src/Graphics/GPUMapping/"
+    
+    --shaderoptions "../asEngine/src/Graphics/GPUMapping/"
     --shaderincludedirs "../asEngine/src/Graphics/GPUMapping"
     filter { "files:**.hlsli" }
     flags "ExcludeFromBuild"
@@ -52,7 +58,7 @@
     flags "ExcludeFromBuild"
     shadermodel "5.0"
     shaderobjectfileoutput "shaderCSO/%{file.basename}.cso"
-    shaderassembleroutput "shaderASM/%{file.basename}.asm"
+    --shaderassembleroutput "shaderASM/%{file.basename}.asm"
 
     filter { "files:**VS.hlsl" }
     removeflags "ExcludeFromBuild"
@@ -84,17 +90,5 @@
     shadertype "Compute"
     shaderentry "main"
 
-    defines
-    {
-        "AS_PLATFORM_WINDOWS"
-    }
 
-filter "configurations:Debug"
-    defines "AS_DEBUG"
-    runtime "Debug"
-    symbols "on"
 
-filter "configurations:Release"
-    defines "AS_RELEASE"
-    runtime "Release"
-    optimize "on"

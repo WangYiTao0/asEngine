@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AS_ENGINE
+#define AS_ENGINE
 
 // NOTE:
 // The purpose of this file is to expose all engine features.
@@ -6,7 +7,6 @@
 // It should be included in the precompiled header if available.
 
 
-#include "CommonInclude.h"
 
 // High-level interface:
 #include "High_Level_Interface/RenderPath.h"
@@ -86,3 +86,6 @@
 //#pragma comment(lib,"ASEngine_Windows.lib")
 //#endif // WINSTORE_SUPPORT
 //#endif // _WIN32
+
+
+#endif // AS_ENGINE

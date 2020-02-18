@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AS_CONSTANTBUFFER_MAPPING_H
+#define AS_CONSTANTBUFFER_MAPPING_H
 
 // Slot matchings:
 ////////////////////////////////////////////////////
@@ -39,3 +40,5 @@
 #define CBSLOT_OTHER_OCEAN_RENDER				7
 #define CBSLOT_OTHER_CLOUDGENERATOR				7
 #define CBSLOT_OTHER_GPUSORTLIB					8
+
+#endif // AS_CONSTANTBUFFER_MAPPING_H

@@ -1,7 +1,7 @@
 #define DISABLE_DECALS
 #define DISABLE_ENVMAPS
 #include "../HF/globals.hlsli"
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 #include "../HF/hairparticleHF.hlsli"
 
 #ifndef TRANSPARENT

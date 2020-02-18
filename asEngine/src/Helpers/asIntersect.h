@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "asArchive.h"
 #include "System/asECS.h"
 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AS_SHADERINTEROP_FFTGENERATOR_H
+#define AS_SHADERINTEROP_FFTGENERATOR_H
 
 #include "ShaderInterop.h"
 
@@ -14,3 +15,5 @@ CBUFFER(FFTGeneratorCB, CBSLOT_OTHER_FFTGENERATOR)
 	float phase_base;
 };
 
+
+#endif // AS_SHADERINTEROP_FFTGENERATOR_H

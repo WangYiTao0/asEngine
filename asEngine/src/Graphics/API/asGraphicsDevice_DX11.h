@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "asGraphicsDevice.h"
 #include "System/asPlatform.h"
 #include "Helpers/asContainers.h"

@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef AS_SHADERINTEROP_IMAGE_H
+#define AS_SHADERINTEROP_IMAGE_H
 #include "ShaderInterop.h"
 
 CBUFFER(ImageCB, CBSLOT_IMAGE)
@@ -13,3 +13,5 @@ CBUFFER(ImageCB, CBSLOT_IMAGE)
 	float		xMipLevel;
 };
 
+
+#endif // AS_SHADERINTEROP_IMAGE_H

@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef AS_SHADERINTEROP_OCEAN_H
+#define AS_SHADERINTEROP_OCEAN_H
 #include "ShaderInterop.h"
 
 #define OCEAN_COMPUTE_TILESIZE 16
@@ -38,4 +38,6 @@ CBUFFER(Ocean_RenderCB, CBSLOT_OTHER_OCEAN_RENDER)
 	float		xOceanWaterHeight;
 	float		xOceanSurfaceDisplacementTolerance;
 };
+
+#endif // AS_SHADERINTEROP_OCEAN_H
 

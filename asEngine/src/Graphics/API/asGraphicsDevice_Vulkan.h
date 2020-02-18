@@ -5,7 +5,7 @@
 #endif // HAS VULKAN
 
 #ifdef ASENGINE_BUILD_VULKAN
-#include "CommonInclude.h"
+
 #include "asGraphicsDevice.h"
 #include "System/asPlatform.h"
 #include "Helpers/asSpinLock.h"

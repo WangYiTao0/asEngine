@@ -1,6 +1,6 @@
 #pragma once
+#include "aspch.h"
 
-#include "CommonInclude.h"
 namespace as
 {
 	namespace asGraphics

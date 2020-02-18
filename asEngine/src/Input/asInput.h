@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "Helpers/asColors.h"
 
 #include <vector>

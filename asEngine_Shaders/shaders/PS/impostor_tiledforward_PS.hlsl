@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
 #include "../HF/impostorHF.hlsli"
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 
 [earlydepthstencil]
 GBUFFEROutputType_Thin main(VSOut input)

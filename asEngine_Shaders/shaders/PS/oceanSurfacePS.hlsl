@@ -4,7 +4,7 @@
 #define DISABLE_TRANSPARENT_SHADOWMAP
 #include "../HF/globals.hlsli"
 #include "../HF/oceanSurfaceHF.hlsli"
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 
 #define xGradientMap		texture_0
 

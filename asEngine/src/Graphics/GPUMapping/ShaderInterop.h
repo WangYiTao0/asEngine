@@ -1,6 +1,7 @@
-#pragma once
+#ifndef AS_SHADERINTEROP_H_
+#define AS_SHADERINTEROP_H_
 
-#include "CommonInclude.h"
+ 
 #include "ShaderInterop_Vulkan.h"
 #include "ConstantBufferMapping.h"
 #include "SamplerMapping.h"
@@ -137,4 +138,6 @@ typedef XMINT4 int4;
 #endif // invoking vulkan/directx
 
 #endif // __cplusplus
+
+#endif
 

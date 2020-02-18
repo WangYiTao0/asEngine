@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CommonInclude.h"
+
 #include <string>
 namespace as
 {

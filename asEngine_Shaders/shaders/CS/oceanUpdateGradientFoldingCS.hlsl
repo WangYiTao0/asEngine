@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "ShaderInterop_Ocean.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Ocean.h"
 
 TEXTURE2D(texture_displacementmap, float4, TEXSLOT_ONDEMAND0);
 

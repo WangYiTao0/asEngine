@@ -1,5 +1,6 @@
-#pragma once
 
+#ifndef AS_SHADERINTEROP_RENDERER_H
+#define AS_SHADERINTEROP_RENDERER_H
 #include "ShaderInterop.h"
 
 struct ShaderMaterial
@@ -338,4 +339,5 @@ CBUFFER(DispatchParamsCB, CBSLOT_RENDERER_DISPATCHPARAMS)
 };
 
 
+#endif // AS_SHADERINTEROP_RENDERER_H
  

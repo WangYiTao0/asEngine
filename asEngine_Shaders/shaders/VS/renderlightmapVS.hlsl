@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
 #include "../HF/objectInputLayoutHF.hlsli"
-#include "ShaderInterop_Raytracing.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Raytracing.h"
 
 struct Input
 {

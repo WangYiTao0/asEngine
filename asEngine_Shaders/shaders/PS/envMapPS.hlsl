@@ -2,5 +2,5 @@
 #define ENVMAPRENDERING
 #define FORWARD
 #include "../HF/envMapHF.hlsli"
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 

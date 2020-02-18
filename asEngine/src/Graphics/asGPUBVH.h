@@ -2,7 +2,7 @@
 //Bounding volume hierarchy
 //Thinking Parallel, Part III: Tree Construction on the GPU
 
-#include "CommonInclude.h"
+
 #include "Graphics\API\asGraphicsDevice.h"
 #include "System\asScene_Dec1.h"
 #include "Helpers\asRectPacker.h"

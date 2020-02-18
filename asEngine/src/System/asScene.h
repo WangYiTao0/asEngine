@@ -1,6 +1,6 @@
 #pragma once
 #include "aspch.h"
-#include "CommonInclude.h"
+
 #include "Graphics\asEnums.h"
 #include "Helpers\asIntersect.h"
 #include "Graphics\asEmittedParticle.h"

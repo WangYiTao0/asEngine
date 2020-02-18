@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef AS_SHADERINTEROP_BVH_H
+#define AS_SHADERINTEROP_BVH_H
 #include "ShaderInterop.h"
 
 static const uint BVH_BUILDER_GROUPSIZE = 64;
@@ -60,3 +60,4 @@ struct BVHNode
 	uint RightChildIndex;
 };
 
+#endif // AS_SHADERINTEROP_BVH_H

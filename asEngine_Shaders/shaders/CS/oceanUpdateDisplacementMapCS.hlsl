@@ -1,4 +1,4 @@
-#include "ShaderInterop_Ocean.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Ocean.h"
 
 STRUCTUREDBUFFER(g_InputDxyz, float2, TEXSLOT_ONDEMAND0);
 RWTEXTURE2D(output, float4, 0);

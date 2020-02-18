@@ -2,5 +2,5 @@
 #define FORWARD
 #define TRANSPARENT
 #define PLANARREFLECTION
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 

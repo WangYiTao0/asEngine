@@ -82,7 +82,7 @@ int FindSplit(int first, uint last, uint elementCount)
 	do
 	{
 		step = (step + 1) >> 1;
-		int newSplit = split + step;
+		unsigned int newSplit = split + step;
 
 		if (newSplit < last)
 		{

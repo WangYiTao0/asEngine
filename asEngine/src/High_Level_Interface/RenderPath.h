@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "Helpers/asResourceManager.h"
 
 #include <functional>

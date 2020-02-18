@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef AS_SHADERINTEROP_EMITTEDPARTICLE_H
+#define AS_SHADERINTEROP_EMITTEDPARTICLE_H
 #include "ShaderInterop.h"
 
 struct Particle
@@ -91,3 +91,5 @@ inline uint SPH_GridHash(int3 cellIndex)
 	return n;
 }
 
+
+#endif // AS_SHADERINTEROP_EMITTEDPARTICLE_H

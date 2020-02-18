@@ -3,5 +3,5 @@
 #define TRANSPARENT
 #define NORMALMAP
 #define POM
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 

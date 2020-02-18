@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef AS_SAMPLER_MAPPING_H
+#define AS_SAMPLER_MAPPING_H
 // Slot matchings:
 ////////////////////////////////////////////////////
 
@@ -28,3 +28,6 @@
 #define SSLOT_COUNT_ONDEMAND	(SSLOT_ONDEMAND3 + 1)
 
 #define SSLOT_COUNT				(SSLOT_COUNT_PERSISTENT + SSLOT_COUNT_ONDEMAND)
+
+
+#endif // AS_SAMPLER_MAPPING_H

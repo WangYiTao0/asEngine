@@ -1,6 +1,6 @@
 #include "../HF/globals.hlsli"
 #include "../HF/brdf.hlsli"
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 #include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_Postprocess.h"
 
 

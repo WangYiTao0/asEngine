@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "API/asGraphicsDevice.h"
 #include "asEnums.h"
 #include "System/asECS.h"

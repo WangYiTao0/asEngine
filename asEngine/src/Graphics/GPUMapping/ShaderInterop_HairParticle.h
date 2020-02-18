@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef AS_SHADERINTEROP_HAIRPARTICLE_H
+#define AS_SHADERINTEROP_HAIRPARTICLE_H
 #include "ShaderInterop.h"
 
 #define THREADCOUNT_SIMULATEHAIR 256
@@ -39,3 +39,5 @@ CBUFFER(HairParticleCB, CBSLOT_OTHER_HAIRPARTICLE)
 	uint xHairNumDispatchGroups;
 };
 
+
+#endif // AS_SHADERINTEROP_HAIRPARTICLE_H

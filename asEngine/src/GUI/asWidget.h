@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "Helpers/asHashString.h"
 #include "Helpers/asColors.h"
 #include "Graphics/API/asGraphicsDevice.h"

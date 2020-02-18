@@ -1,5 +1,5 @@
 #include "../HF/globals.hlsli"
-#include "cullingShaderHF.hlsli"
+#include "../HF/cullingShaderHF.hlsli"
 #include "../HF/lightingHF.hlsli"
 
 TEXTURE2D(texture_ssao, float, TEXSLOT_RENDERPATH_SSAO);

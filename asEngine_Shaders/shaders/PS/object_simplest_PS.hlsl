@@ -1,4 +1,4 @@
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 
 float4 main(PixelInputType_Simple PSIn) : SV_TARGET
 {

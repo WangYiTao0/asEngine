@@ -5,5 +5,5 @@
 #define TILEDFORWARD
 #define TRANSPARENT
 #define WATER
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 

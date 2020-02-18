@@ -74,6 +74,8 @@ static const int gaussianOffsets[9] = {
 	-4, -3, -2, -1, 0, 1, 2, 3, 4
 };
 
+#define sqr(a)		((a)*(a))
+
 inline bool is_saturated(float a) { return a == saturate(a); }
 inline bool is_saturated(float2 a) { return is_saturated(a.x) && is_saturated(a.y); }
 inline bool is_saturated(float3 a) { return is_saturated(a.x) && is_saturated(a.y) && is_saturated(a.z); }

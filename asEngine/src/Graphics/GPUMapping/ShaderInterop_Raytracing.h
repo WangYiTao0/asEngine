@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef AS_SHADERINTEROP_RAYTRACING_H
+#define AS_SHADERINTEROP_RAYTRACING_H
 #include "ShaderInterop.h"
 
 
@@ -34,6 +34,7 @@ struct RaytracingStoredRay
 	float2 bary;
 	uint2 color; // packed rgba16
 };
+#endif // AS_SHADERINTEROP_RAYTRACING_H
 
 
  

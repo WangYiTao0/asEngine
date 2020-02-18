@@ -2,5 +2,5 @@
 #define TILEDFORWARD
 #define TRANSPARENT
 #define NORMALMAP
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 

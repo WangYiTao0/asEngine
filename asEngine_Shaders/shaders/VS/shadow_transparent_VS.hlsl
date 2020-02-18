@@ -1,4 +1,4 @@
-#include "../HF/globals.hlsli"
+#include "../HF/objectHF.hlsli"
 
 struct VertexOut
 {

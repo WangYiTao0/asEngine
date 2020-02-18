@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AS_RESOURCE_MAPPING_H
+#define AS_RESOURCE_MAPPING_H
 // Slot matchings:
 ////////////////////////////////////////////////////
 
@@ -70,3 +71,5 @@
 #define TEXSLOT_RENDERPATH_WATERRIPPLES		TEXSLOT_ONDEMAND8
 #define TEXSLOT_RENDERPATH_SSAO				TEXSLOT_ONDEMAND8
 #define TEXSLOT_RENDERPATH_SSR				TEXSLOT_ONDEMAND9
+
+#endif // AS_RESOURCE_MAPPING_H

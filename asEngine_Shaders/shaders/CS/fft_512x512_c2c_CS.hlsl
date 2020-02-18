@@ -1,4 +1,4 @@
-#include "ShaderInterop_FFTGenerator.h"
+#include "../../../asEngine/src/Graphics/GPUMapping/ShaderInterop_FFTGenerator.h"
 
 #define COS_PI_4_16 0.70710678118654752440084436210485f
 #define TWIDDLE_1_8 COS_PI_4_16, -COS_PI_4_16

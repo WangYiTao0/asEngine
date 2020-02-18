@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "asMath.h"
 namespace as
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "CommonInclude.h"
+
 #include "Graphics/API/asGraphicsDevice.h"
 #include "Core/Log.h"
 #include <string>
