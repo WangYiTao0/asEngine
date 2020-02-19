@@ -305,9 +305,8 @@ namespace as
 		objectWindow->AddWidget(cascadeMaskSlider);
 
 
-		colorPicker = new asColorPicker(GUI, "Object Color");
+		colorPicker = new asColorPicker(GUI, "Object Color", false);
 		colorPicker->SetPos(XMFLOAT2(10, 30));
-		colorPicker->RemoveWidgets();
 		colorPicker->SetVisible(true);
 		colorPicker->SetEnabled(true);
 		colorPicker->OnColorChanged([&](asEventArgs args) {

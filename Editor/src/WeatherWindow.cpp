@@ -246,9 +246,8 @@ namespace as
 
 
 
-		ambientColorPicker = new asColorPicker(GUI, "Ambient Color");
+		ambientColorPicker = new asColorPicker(GUI, "Ambient Color", false);
 		ambientColorPicker->SetPos(XMFLOAT2(360, 40));
-		ambientColorPicker->RemoveWidgets();
 		ambientColorPicker->SetVisible(false);
 		ambientColorPicker->SetEnabled(true);
 		ambientColorPicker->OnColorChanged([&](asEventArgs args) {
@@ -258,9 +257,8 @@ namespace as
 		weatherWindow->AddWidget(ambientColorPicker);
 
 
-		horizonColorPicker = new asColorPicker(GUI, "Horizon Color");
+		horizonColorPicker = new asColorPicker(GUI, "Horizon Color", false);
 		horizonColorPicker->SetPos(XMFLOAT2(360, 300));
-		horizonColorPicker->RemoveWidgets();
 		horizonColorPicker->SetVisible(false);
 		horizonColorPicker->SetEnabled(true);
 		horizonColorPicker->OnColorChanged([&](asEventArgs args) {
@@ -271,9 +269,8 @@ namespace as
 
 
 
-		zenithColorPicker = new asColorPicker(GUI, "Zenith Color");
+		zenithColorPicker = new asColorPicker(GUI, "Zenith Color", false);
 		zenithColorPicker->SetPos(XMFLOAT2(360, 560));
-		zenithColorPicker->RemoveWidgets();
 		zenithColorPicker->SetVisible(false);
 		zenithColorPicker->SetEnabled(true);
 		zenithColorPicker->OnColorChanged([&](asEventArgs args) {
@@ -425,9 +422,8 @@ namespace as
 		weatherWindow->AddWidget(ocean_toleranceSlider);
 
 
-		ocean_colorPicker = new asColorPicker(GUI, "Water Color");
+		ocean_colorPicker = new asColorPicker(GUI, "Water Color", false);
 		ocean_colorPicker->SetPos(XMFLOAT2(x - 160, y += step));
-		ocean_colorPicker->RemoveWidgets();
 		ocean_colorPicker->SetVisible(true);
 		ocean_colorPicker->SetEnabled(true);
 		ocean_colorPicker->OnColorChanged([&](asEventArgs args) {

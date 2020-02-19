@@ -1,12 +1,10 @@
 #include "aspch.h"
 #include "asWidget.h"
 
-
 #include "asWidget.h"
 #include "asGUI.h"
 #include "Graphics/asImage.h"
 #include "Graphics/asTextureHelper.h"
-#include "Graphics/asFont.h"
 #include "Helpers/asMath.h"
 #include "Helpers/asHelper.h"
 #include "Input/asInput.h"
@@ -66,6 +64,7 @@ namespace as
 		this->parent->UpdateTransform();
 		XMStoreFloat4x4(&world_parent_bind, XMMatrixInverse(nullptr, XMLoadFloat4x4(&parent->world)));
 	}
+
 	void asWidget::Detach()
 	{
 		this->parent = nullptr;
@@ -261,6 +260,9 @@ namespace as
 		OnDrag([](asEventArgs args) {});
 		OnDragEnd([](asEventArgs args) {});
 		SetSize(XMFLOAT2(100, 30));
+
+		fontParams.h_align = ASFALIGN_CENTER;
+		fontParams.v_align = ASFALIGN_CENTER;
 	}
 	asButton::~asButton()
 	{
@@ -376,8 +378,34 @@ namespace as
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x, translation.y, scale.x, scale.y, color.toFloat4()), cmd);
 
-		asFont(text, asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+		asFontParams fontparams = GetFontParams();
+		switch (fontparams.h_align)
+		{
+		case ASFALIGN_LEFT:
+			fontparams.posX = (int)(translation.x + 2);
+			break;
+		case ASFALIGN_RIGHT:
+			fontparams.posX = (int)(translation.x + scale.x - 2);
+			break;
+		case ASFALIGN_CENTER:
+		default:
+			fontparams.posX = (int)(translation.x + scale.x * 0.5f);
+			break;
+		}
+		switch (fontparams.v_align)
+		{
+		case ASFALIGN_TOP:
+			fontparams.posY = (int)(translation.y + 2);
+			break;
+		case ASFALIGN_BOTTOM:
+			fontparams.posY = (int)(translation.y + scale.y - 2);
+			break;
+		case ASFALIGN_CENTER:
+		default:
+			fontparams.posY = (int)(translation.y + scale.y * 0.5f);
+			break;
+		}
+		asFont(text, fontparams).Draw(cmd);
 
 	}
 	void asButton::OnClick(function<void(asEventArgs args)> func)
@@ -444,7 +472,7 @@ namespace as
 			, asImageParams(translation.x, translation.y, scale.x, scale.y, color.toFloat4()), cmd);
 
 		asFont(text, asFontParams((int)translation.x + 2, (int)translation.y + 2, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 
 	}
 
@@ -587,8 +615,10 @@ namespace as
 
 		asColor color = GetColor();
 
-		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
+		asFont(description, asFontParams((int)(translation.x - 2), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x, translation.y, scale.x, scale.y, color.toFloat4()), cmd);
@@ -604,7 +634,7 @@ namespace as
 			activeText = value;
 		}
 		asFont(activeText, asFontParams((int)(translation.x + 2), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 
 	}
 	void asTextInputField::OnInputAccepted(function<void(asEventArgs args)> func)
@@ -622,10 +652,6 @@ namespace as
 			value_new.pop_back();
 		}
 	}
-
-
-
-
 
 	asSlider::asSlider(float start, float end, float defaultValue, float step, const std::string& name) : start(start), end(end), value(defaultValue), step(std::max(step, 1.0f))
 	{
@@ -673,8 +699,8 @@ namespace as
 		{
 			valueInputField->SetColor(this->colors[i], (ASWIDGETSTATE)i);
 		}
-		valueInputField->SetTextColor(this->textColor);
-		valueInputField->SetTextShadowColor(this->textShadowColor);
+		valueInputField->SetTextColor(this->fontParams.color);
+		valueInputField->SetTextShadowColor(this->fontParams.shadowColor);
 		valueInputField->SetEnabled(IsEnabled());
 		valueInputField->Update(gui, dt);
 
@@ -773,7 +799,7 @@ namespace as
 
 		// text
 		asFont(text, asFontParams((int)(translation.x - headWidth * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 
 		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
@@ -781,9 +807,13 @@ namespace as
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x - headWidth * 0.5f, translation.y, scale.x + headWidth, scale.y, colors_base[state].toFloat4()), cmd);
 		// head
-		float headPosX = asMath::Lerp(translation.x + 2, translation.x + scale.x - 2, asMath::Clamp(asMath::InverseLerp(start, end, value), 0, 1));
-		asImage::Draw(asTextureHelper::getWhite()
-			, asImageParams(headPosX - headWidth * 0.5f, translation.y + 2, headWidth, scale.y - 4, color.toFloat4()), cmd);
+		float headPosX = asMath::Lerp(
+			translation.x + headWidth * 0.5f + 2, 
+			translation.x + scale.x - headWidth * 0.5f - 2, 
+			asMath::Clamp(asMath::InverseLerp(start, end, value), 0, 1));
+		asImageParams fx(headPosX, translation.y + 2, headWidth, scale.y - 4, color.toFloat4());
+		fx.pivot = XMFLOAT2(0.5f, 0);
+		asImage::Draw(asTextureHelper::getWhite(), fx, cmd);
 
 		valueInputField->Render(gui, cmd);
 	}
@@ -910,7 +940,7 @@ namespace as
 		asColor color = GetColor();
 
 		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 
 		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
@@ -1130,7 +1160,7 @@ namespace as
 			color = colors[FOCUS];
 		}
 		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f),ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 		gui->ResetScissor(cmd);
 
 		// control-base
@@ -1141,7 +1171,7 @@ namespace as
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x + scale.x + 1, translation.y, scale.y, scale.y, color.toFloat4()), cmd);
 		asFont("V", asFontParams((int)(translation.x + scale.x + scale.y * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 
 		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
@@ -1153,12 +1183,19 @@ namespace as
 		if (selected >= 0)
 		{
 			asFont(items[selected], asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
-				textColor, textShadowColor)).Draw(cmd);
+				fontParams.color, fontParams.shadowColor)).Draw(cmd);
 		}
 
 		// drop-down
 		if (state == ACTIVE)
 		{
+			Rect rect;
+			rect.left = int(translation.x + scale.x + 1);
+			rect.right = int(translation.x + scale.x + 1 + scale.y);
+			rect.top = int(translation.y + scale.y + 1);
+			rect.bottom = int(translation.y + scale.y + 1 + scale.y * maxVisibleItemCount);
+			asRenderer::GetDevice()->BindScissorRects(1, &rect, cmd);
+
 			if (HasScrollbar())
 			{
 				// control-scrollbar-base
@@ -1205,7 +1242,7 @@ namespace as
 				asImage::Draw(asTextureHelper::getWhite()
 					, asImageParams(translation.x, translation.y + GetItemOffset(i), scale.x, scale.y, col.toFloat4()), cmd);
 				asFont(items[i], asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f + GetItemOffset(i)), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
-					textColor, textShadowColor)).Draw(cmd);
+					fontParams.color, fontParams.shadowColor)).Draw(cmd);
 			}
 		}
 	}
@@ -1276,13 +1313,8 @@ namespace as
 		return selected;
 	}
 
-
-
-
-
-
 	static const float windowcontrolSize = 20.0f;
-	asWindow::asWindow(asGUI* gui, const std::string& name) : gui(gui)
+	asWindow::asWindow(asGUI* gui, const std::string& name, bool window_controls) : gui(gui)
 	{
 		assert(gui != nullptr && "Ivalid GUI!");
 
@@ -1291,80 +1323,85 @@ namespace as
 		SetSize(XMFLOAT2(640, 480));
 
 		// Add controls
+		if (window_controls)
+		{
+			// Add a grabber onto the title bar
+			moveDragger = new asButton(name + "_move_dragger");
+			moveDragger->SetText(name);
+			asFontParams fontparams = moveDragger->GetFontParams();
+			fontparams.h_align = ASFALIGN_LEFT;
+			moveDragger->SetFontParams(fontparams);
+			moveDragger->SetSize(XMFLOAT2(scale.x - windowcontrolSize * 3, windowcontrolSize));
+			moveDragger->SetPos(XMFLOAT2(windowcontrolSize, 0));
+			moveDragger->OnDrag([this, gui](asEventArgs args) {
+				this->Translate(XMFLOAT3(args.deltaPos.x, args.deltaPos.y, 0));
+				this->asWidget::Update(gui, 0);
+				for (auto& x : this->childrenWidgets)
+				{
+					x->asWidget::Update(gui, 0);
+				}
+				});
+			AddWidget(moveDragger);
 
-		// Add a grabber onto the title bar
-		moveDragger = new asButton(name + "_move_dragger");
-		moveDragger->SetText("");
-		moveDragger->SetSize(XMFLOAT2(scale.x - windowcontrolSize * 3, windowcontrolSize));
-		moveDragger->SetPos(XMFLOAT2(windowcontrolSize, 0));
-		moveDragger->OnDrag([this, gui](asEventArgs args) {
-			this->Translate(XMFLOAT3(args.deltaPos.x, args.deltaPos.y, 0));
-			this->asWidget::Update(gui, 0);
-			for (auto& x : this->childrenWidgets)
-			{
-				x->asWidget::Update(gui, 0);
-			}
-			});
-		AddWidget(moveDragger);
+			// Add close button to the top right corner
+			closeButton = new asButton(name + "_close_button");
+			closeButton->SetText("x");
+			closeButton->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
+			closeButton->SetPos(XMFLOAT2(translation.x + scale.x - windowcontrolSize, translation.y));
+			closeButton->OnClick([this](asEventArgs args) {
+				this->SetVisible(false);
+				});
+			closeButton->SetTooltip("Close window");
+			AddWidget(closeButton);
 
-		// Add close button to the top right corner
-		closeButton = new asButton(name + "_close_button");
-		closeButton->SetText("x");
-		closeButton->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
-		closeButton->SetPos(XMFLOAT2(translation.x + scale.x - windowcontrolSize, translation.y));
-		closeButton->OnClick([this](asEventArgs args) {
-			this->SetVisible(false);
-			});
-		closeButton->SetTooltip("Close window");
-		AddWidget(closeButton);
+			// Add minimize button to the top right corner
+			minimizeButton = new asButton(name + "_minimize_button");
+			minimizeButton->SetText("-");
+			minimizeButton->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
+			minimizeButton->SetPos(XMFLOAT2(translation.x + scale.x - windowcontrolSize * 2, translation.y));
+			minimizeButton->OnClick([this](asEventArgs args) {
+				this->SetMinimized(!this->IsMinimized());
+				});
+			minimizeButton->SetTooltip("Minimize window");
+			AddWidget(minimizeButton);
 
-		// Add minimize button to the top right corner
-		minimizeButton = new asButton(name + "_minimize_button");
-		minimizeButton->SetText("-");
-		minimizeButton->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
-		minimizeButton->SetPos(XMFLOAT2(translation.x + scale.x - windowcontrolSize * 2, translation.y));
-		minimizeButton->OnClick([this](asEventArgs args) {
-			this->SetMinimized(!this->IsMinimized());
-			});
-		minimizeButton->SetTooltip("Minimize window");
-		AddWidget(minimizeButton);
+			// Add a resizer control to the upperleft corner
+			resizeDragger_UpperLeft = new asButton(name + "_resize_dragger_upper_left");
+			resizeDragger_UpperLeft->SetText("");
+			resizeDragger_UpperLeft->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
+			resizeDragger_UpperLeft->SetPos(XMFLOAT2(0, 0));
+			resizeDragger_UpperLeft->OnDrag([this, gui](asEventArgs args) {
+				XMFLOAT2 scaleDiff;
+				scaleDiff.x = (scale.x - args.deltaPos.x) / scale.x;
+				scaleDiff.y = (scale.y - args.deltaPos.y) / scale.y;
+				this->Translate(XMFLOAT3(args.deltaPos.x, args.deltaPos.y, 0));
+				this->Scale(XMFLOAT3(scaleDiff.x, scaleDiff.y, 1));
+				this->asWidget::Update(gui, 0);
+				for (auto& x : this->childrenWidgets)
+				{
+					x->asWidget::Update(gui, 0);
+				}
+				});
+			AddWidget(resizeDragger_UpperLeft);
 
-		// Add a resizer control to the upperleft corner
-		resizeDragger_UpperLeft = new asButton(name + "_resize_dragger_upper_left");
-		resizeDragger_UpperLeft->SetText("");
-		resizeDragger_UpperLeft->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
-		resizeDragger_UpperLeft->SetPos(XMFLOAT2(0, 0));
-		resizeDragger_UpperLeft->OnDrag([this, gui](asEventArgs args) {
-			XMFLOAT2 scaleDiff;
-			scaleDiff.x = (scale.x - args.deltaPos.x) / scale.x;
-			scaleDiff.y = (scale.y - args.deltaPos.y) / scale.y;
-			this->Translate(XMFLOAT3(args.deltaPos.x, args.deltaPos.y, 0));
-			this->Scale(XMFLOAT3(scaleDiff.x, scaleDiff.y, 1));
-			this->asWidget::Update(gui, 0);
-			for (auto& x : this->childrenWidgets)
-			{
-				x->asWidget::Update(gui, 0);
-			}
-			});
-		AddWidget(resizeDragger_UpperLeft);
-
-		// Add a resizer control to the bottom right corner
-		resizeDragger_BottomRight = new asButton(name + "_resize_dragger_bottom_right");
-		resizeDragger_BottomRight->SetText("");
-		resizeDragger_BottomRight->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
-		resizeDragger_BottomRight->SetPos(XMFLOAT2(translation.x + scale.x - windowcontrolSize, translation.y + scale.y - windowcontrolSize));
-		resizeDragger_BottomRight->OnDrag([this, gui](asEventArgs args) {
-			XMFLOAT2 scaleDiff;
-			scaleDiff.x = (scale.x + args.deltaPos.x) / scale.x;
-			scaleDiff.y = (scale.y + args.deltaPos.y) / scale.y;
-			this->Scale(XMFLOAT3(scaleDiff.x, scaleDiff.y, 1));
-			this->asWidget::Update(gui, 0);
-			for (auto& x : this->childrenWidgets)
-			{
-				x->asWidget::Update(gui, 0);
-			}
-			});
-		AddWidget(resizeDragger_BottomRight);
+			// Add a resizer control to the bottom right corner
+			resizeDragger_BottomRight = new asButton(name + "_resize_dragger_bottom_right");
+			resizeDragger_BottomRight->SetText("");
+			resizeDragger_BottomRight->SetSize(XMFLOAT2(windowcontrolSize, windowcontrolSize));
+			resizeDragger_BottomRight->SetPos(XMFLOAT2(translation.x + scale.x - windowcontrolSize, translation.y + scale.y - windowcontrolSize));
+			resizeDragger_BottomRight->OnDrag([this, gui](asEventArgs args) {
+				XMFLOAT2 scaleDiff;
+				scaleDiff.x = (scale.x + args.deltaPos.x) / scale.x;
+				scaleDiff.y = (scale.y + args.deltaPos.y) / scale.y;
+				this->Scale(XMFLOAT3(scaleDiff.x, scaleDiff.y, 1));
+				this->asWidget::Update(gui, 0);
+				for (auto& x : this->childrenWidgets)
+				{
+					x->asWidget::Update(gui, 0);
+				}
+				});
+			AddWidget(resizeDragger_BottomRight);
+		}
 
 
 		SetEnabled(true);
@@ -1461,10 +1498,6 @@ namespace as
 			}
 		}
 
-		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
-		asFont(text, asFontParams((int)(translation.x + resizeDragger_UpperLeft->scale.x + 2), (int)(translation.y + resizeDragger_UpperLeft->scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
-
 	}
 	void asWindow::SetVisible(bool value)
 	{
@@ -1516,9 +1549,6 @@ namespace as
 	{
 		return minimized;
 	}
-
-
-
 
 	struct rgb {
 		float r;       // a fraction between 0 and 1
@@ -1636,12 +1666,102 @@ namespace as
 		return out;
 	}
 
-	asColorPicker::asColorPicker(asGUI* gui, const std::string& name) :asWindow(gui, name)
+	asColorPicker::asColorPicker(asGUI* gui, const std::string& name, bool window_controls)
+		:asWindow(gui, name, window_controls)
 	{
 		SetSize(XMFLOAT2(300, 260));
 		SetColor(asColor::Ghost());
-		RemoveWidget(resizeDragger_BottomRight);
-		RemoveWidget(resizeDragger_UpperLeft);
+		if (resizeDragger_BottomRight != nullptr)
+		{
+			RemoveWidget(resizeDragger_BottomRight);
+		}
+		if (resizeDragger_UpperLeft != nullptr)
+		{
+			RemoveWidget(resizeDragger_UpperLeft);
+		}
+
+		float x = 250;
+		float y = 110;
+		float step = 20;
+
+		text_R = new asTextInputField("");
+		text_R->SetPos(XMFLOAT2(x, y += step));
+		text_R->SetSize(XMFLOAT2(40, 18));
+		text_R->SetText("");
+		text_R->SetTooltip("Enter value for RED channel (0-255)");
+		text_R->SetDescription("R: ");
+		text_R->OnInputAccepted([this](asEventArgs args) {
+			asColor color = GetPickColor();
+			color.setR((uint8_t)args.iValue);
+			SetPickColor(color);
+			FireEvents();
+			});
+		AddWidget(text_R);
+
+		text_G = new asTextInputField("");
+		text_G->SetPos(XMFLOAT2(x, y += step));
+		text_G->SetSize(XMFLOAT2(40, 18));
+		text_G->SetText("");
+		text_G->SetTooltip("Enter value for GREEN channel (0-255)");
+		text_G->SetDescription("G: ");
+		text_G->OnInputAccepted([this](asEventArgs args) {
+			asColor color = GetPickColor();
+			color.setG((uint8_t)args.iValue);
+			SetPickColor(color);
+			FireEvents();
+			});
+		AddWidget(text_G);
+
+		text_B = new asTextInputField("");
+		text_B->SetPos(XMFLOAT2(x, y += step));
+		text_B->SetSize(XMFLOAT2(40, 18));
+		text_B->SetText("");
+		text_B->SetTooltip("Enter value for BLUE channel (0-255)");
+		text_B->SetDescription("B: ");
+		text_B->OnInputAccepted([this](asEventArgs args) {
+			asColor color = GetPickColor();
+			color.setB((uint8_t)args.iValue);
+			SetPickColor(color);
+			FireEvents();
+			});
+		AddWidget(text_B);
+
+
+		text_H = new asTextInputField("");
+		text_H->SetPos(XMFLOAT2(x, y += step));
+		text_H->SetSize(XMFLOAT2(40, 18));
+		text_H->SetText("");
+		text_H->SetTooltip("Enter value for HUE channel (0-360)");
+		text_H->SetDescription("H: ");
+		text_H->OnInputAccepted([this](asEventArgs args) {
+			hue = asMath::Clamp(args.fValue, 0, 360.0f);
+			FireEvents();
+			});
+		AddWidget(text_H);
+
+		text_S = new asTextInputField("");
+		text_S->SetPos(XMFLOAT2(x, y += step));
+		text_S->SetSize(XMFLOAT2(40, 18));
+		text_S->SetText("");
+		text_S->SetTooltip("Enter value for SATURATION channel (0-100)");
+		text_S->SetDescription("S: ");
+		text_S->OnInputAccepted([this](asEventArgs args) {
+			saturation = asMath::Clamp(args.fValue / 100.0f, 0, 1);
+			FireEvents();
+			});
+		AddWidget(text_S);
+
+		text_V = new asTextInputField("");
+		text_V->SetPos(XMFLOAT2(x, y += step));
+		text_V->SetSize(XMFLOAT2(40, 18));
+		text_V->SetText("");
+		text_V->SetTooltip("Enter value for LUMINANCE channel (0-100)");
+		text_V->SetDescription("V: ");
+		text_V->OnInputAccepted([this](asEventArgs args) {
+			luminance = asMath::Clamp(args.fValue / 100.0f, 0, 1);
+			FireEvents();
+			});
+		AddWidget(text_V);
 	}
 	static const float colorpicker_center = 120;
 	static const float colorpicker_radius_triangle = 68;
@@ -1763,12 +1883,17 @@ namespace as
 			gui->DeactivateWidget(this);
 		}
 
+		asColor color = GetPickColor();
+		text_R->SetValue((int)color.getR());
+		text_G->SetValue((int)color.getG());
+		text_B->SetValue((int)color.getB());
+		text_H->SetValue(int(hue));
+		text_S->SetValue(int(saturation * 100));
+		text_V->SetValue(int(luminance * 100));
+
 		if (dragged)
 		{
-			asEventArgs args;
-			args.clickPos = pointer;
-			args.color = GetPickColor();
-			onColorChanged(args);
+			FireEvents();
 		}
 	}
 	void asColorPicker::Render(const asGUI* gui, CommandList cmd) const
@@ -1997,6 +2122,7 @@ namespace as
 
 		asRenderer::GetDevice()->BindConstantBuffer(VS, asRenderer::GetConstantBuffer(CBTYPE_MISC), CBSLOT_RENDERER_MISC, cmd);
 		asRenderer::GetDevice()->BindPipelineState(&PSO_colored, cmd);
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
 		MiscCB cb;
 
@@ -2153,19 +2279,6 @@ namespace as
 			asRenderer::GetDevice()->BindVertexBuffers(vbs, 0, arraysize(vbs), strides, nullptr, cmd);
 			asRenderer::GetDevice()->Draw(vb_preview.GetDesc().ByteWidth / sizeof(Vertex), 0, cmd);
 		}
-
-		// RGB values:
-		stringstream ss("");
-		ss << "R: " << int(final_color.getR()) << endl;
-		ss << "G: " << int(final_color.getG()) << endl;
-		ss << "B: " << int(final_color.getB()) << endl;
-		ss << endl;
-		ss << "H: " << int(hue) << endl;
-		ss << "S: " << int(saturation * 100) << endl;
-		ss << "V: " << int(luminance * 100) << endl;
-		asFont(ss.str(), asFontParams((int)(translation.x + 240), (int)(translation.y + 80), ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
-
 	}
 	asColor asColorPicker::GetPickColor() const
 	{
@@ -2192,6 +2305,12 @@ namespace as
 		}
 		saturation = result.s;
 		luminance = result.v;
+	}
+	void asColorPicker::FireEvents()
+	{
+		asEventArgs args;
+		args.color = GetPickColor();
+		onColorChanged(args);
 	}
 	void asColorPicker::OnColorChanged(function<void(asEventArgs args)> func)
 	{
@@ -2409,7 +2528,7 @@ namespace as
 			, asImageParams(translation.x, translation.y, scale.x, item_height, colors[state == IDLE ? IDLE : FOCUS].toFloat4()), cmd);
 
 		asFont(text, asFontParams((int)(translation.x) + 1, (int)(translation.y) + 1, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+			fontParams.color, fontParams.shadowColor)).Draw(cmd);
 
 		// scrollbar background
 		asImage::Draw(asTextureHelper::getWhite()
@@ -2507,7 +2626,7 @@ namespace as
 			}
 			// Item name text:
 			asFont(item.name, asFontParams((int)pos.x + int(item_height * 0.5f) + 2, (int)pos.y, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_CENTER, 0, 0,
-				textColor, textShadowColor)).Draw(cmd);
+				fontParams.color, fontParams.shadowColor)).Draw(cmd);
 		}
 	}
 	void asTreeList::OnSelect(function<void(asEventArgs args)> func)

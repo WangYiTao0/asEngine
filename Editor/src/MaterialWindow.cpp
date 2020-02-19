@@ -312,9 +312,8 @@ namespace as
 		materialWindow->AddWidget(texMulSliderY);
 
 
-		baseColorPicker = new asColorPicker(GUI, "Base Color");
+		baseColorPicker = new asColorPicker(GUI, "Base Color", false);
 		baseColorPicker->SetPos(XMFLOAT2(10, 300));
-		baseColorPicker->RemoveWidgets();
 		baseColorPicker->SetVisible(true);
 		baseColorPicker->SetEnabled(true);
 		baseColorPicker->OnColorChanged([&](asEventArgs args) {
@@ -328,9 +327,8 @@ namespace as
 		materialWindow->AddWidget(baseColorPicker);
 
 
-		emissiveColorPicker = new asColorPicker(GUI, "Emissive Color");
+		emissiveColorPicker = new asColorPicker(GUI, "Emissive Color", false);
 		emissiveColorPicker->SetPos(XMFLOAT2(10, 570));
-		emissiveColorPicker->RemoveWidgets();
 		emissiveColorPicker->SetVisible(true);
 		emissiveColorPicker->SetEnabled(true);
 		emissiveColorPicker->OnColorChanged([&](asEventArgs args) {

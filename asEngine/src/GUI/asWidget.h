@@ -5,6 +5,7 @@
 #include "Graphics/API/asGraphicsDevice.h"
 #include "Helpers/asIntersect.h"
 #include "System/asScene.h"
+#include "Graphics/asFont.h"
 
 #include <string>
 #include <list>
@@ -64,8 +65,7 @@ namespace as
 		};
 		static_assert(arraysize(colors) == ASWIDGETSTATE_COUNT, "Every ASWIDGETSTATE needs a default color!");
 
-		asColor textColor = asColor(255, 255, 255, 255);
-		asColor textShadowColor = asColor(0, 0, 0, 255);
+		asFontParams fontParams =asFontParams(0, 0, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0, asColor::White(), asColor::Black());
 	public:
 		const asHashString& GetName() const;
 		void SetName(const std::string& value);
@@ -84,8 +84,11 @@ namespace as
 		void SetColor(asColor color, ASWIDGETSTATE state = ASWIDGETSTATE_COUNT);
 		asColor GetColor() const;
 		void SetScissorRect(const asGraphics::Rect& rect);
-		void SetTextColor(asColor value) { textColor = value; }
-		void SetTextShadowColor(asColor value) { textShadowColor = value; }
+		void SetTextColor(asColor value) { fontParams.color = value; }
+		void SetTextShadowColor(asColor value) { fontParams.shadowColor = value; }
+		void SetFontParams(asFontParams params) { fontParams = params; }
+		const asFontParams& GetFontParams() const { return fontParams; }
+
 
 		virtual void Update(asGUI* gui, float dt);
 		virtual void Render(const asGUI* gui, asGraphics::CommandList cmd) const = 0;
@@ -147,6 +150,7 @@ namespace as
 
 		std::string value;
 		static std::string value_new;
+		std::string description;
 	public:
 		asTextInputField(const std::string& name = "");
 		virtual ~asTextInputField();
@@ -155,6 +159,8 @@ namespace as
 		void SetValue(int newValue);
 		void SetValue(float newValue);
 		const std::string& GetValue();
+		void SetDescription(const std::string& desc) { description = desc; }
+		const std::string& GetDescription() const { return description; }
 
 		// There can only be ONE active text input field, so these methods modify the active one
 		static void AddInput(const char inputChar);
@@ -289,7 +295,7 @@ namespace as
 		std::list<asWidget*> childrenWidgets;
 		bool minimized = false;
 	public:
-		asWindow(asGUI* gui, const std::string& name = "");
+		asWindow(asGUI* gui, const std::string& name = "", bool window_controls = true);
 		virtual ~asWindow();
 
 		void AddWidget(asWidget* widget);
@@ -314,8 +320,17 @@ namespace as
 		float hue = 0.0f;			// [0, 360] degrees
 		float saturation = 0.0f;	// [0, 1]
 		float luminance = 1.0f;		// [0, 1]
+
+		asTextInputField* text_R = nullptr;
+		asTextInputField* text_G = nullptr;
+		asTextInputField* text_B = nullptr;
+		asTextInputField* text_H = nullptr;
+		asTextInputField* text_S = nullptr;
+		asTextInputField* text_V = nullptr;
+
+		void FireEvents();
 	public:
-		asColorPicker(asGUI* gui, const std::string& name = "");
+		asColorPicker(asGUI* gui, const std::string& name = "", bool window_controls = true);
 
 		virtual void Update(asGUI* gui, float dt) override;
 		virtual void Render(const asGUI* gui, asGraphics::CommandList cmd) const override;

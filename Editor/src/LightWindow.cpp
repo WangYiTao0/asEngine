@@ -194,9 +194,8 @@ namespace as
 		lightWindow->AddWidget(addLightButton);
 
 
-		colorPicker = new asColorPicker(GUI, "Light Color");
+		colorPicker = new asColorPicker(GUI, "Light Color", false);
 		colorPicker->SetPos(XMFLOAT2(10, 30));
-		colorPicker->RemoveWidgets();
 		colorPicker->SetVisible(true);
 		colorPicker->SetEnabled(false);
 		colorPicker->OnColorChanged([&](asEventArgs args) {
