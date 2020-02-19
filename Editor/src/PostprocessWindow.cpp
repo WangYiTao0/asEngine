@@ -19,7 +19,7 @@ namespace as
 		float screenH = (float)asRenderer::GetDevice()->GetScreenHeight();
 
 		ppWindow = new asWindow(GUI, "PostProcess Window");
-		ppWindow->SetSize(XMFLOAT2(400, 740));
+		ppWindow->SetSize(XMFLOAT2(450, 740));
 		GUI->AddWidget(ppWindow);
 
 		float x = 150;

@@ -63,7 +63,7 @@ namespace as
 			ASFALIGN_CENTER, ASFALIGN_CENTER));
 		addFont(&font);
 
-		sprite = asSprite("assets/images/as-logo.jpg");
+		sprite = asSprite("assets/images/default/as-logo.jpg");
 		sprite.anim.opa = 1;
 		sprite.anim.repeatable = true;
 		sprite.params.pos = XMFLOAT3(asRenderer::GetDevice()->GetScreenWidth() * 0.5f, asRenderer::GetDevice()->GetScreenHeight() * 0.5f - font.textHeight(), 0);
@@ -201,17 +201,17 @@ namespace as
 		__super::Load();
 
 		asJobSystem::context ctx;
-		asJobSystem::Execute(ctx, [this] { pointLightTex = asResourceManager::Load("assets/images/pointlight.dds"); });
-		asJobSystem::Execute(ctx, [this] { spotLightTex = asResourceManager::Load("assets/images/spotlight.dds"); });
-		asJobSystem::Execute(ctx, [this] { dirLightTex = asResourceManager::Load("assets/images/directional_light.dds"); });
-		asJobSystem::Execute(ctx, [this] { areaLightTex = asResourceManager::Load("assets/images/arealight.dds"); });
-		asJobSystem::Execute(ctx, [this] { decalTex = asResourceManager::Load("assets/images/decal.dds"); });
-		asJobSystem::Execute(ctx, [this] { forceFieldTex = asResourceManager::Load("assets/images/forcefield.dds"); });
-		asJobSystem::Execute(ctx, [this] { emitterTex = asResourceManager::Load("assets/images/emitter.dds"); });
-		asJobSystem::Execute(ctx, [this] { hairTex = asResourceManager::Load("assets/images/hair.dds"); });
-		asJobSystem::Execute(ctx, [this] { cameraTex = asResourceManager::Load("assets/images/camera.dds"); });
-		asJobSystem::Execute(ctx, [this] { armatureTex = asResourceManager::Load("assets/images/armature.dds"); });
-		asJobSystem::Execute(ctx, [this] { soundTex = asResourceManager::Load("assets/images/sound.dds"); });
+		asJobSystem::Execute(ctx, [this] { pointLightTex = asResourceManager::Load("assets/images/default/pointlight.dds"); });
+		asJobSystem::Execute(ctx, [this] { spotLightTex = asResourceManager::Load("assets/images/default/spotlight.dds"); });
+		asJobSystem::Execute(ctx, [this] { dirLightTex = asResourceManager::Load("assets/images/default/directional_light.dds"); });
+		asJobSystem::Execute(ctx, [this] { areaLightTex = asResourceManager::Load("assets/images/default/arealight.dds"); });
+		asJobSystem::Execute(ctx, [this] { decalTex = asResourceManager::Load("assets/images/default/decal.dds"); });
+		asJobSystem::Execute(ctx, [this] { forceFieldTex = asResourceManager::Load("assets/images/default/forcefield.dds"); });
+		asJobSystem::Execute(ctx, [this] { emitterTex = asResourceManager::Load("assets/images/default/emitter.dds"); });
+		asJobSystem::Execute(ctx, [this] { hairTex = asResourceManager::Load("assets/images/default/hair.dds"); });
+		asJobSystem::Execute(ctx, [this] { cameraTex = asResourceManager::Load("assets/images/default/camera.dds"); });
+		asJobSystem::Execute(ctx, [this] { armatureTex = asResourceManager::Load("assets/images/default/armature.dds"); });
+		asJobSystem::Execute(ctx, [this] { soundTex = asResourceManager::Load("assets/images/default/sound.dds"); });
 		// wait for ctx is at the end of this function!
 
 		//translator.enabled = false;
@@ -1188,7 +1188,7 @@ namespace as
 						if (asInput::Down(asInput::MOUSE_BUTTON_LEFT))
 						{
 							// if water, then put a water ripple onto it:
-							asRenderer::PutWaterRipple(asHelper::GetOriginalWorkingDirectory() + "assets/images/ripple.png", hovered.position);
+							asRenderer::PutWaterRipple(asHelper::GetOriginalWorkingDirectory() + "assets/images/default/ripple.png", hovered.position);
 						}
 					}
 					else
@@ -1217,7 +1217,7 @@ namespace as
 								// if not water or softbody, put a decal on it:
 								static int decalselector = 0;
 								decalselector = (decalselector + 1) % 2;
-								Entity entity = scene.Entity_CreateDecal("editorDecal", asHelper::GetOriginalWorkingDirectory() + (decalselector == 0 ? "assets/images/leaf.dds" : "assets/images/blood1.png"));
+								Entity entity = scene.Entity_CreateDecal("editorDecal", asHelper::GetOriginalWorkingDirectory() + (decalselector == 0 ? "assets/images/default/leaf.dds" : "assets/images/default/blood1.png"));
 								TransformComponent& transform = *scene.transforms.GetComponent(entity);
 								transform.MatrixTransform(hovered.orientation);
 								transform.RotateRollPitchYaw(XMFLOAT3(XM_PIDIV2, 0, 0));

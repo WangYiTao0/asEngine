@@ -49,7 +49,7 @@ namespace as
 			int burst = 0;
 
 			bool buffersUpToDate = false;
-			uint32_t MAX_PARTICLES = 10000;
+			uint32_t MAX_PARTICLES = 1000;
 
 		public:
 			void UpdateCPU(const TransformComponent& transform, float dt);
