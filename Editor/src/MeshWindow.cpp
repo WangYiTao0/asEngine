@@ -98,32 +98,32 @@ namespace as
 			});
 		meshWindow->AddWidget(frictionSlider);
 
-		impostorCreateButton = new asButton("Create Impostor");
-		impostorCreateButton->SetTooltip("Create an impostor image of the mesh. The mesh will be replaced by this image when far away, to render faster.");
-		impostorCreateButton->SetSize(XMFLOAT2(240, 30));
-		impostorCreateButton->SetPos(XMFLOAT2(x - 50, y += step));
-		impostorCreateButton->OnClick([&](asEventArgs args) {
-			MeshComponent* mesh = asScene::GetScene().meshes.GetComponent(entity);
-			if (mesh != nullptr)
-			{
-				Scene& scene = asScene::GetScene();
-				scene.impostors.Create(entity).swapInDistance = impostorDistanceSlider->GetValue();
-			}
-			});
-		meshWindow->AddWidget(impostorCreateButton);
+		//impostorCreateButton = new asButton("Create Impostor");
+		//impostorCreateButton->SetTooltip("Create an impostor image of the mesh. The mesh will be replaced by this image when far away, to render faster.");
+		//impostorCreateButton->SetSize(XMFLOAT2(240, 30));
+		//impostorCreateButton->SetPos(XMFLOAT2(x - 50, y += step));
+		//impostorCreateButton->OnClick([&](asEventArgs args) {
+		//	MeshComponent* mesh = asScene::GetScene().meshes.GetComponent(entity);
+		//	if (mesh != nullptr)
+		//	{
+		//		Scene& scene = asScene::GetScene();
+		//		scene.impostors.Create(entity).swapInDistance = impostorDistanceSlider->GetValue();
+		//	}
+		//	});
+		//meshWindow->AddWidget(impostorCreateButton);
 
-		impostorDistanceSlider = new asSlider(0, 1000, 100, 10000, "Impostor Distance: ");
-		impostorDistanceSlider->SetTooltip("Assign the distance where the mesh geometry should be switched to the impostor image.");
-		impostorDistanceSlider->SetSize(XMFLOAT2(100, 30));
-		impostorDistanceSlider->SetPos(XMFLOAT2(x, y += step));
-		impostorDistanceSlider->OnSlide([&](asEventArgs args) {
-			ImpostorComponent* impostor = asScene::GetScene().impostors.GetComponent(entity);
-			if (impostor != nullptr)
-			{
-				impostor->swapInDistance = args.fValue;
-			}
-			});
-		meshWindow->AddWidget(impostorDistanceSlider);
+		//impostorDistanceSlider = new asSlider(0, 1000, 100, 10000, "Impostor Distance: ");
+		//impostorDistanceSlider->SetTooltip("Assign the distance where the mesh geometry should be switched to the impostor image.");
+		//impostorDistanceSlider->SetSize(XMFLOAT2(100, 30));
+		//impostorDistanceSlider->SetPos(XMFLOAT2(x, y += step));
+		//impostorDistanceSlider->OnSlide([&](asEventArgs args) {
+		//	ImpostorComponent* impostor = asScene::GetScene().impostors.GetComponent(entity);
+		//	if (impostor != nullptr)
+		//	{
+		//		impostor->swapInDistance = args.fValue;
+		//	}
+		//	});
+		//meshWindow->AddWidget(impostorDistanceSlider);
 
 		tessellationFactorSlider = new asSlider(0, 16, 0, 10000, "Tessellation Factor: ");
 		tessellationFactorSlider->SetTooltip("Set the dynamic tessellation amount. Tessellation should be enabled in the Renderer window and your GPU must support it!");

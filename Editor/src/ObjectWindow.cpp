@@ -429,148 +429,148 @@ namespace as
 		y += 30;
 
 
-		lightmapResolutionSlider = new asSlider(32, 1024, 128, 1024 - 32, "Lightmap resolution: ");
-		lightmapResolutionSlider->SetTooltip("Set the approximate resolution for this object's lightmap. This will be packed into the larger global lightmap later.");
-		lightmapResolutionSlider->SetSize(XMFLOAT2(100, 30));
-		lightmapResolutionSlider->SetPos(XMFLOAT2(x, y += 30));
-		lightmapResolutionSlider->OnSlide([&](asEventArgs args) {
-			// unfortunately, we must be pow2 with full float lightmap format, otherwise it could be unlimited (but accumulation blending would suffer then)
-			//	or at least for me, downloading the lightmap was glitching out when non-pow 2 and RGBA32_FLOAT format
-			lightmapResolutionSlider->SetValue(float(asMath::GetNextPowerOfTwo(uint32_t(args.fValue))));
-			});
-		objectWindow->AddWidget(lightmapResolutionSlider);
+		//lightmapResolutionSlider = new asSlider(32, 1024, 128, 1024 - 32, "Lightmap resolution: ");
+		//lightmapResolutionSlider->SetTooltip("Set the approximate resolution for this object's lightmap. This will be packed into the larger global lightmap later.");
+		//lightmapResolutionSlider->SetSize(XMFLOAT2(100, 30));
+		//lightmapResolutionSlider->SetPos(XMFLOAT2(x, y += 30));
+		//lightmapResolutionSlider->OnSlide([&](asEventArgs args) {
+		//	// unfortunately, we must be pow2 with full float lightmap format, otherwise it could be unlimited (but accumulation blending would suffer then)
+		//	//	or at least for me, downloading the lightmap was glitching out when non-pow 2 and RGBA32_FLOAT format
+		//	lightmapResolutionSlider->SetValue(float(asMath::GetNextPowerOfTwo(uint32_t(args.fValue))));
+		//	});
+		//objectWindow->AddWidget(lightmapResolutionSlider);
 
-		lightmapSourceUVSetComboBox = new asComboBox("Source UV: ");
-		lightmapSourceUVSetComboBox->SetPos(XMFLOAT2(x - 130, y += 30));
-		lightmapSourceUVSetComboBox->AddItem("Copy UV 0");
-		lightmapSourceUVSetComboBox->AddItem("Copy UV 1");
-		lightmapSourceUVSetComboBox->AddItem("Keep Atlas");
-		lightmapSourceUVSetComboBox->AddItem("Generate Atlas");
-		lightmapSourceUVSetComboBox->SetSelected(3);
-		lightmapSourceUVSetComboBox->SetTooltip("Set which UV set to use when generating the lightmap Atlas");
-		objectWindow->AddWidget(lightmapSourceUVSetComboBox);
+		//lightmapSourceUVSetComboBox = new asComboBox("Source UV: ");
+		//lightmapSourceUVSetComboBox->SetPos(XMFLOAT2(x - 130, y += 30));
+		//lightmapSourceUVSetComboBox->AddItem("Copy UV 0");
+		//lightmapSourceUVSetComboBox->AddItem("Copy UV 1");
+		//lightmapSourceUVSetComboBox->AddItem("Keep Atlas");
+		//lightmapSourceUVSetComboBox->AddItem("Generate Atlas");
+		//lightmapSourceUVSetComboBox->SetSelected(3);
+		//lightmapSourceUVSetComboBox->SetTooltip("Set which UV set to use when generating the lightmap Atlas");
+		//objectWindow->AddWidget(lightmapSourceUVSetComboBox);
 
-		generateLightmapButton = new asButton("Generate Lightmap");
-		generateLightmapButton->SetTooltip("Render the lightmap for only this object. It will automatically combined with the global lightmap.");
-		generateLightmapButton->SetPos(XMFLOAT2(x, y));
-		generateLightmapButton->SetSize(XMFLOAT2(140, 30));
-		generateLightmapButton->OnClick([&](asEventArgs args) {
+		//generateLightmapButton = new asButton("Generate Lightmap");
+		//generateLightmapButton->SetTooltip("Render the lightmap for only this object. It will automatically combined with the global lightmap.");
+		//generateLightmapButton->SetPos(XMFLOAT2(x, y));
+		//generateLightmapButton->SetSize(XMFLOAT2(140, 30));
+		//generateLightmapButton->OnClick([&](asEventArgs args) {
 
-			Scene& scene = asScene::GetScene();
+		//	Scene& scene = asScene::GetScene();
 
-			enum UV_GEN_TYPE
-			{
-				UV_GEN_COPY_UVSET_0,
-				UV_GEN_COPY_UVSET_1,
-				UV_GEN_KEEP_ATLAS,
-				UV_GEN_GENERATE_ATLAS,
-			};
-			UV_GEN_TYPE gen_type = (UV_GEN_TYPE)lightmapSourceUVSetComboBox->GetSelected();
+		//	enum UV_GEN_TYPE
+		//	{
+		//		UV_GEN_COPY_UVSET_0,
+		//		UV_GEN_COPY_UVSET_1,
+		//		UV_GEN_KEEP_ATLAS,
+		//		UV_GEN_GENERATE_ATLAS,
+		//	};
+		//	UV_GEN_TYPE gen_type = (UV_GEN_TYPE)lightmapSourceUVSetComboBox->GetSelected();
 
-			std::unordered_set<ObjectComponent*> gen_objects;
-			std::unordered_map<MeshComponent*, Atlas_Dim> gen_meshes;
+		//	std::unordered_set<ObjectComponent*> gen_objects;
+		//	std::unordered_map<MeshComponent*, Atlas_Dim> gen_meshes;
 
-			for (auto& x : this->editor->selected)
-			{
-				ObjectComponent* objectcomponent = scene.objects.GetComponent(x.entity);
-				if (objectcomponent != nullptr)
-				{
-					MeshComponent* meshcomponent = scene.meshes.GetComponent(objectcomponent->meshID);
+		//	for (auto& x : this->editor->selected)
+		//	{
+		//		ObjectComponent* objectcomponent = scene.objects.GetComponent(x.entity);
+		//		if (objectcomponent != nullptr)
+		//		{
+		//			MeshComponent* meshcomponent = scene.meshes.GetComponent(objectcomponent->meshID);
 
-					if (meshcomponent != nullptr)
-					{
-						gen_objects.insert(objectcomponent);
-						gen_meshes[meshcomponent] = Atlas_Dim();
-					}
-				}
+		//			if (meshcomponent != nullptr)
+		//			{
+		//				gen_objects.insert(objectcomponent);
+		//				gen_meshes[meshcomponent] = Atlas_Dim();
+		//			}
+		//		}
 
-			}
+		//	}
 
-			asJobSystem::context ctx;
+		//	asJobSystem::context ctx;
 
-			for (auto& it : gen_meshes)
-			{
-				MeshComponent& mesh = *it.first;
-				if (gen_type == UV_GEN_COPY_UVSET_0)
-				{
-					mesh.vertex_atlas = mesh.vertex_uvset_0;
-					mesh.CreateRenderData();
-				}
-				else if (gen_type == UV_GEN_COPY_UVSET_1)
-				{
-					mesh.vertex_atlas = mesh.vertex_uvset_1;
-					mesh.CreateRenderData();
-				}
-				else if (gen_type == UV_GEN_GENERATE_ATLAS)
-				{
-					asJobSystem::Execute(ctx, [&] {
-						it.second = GenerateMeshAtlas(mesh, (uint32_t)lightmapResolutionSlider->GetValue());
-						});
-				}
-			}
-			asJobSystem::Wait(ctx);
+		//	for (auto& it : gen_meshes)
+		//	{
+		//		MeshComponent& mesh = *it.first;
+		//		if (gen_type == UV_GEN_COPY_UVSET_0)
+		//		{
+		//			mesh.vertex_atlas = mesh.vertex_uvset_0;
+		//			mesh.CreateRenderData();
+		//		}
+		//		else if (gen_type == UV_GEN_COPY_UVSET_1)
+		//		{
+		//			mesh.vertex_atlas = mesh.vertex_uvset_1;
+		//			mesh.CreateRenderData();
+		//		}
+		//		else if (gen_type == UV_GEN_GENERATE_ATLAS)
+		//		{
+		//			asJobSystem::Execute(ctx, [&] {
+		//				it.second = GenerateMeshAtlas(mesh, (uint32_t)lightmapResolutionSlider->GetValue());
+		//				});
+		//		}
+		//	}
+		//	asJobSystem::Wait(ctx);
 
-			for (auto& x : gen_objects)
-			{
-				x->ClearLightmap();
-				MeshComponent* meshcomponent = scene.meshes.GetComponent(x->meshID);
-				if (gen_type == UV_GEN_GENERATE_ATLAS)
-				{
-					x->lightmapWidth = gen_meshes.at(meshcomponent).width;
-					x->lightmapHeight = gen_meshes.at(meshcomponent).height;
-				}
-				else
-				{
-					x->lightmapWidth = x->lightmapHeight = (uint32_t)lightmapResolutionSlider->GetValue();
-				}
-				x->SetLightmapRenderRequest(true);
-			}
+		//	for (auto& x : gen_objects)
+		//	{
+		//		x->ClearLightmap();
+		//		MeshComponent* meshcomponent = scene.meshes.GetComponent(x->meshID);
+		//		if (gen_type == UV_GEN_GENERATE_ATLAS)
+		//		{
+		//			x->lightmapWidth = gen_meshes.at(meshcomponent).width;
+		//			x->lightmapHeight = gen_meshes.at(meshcomponent).height;
+		//		}
+		//		else
+		//		{
+		//			x->lightmapWidth = x->lightmapHeight = (uint32_t)lightmapResolutionSlider->GetValue();
+		//		}
+		//		x->SetLightmapRenderRequest(true);
+		//	}
 
-			asRenderer::InvalidateBVH();
+		//	asRenderer::InvalidateBVH();
 
-			});
-		objectWindow->AddWidget(generateLightmapButton);
+		//	});
+		//objectWindow->AddWidget(generateLightmapButton);
 
-		stopLightmapGenButton = new asButton("Stop Lightmap Gen");
-		stopLightmapGenButton->SetTooltip("Stop the lightmap rendering and save the lightmap.");
-		stopLightmapGenButton->SetPos(XMFLOAT2(x, y += 30));
-		stopLightmapGenButton->SetSize(XMFLOAT2(140, 30));
-		stopLightmapGenButton->OnClick([&](asEventArgs args) {
+		//stopLightmapGenButton = new asButton("Stop Lightmap Gen");
+		//stopLightmapGenButton->SetTooltip("Stop the lightmap rendering and save the lightmap.");
+		//stopLightmapGenButton->SetPos(XMFLOAT2(x, y += 30));
+		//stopLightmapGenButton->SetSize(XMFLOAT2(140, 30));
+		//stopLightmapGenButton->OnClick([&](asEventArgs args) {
 
-			Scene& scene = asScene::GetScene();
+		//	Scene& scene = asScene::GetScene();
 
-			for (auto& x : this->editor->selected)
-			{
-				ObjectComponent* objectcomponent = scene.objects.GetComponent(x.entity);
-				if (objectcomponent != nullptr)
-				{
-					objectcomponent->SetLightmapRenderRequest(false);
-					objectcomponent->SaveLightmap();
-				}
-			}
+		//	for (auto& x : this->editor->selected)
+		//	{
+		//		ObjectComponent* objectcomponent = scene.objects.GetComponent(x.entity);
+		//		if (objectcomponent != nullptr)
+		//		{
+		//			objectcomponent->SetLightmapRenderRequest(false);
+		//			objectcomponent->SaveLightmap();
+		//		}
+		//	}
 
-			});
-		objectWindow->AddWidget(stopLightmapGenButton);
+		//	});
+		//objectWindow->AddWidget(stopLightmapGenButton);
 
-		clearLightmapButton = new asButton("Clear Lightmap");
-		clearLightmapButton->SetTooltip("Clear the lightmap from this object.");
-		clearLightmapButton->SetPos(XMFLOAT2(x, y += 30));
-		clearLightmapButton->SetSize(XMFLOAT2(140, 30));
-		clearLightmapButton->OnClick([&](asEventArgs args) {
+		//clearLightmapButton = new asButton("Clear Lightmap");
+		//clearLightmapButton->SetTooltip("Clear the lightmap from this object.");
+		//clearLightmapButton->SetPos(XMFLOAT2(x, y += 30));
+		//clearLightmapButton->SetSize(XMFLOAT2(140, 30));
+		//clearLightmapButton->OnClick([&](asEventArgs args) {
 
-			Scene& scene = asScene::GetScene();
+		//	Scene& scene = asScene::GetScene();
 
-			for (auto& x : this->editor->selected)
-			{
-				ObjectComponent* objectcomponent = scene.objects.GetComponent(x.entity);
-				if (objectcomponent != nullptr)
-				{
-					objectcomponent->ClearLightmap();
-				}
-			}
+		//	for (auto& x : this->editor->selected)
+		//	{
+		//		ObjectComponent* objectcomponent = scene.objects.GetComponent(x.entity);
+		//		if (objectcomponent != nullptr)
+		//		{
+		//			objectcomponent->ClearLightmap();
+		//		}
+		//	}
 
-			});
-		objectWindow->AddWidget(clearLightmapButton);
+		//	});
+		//objectWindow->AddWidget(clearLightmapButton);
 
 
 

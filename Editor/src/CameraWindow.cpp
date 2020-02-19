@@ -97,7 +97,7 @@ namespace as
 
 
 
-		proxyButton = new asButton("Place Proxy");
+		proxyButton = new asButton("Place Proxy Camera");
 		proxyButton->SetTooltip("Copy the current camera and place a proxy of it in the world.");
 		proxyButton->SetSize(XMFLOAT2(140, 30));
 		proxyButton->SetPos(XMFLOAT2(x, y += inc * 2));
@@ -114,7 +114,7 @@ namespace as
 			});
 		cameraWindow->AddWidget(proxyButton);
 
-		proxyNameField = new asTextInputField("Proxy Name: ");
+		proxyNameField = new asTextInputField("Proxy Camera Name: ");
 		proxyNameField->SetSize(XMFLOAT2(140, 30));
 		proxyNameField->SetPos(XMFLOAT2(x + 200, y));
 		proxyNameField->OnInputAccepted([&](asEventArgs args) {
@@ -128,12 +128,12 @@ namespace as
 		cameraWindow->AddWidget(proxyNameField);
 
 
-		followCheckBox = new asCheckBox("Follow Proxy: ");
+		followCheckBox = new asCheckBox("Follow Proxy Camera: ");
 		followCheckBox->SetPos(XMFLOAT2(x, y += inc));
 		followCheckBox->SetCheck(false);
 		cameraWindow->AddWidget(followCheckBox);
 
-		followSlider = new asSlider(0.0f, 0.999f, 0.0f, 1000.0f, "Follow Proxy Delay: ");
+		followSlider = new asSlider(0.0f, 0.999f, 0.0f, 1000.0f, "Follow Proxy Camera Delay: ");
 		followSlider->SetSize(XMFLOAT2(100, 30));
 		followSlider->SetPos(XMFLOAT2(x, y += inc));
 		cameraWindow->AddWidget(followSlider);

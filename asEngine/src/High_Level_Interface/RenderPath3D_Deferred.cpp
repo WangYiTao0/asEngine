@@ -306,6 +306,12 @@ namespace as
 
 		device->RenderPassEnd(cmd);
 	}
+
+	void RenderPath3D_Deferred::RenderDebugImage(asGraphics::CommandList cmd) const
+	{
+
+	}
+
 }
 
 

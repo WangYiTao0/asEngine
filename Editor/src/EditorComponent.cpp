@@ -102,12 +102,12 @@ namespace as
 		case EditorComponent::RENDERPATH_TILEDFORWARD:
 			renderPath = new RenderPath3D_TiledForward;
 			break;
-		case EditorComponent::RENDERPATH_TILEDDEFERRED:
-			renderPath = new RenderPath3D_TiledDeferred;
-			break;
-		case EditorComponent::RENDERPATH_PATHTRACING:
-			renderPath = new RenderPath3D_PathTracing;
-			break;
+		//case EditorComponent::RENDERPATH_TILEDDEFERRED:
+		//	renderPath = new RenderPath3D_TiledDeferred;
+		//	break;
+		//case EditorComponent::RENDERPATH_PATHTRACING:
+		//	renderPath = new RenderPath3D_PathTracing;
+		//	break;
 		default:
 			assert(0);
 			break;
@@ -206,6 +206,7 @@ namespace as
 		asJobSystem::Execute(ctx, [this] { dirLightTex = asResourceManager::Load("assets/images/default/directional_light.dds"); });
 		asJobSystem::Execute(ctx, [this] { areaLightTex = asResourceManager::Load("assets/images/default/arealight.dds"); });
 		asJobSystem::Execute(ctx, [this] { decalTex = asResourceManager::Load("assets/images/default/decal.dds"); });
+		//asJobSystem::Execute(ctx, [this] { decalTex = asResourceManager::Load("assets/images/default/bullet.png"); });
 		asJobSystem::Execute(ctx, [this] { forceFieldTex = asResourceManager::Load("assets/images/default/forcefield.dds"); });
 		asJobSystem::Execute(ctx, [this] { emitterTex = asResourceManager::Load("assets/images/default/emitter.dds"); });
 		asJobSystem::Execute(ctx, [this] { hairTex = asResourceManager::Load("assets/images/default/hair.dds"); });
@@ -225,23 +226,25 @@ namespace as
 		//float x = screenW - option_size.x, y = screenH - option_size.y;
 		float x = 0, y = screenH - option_size.y;
 
-		asButton* rendererWnd_Toggle = new asButton("Renderer");
-		rendererWnd_Toggle->SetTooltip("Renderer settings window");
-		rendererWnd_Toggle->SetPos(XMFLOAT2(x, y));
-		rendererWnd_Toggle->SetSize(option_size);
-		rendererWnd_Toggle->OnClick([=](asEventArgs args) {
-			rendererWnd->rendererWindow->SetVisible(!rendererWnd->rendererWindow->IsVisible());
-			});
-		GetGUI().AddWidget(rendererWnd_Toggle);
+
 
 		asButton* weatherWnd_Toggle = new asButton("Weather");
 		weatherWnd_Toggle->SetTooltip("World settings window");
-		weatherWnd_Toggle->SetPos(XMFLOAT2(x, y += step));
+		weatherWnd_Toggle->SetPos(XMFLOAT2(x, y));
 		weatherWnd_Toggle->SetSize(option_size);
 		weatherWnd_Toggle->OnClick([=](asEventArgs args) {
 			weatherWnd->weatherWindow->SetVisible(!weatherWnd->weatherWindow->IsVisible());
 			});
 		GetGUI().AddWidget(weatherWnd_Toggle);
+
+		//asButton* rendererWnd_Toggle = new asButton("Renderer");
+		//rendererWnd_Toggle->SetTooltip("Renderer settings window");
+		//rendererWnd_Toggle->SetPos(XMFLOAT2(x, y+=step));
+		//rendererWnd_Toggle->SetSize(option_size);
+		//rendererWnd_Toggle->OnClick([=](asEventArgs args) {
+		//	rendererWnd->rendererWindow->SetVisible(!rendererWnd->rendererWindow->IsVisible());
+		//	});
+		//GetGUI().AddWidget(rendererWnd_Toggle);
 
 		asButton* objectWnd_Toggle = new asButton("Object");
 		objectWnd_Toggle->SetTooltip("Object settings window");
@@ -252,14 +255,14 @@ namespace as
 			});
 		GetGUI().AddWidget(objectWnd_Toggle);
 
-		asButton* meshWnd_Toggle = new asButton("Mesh");
-		meshWnd_Toggle->SetTooltip("Mesh settings window");
-		meshWnd_Toggle->SetPos(XMFLOAT2(x, y += step));
-		meshWnd_Toggle->SetSize(option_size);
-		meshWnd_Toggle->OnClick([=](asEventArgs args) {
-			meshWnd->meshWindow->SetVisible(!meshWnd->meshWindow->IsVisible());
-			});
-		GetGUI().AddWidget(meshWnd_Toggle);
+		//asButton* meshWnd_Toggle = new asButton("Mesh");
+		//meshWnd_Toggle->SetTooltip("Mesh settings window");
+		//meshWnd_Toggle->SetPos(XMFLOAT2(x, y += step));
+		//meshWnd_Toggle->SetSize(option_size);
+		//meshWnd_Toggle->OnClick([=](asEventArgs args) {
+		//	meshWnd->meshWindow->SetVisible(!meshWnd->meshWindow->IsVisible());
+		//	});
+		//GetGUI().AddWidget(meshWnd_Toggle);
 
 		asButton* materialWnd_Toggle = new asButton("Material");
 		materialWnd_Toggle->SetTooltip("Material settings window");
@@ -288,23 +291,14 @@ namespace as
 			});
 		GetGUI().AddWidget(cameraWnd_Toggle);
 
-		asButton* envProbeWnd_Toggle = new asButton("EnvProbe");
-		envProbeWnd_Toggle->SetTooltip("Environment probe settings window");
-		envProbeWnd_Toggle->SetPos(XMFLOAT2(x, y += step));
-		envProbeWnd_Toggle->SetSize(option_size);
-		envProbeWnd_Toggle->OnClick([=](asEventArgs args) {
-			envProbeWnd->envProbeWindow->SetVisible(!envProbeWnd->envProbeWindow->IsVisible());
-			});
-		GetGUI().AddWidget(envProbeWnd_Toggle);
-
-		asButton* decalWnd_Toggle = new asButton("Decal");
-		decalWnd_Toggle->SetTooltip("Decal settings window");
-		decalWnd_Toggle->SetPos(XMFLOAT2(x, y += step));
-		decalWnd_Toggle->SetSize(option_size);
-		decalWnd_Toggle->OnClick([=](asEventArgs args) {
-			decalWnd->decalWindow->SetVisible(!decalWnd->decalWindow->IsVisible());
-			});
-		GetGUI().AddWidget(decalWnd_Toggle);
+		//asButton* envProbeWnd_Toggle = new asButton("EnvProbe");
+		//envProbeWnd_Toggle->SetTooltip("Environment probe settings window");
+		//envProbeWnd_Toggle->SetPos(XMFLOAT2(x, y += step));
+		//envProbeWnd_Toggle->SetSize(option_size);
+		//envProbeWnd_Toggle->OnClick([=](asEventArgs args) {
+		//	envProbeWnd->envProbeWindow->SetVisible(!envProbeWnd->envProbeWindow->IsVisible());
+		//	});
+		//GetGUI().AddWidget(envProbeWnd_Toggle);
 
 		asButton* soundWnd_Toggle = new asButton("Sound");
 		soundWnd_Toggle->SetTooltip("Sound settings window");
@@ -538,8 +532,8 @@ namespace as
 		renderPathComboBox->AddItem("Forward");
 		renderPathComboBox->AddItem("Deferred");
 		renderPathComboBox->AddItem("Tiled Forward");
-		renderPathComboBox->AddItem("Tiled Deferred");
-		renderPathComboBox->AddItem("Path Tracing");
+		//renderPathComboBox->AddItem("Tiled Deferred");
+		//renderPathComboBox->AddItem("Path Tracing");
 		renderPathComboBox->OnSelect([&](asEventArgs args) {
 			switch (args.iValue)
 			{
@@ -552,12 +546,12 @@ namespace as
 			case 2:
 				ChangeRenderPath(RENDERPATH_TILEDFORWARD);
 				break;
-			case 3:
-				ChangeRenderPath(RENDERPATH_TILEDDEFERRED);
-				break;
-			case 4:
-				ChangeRenderPath(RENDERPATH_PATHTRACING);
-				break;
+			//case 3:
+			//	ChangeRenderPath(RENDERPATH_TILEDDEFERRED);
+			//	break;
+			//case 4:
+			//	ChangeRenderPath(RENDERPATH_PATHTRACING);
+			//	break;
 			default:
 				break;
 			}
@@ -1217,7 +1211,7 @@ namespace as
 								// if not water or softbody, put a decal on it:
 								static int decalselector = 0;
 								decalselector = (decalselector + 1) % 2;
-								Entity entity = scene.Entity_CreateDecal("editorDecal", asHelper::GetOriginalWorkingDirectory() + (decalselector == 0 ? "assets/images/default/leaf.dds" : "assets/images/default/blood1.png"));
+								Entity entity = scene.Entity_CreateDecal("editorDecal", asHelper::GetOriginalWorkingDirectory() + (decalselector == 0 ? "assets/images/default/bullet.png" : "assets/images/default/blood1.png"));
 								TransformComponent& transform = *scene.transforms.GetComponent(entity);
 								transform.MatrixTransform(hovered.orientation);
 								transform.RotateRollPitchYaw(XMFLOAT3(XM_PIDIV2, 0, 0));
@@ -1230,37 +1224,37 @@ namespace as
 
 			}
 
-			// Visualize soft body pinning:
-			if (asInput::Down((asInput::BUTTON)'P'))
-			{
-				for (size_t i = 0; i < scene.softbodies.GetCount(); ++i)
-				{
-					const SoftBodyPhysicsComponent& softbody = scene.softbodies[i];
-					Entity entity = scene.softbodies.GetEntity(i);
-					const MeshComponent& mesh = *scene.meshes.GetComponent(entity);
+			//// Visualize soft body pinning:
+			//if (asInput::Down((asInput::BUTTON)'P'))
+			//{
+			//	for (size_t i = 0; i < scene.softbodies.GetCount(); ++i)
+			//	{
+			//		const SoftBodyPhysicsComponent& softbody = scene.softbodies[i];
+			//		Entity entity = scene.softbodies.GetEntity(i);
+			//		const MeshComponent& mesh = *scene.meshes.GetComponent(entity);
 
-					XMMATRIX W = XMLoadFloat4x4(&softbody.worldMatrix);
-					int physicsIndex = 0;
-					for (auto& weight : softbody.weights)
-					{
-						if (weight == 0)
-						{
-							asRenderer::RenderablePoint point;
-							point.color = XMFLOAT4(1, 0, 0, 1);
-							point.size = 0.2f;
-							point.position = mesh.vertex_positions[softbody.physicsToGraphicsVertexMapping[physicsIndex]];
-							if (!asPhysicsEngine::IsEnabled()) // todo: better
-							{
-								XMVECTOR P = XMLoadFloat3(&point.position);
-								P = XMVector3Transform(P, W);
-								XMStoreFloat3(&point.position, P);
-							}
-							asRenderer::AddRenderablePoint(point);
-						}
-						++physicsIndex;
-					}
-				}
-			}
+			//		XMMATRIX W = XMLoadFloat4x4(&softbody.worldMatrix);
+			//		int physicsIndex = 0;
+			//		for (auto& weight : softbody.weights)
+			//		{
+			//			if (weight == 0)
+			//			{
+			//				asRenderer::RenderablePoint point;
+			//				point.color = XMFLOAT4(1, 0, 0, 1);
+			//				point.size = 0.2f;
+			//				point.position = mesh.vertex_positions[softbody.physicsToGraphicsVertexMapping[physicsIndex]];
+			//				if (!asPhysicsEngine::IsEnabled()) // todo: better
+			//				{
+			//					XMVECTOR P = XMLoadFloat3(&point.position);
+			//					P = XMVector3Transform(P, W);
+			//					XMStoreFloat3(&point.position, P);
+			//				}
+			//				asRenderer::AddRenderablePoint(point);
+			//			}
+			//			++physicsIndex;
+			//		}
+			//	}
+			//}
 
 			// Select...
 			static bool selectAll = false;

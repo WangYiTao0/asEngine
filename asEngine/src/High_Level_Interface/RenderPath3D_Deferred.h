@@ -19,6 +19,7 @@ namespace as
 		asGraphics::RenderPass renderpass_deferredcomposition;
 		asGraphics::RenderPass renderpass_SSS[3];
 		asGraphics::RenderPass renderpass_transparent;
+		//asGraphics::RenderPass renderPass_
 
 		void ResizeBuffers() override;
 
@@ -26,10 +27,12 @@ namespace as
 		virtual void RenderDecals(asGraphics::CommandList cmd) const;
 		virtual void RenderDeferredComposition(asGraphics::CommandList cmd) const;
 
+		virtual void RenderDebugImage(asGraphics::CommandList cmd)const;
 	public:
 		void setMSAASampleCount(uint32_t value) override { /*disable MSAA for deferred*/ }
 
 		void Render() const override;
+		
 	};
 }
 
