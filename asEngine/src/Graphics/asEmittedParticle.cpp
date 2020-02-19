@@ -13,14 +13,18 @@
 #include "Tools\asBackLog.h"
 #include "Graphics\asGPUSortLib.h"
 
-using namespace as::asGraphics;
+	using namespace std;
 
 namespace as
 {
+
+	using namespace asGraphics;
+
 	namespace asScene
 	{
-		static Shader			vertexShader;
-		static Shader			pixelShader[asEmittedParticle::PARTICLESHADERTYPE_COUNT];
+
+		static Shader		vertexShader;
+		static Shader		pixelShader[asEmittedParticle::PARTICLESHADERTYPE_COUNT];
 		static Shader		kickoffUpdateCS;
 		static Shader		finishUpdateCS;
 		static Shader		emitCS;
@@ -42,6 +46,7 @@ namespace as
 		static PipelineState		PSO[BLENDMODE_COUNT][asEmittedParticle::PARTICLESHADERTYPE_COUNT];
 		static PipelineState		PSO_wire;
 
+
 		void asEmittedParticle::SetMaxParticleCount(uint32_t value)
 		{
 			buffersUpToDate = false;
@@ -54,6 +59,7 @@ namespace as
 			{
 				return;
 			}
+			buffersUpToDate = true;
 
 			particleBuffer.reset(new GPUBuffer);
 			aliveList[0].reset(new GPUBuffer);
@@ -69,6 +75,7 @@ namespace as
 			debugDataReadbackBuffer.reset(new GPUBuffer);
 			debugDataReadbackIndexBuffer.reset(new GPUBuffer);
 			debugDataReadbackDistanceBuffer.reset(new GPUBuffer);
+
 
 			// GPU-local buffer descriptors:
 			GPUBufferDesc bd;
@@ -100,7 +107,7 @@ namespace as
 			SAFE_DELETE_ARRAY(indices);
 			data.pSysMem = nullptr;
 
-			//Distance buffer
+			// Distance buffer:
 			bd.StructureByteStride = sizeof(float);
 			bd.ByteWidth = bd.StructureByteStride * MAX_PARTICLES;
 			float* distances = new float[MAX_PARTICLES];
@@ -127,7 +134,6 @@ namespace as
 			bd.StructureByteStride = sizeof(float);
 			bd.ByteWidth = bd.StructureByteStride * MAX_PARTICLES;
 			asRenderer::GetDevice()->CreateBuffer(&bd, nullptr, densityBuffer.get());
-
 
 			// Particle System statistics:
 			ParticleCounters counters;
@@ -465,8 +471,8 @@ namespace as
 					else
 					{
 						device->BindComputeShader(&simulateCS, cmd);
-					}
 				}
+			}
 				device->DispatchIndirect(indirectBuffers.get(), ARGUMENTBUFFER_OFFSET_DISPATCHSIMULATION, cmd);
 				device->Barrier(&GPUBarrier::Memory(), 1, cmd);
 				device->EventEnd(cmd);
@@ -543,9 +549,9 @@ namespace as
 					{
 						device->UpdateBuffer(aliveList[1].get(), before.data(), cmd);
 					}
-				}
+		}
 #endif // DEBUG_SORTING
-			}
+	}
 
 			if (!IsPaused())
 			{
@@ -570,7 +576,7 @@ namespace as
 				device->UnbindResources(0, arraysize(res), cmd);
 				device->EventEnd(cmd);
 			}
-		}
+}
 
 
 		void asEmittedParticle::Draw(const CameraComponent& camera, const MaterialComponent& material, CommandList cmd) const
@@ -615,25 +621,25 @@ namespace as
 		{
 			std::string path = asRenderer::GetShaderPath();
 
-			asRenderer::LoadShader(VS,vertexShader, "emittedparticleVS.cso");
+			asRenderer::LoadShader(VS, vertexShader, "emittedparticleVS.cso");
 
-			asRenderer::LoadShader(PS,pixelShader[SOFT], "emittedparticle_soft_PS.cso");
-			asRenderer::LoadShader(PS,pixelShader[SOFT_DISTORTION], "emittedparticle_soft_distortion_PS.cso");
-			asRenderer::LoadShader(PS,pixelShader[SIMPLEST], "emittedparticle_simplest_PS.cso");
+			asRenderer::LoadShader(PS, pixelShader[SOFT], "emittedparticle_soft_PS.cso");
+			asRenderer::LoadShader(PS, pixelShader[SOFT_DISTORTION], "emittedparticle_soft_distortion_PS.cso");
+			asRenderer::LoadShader(PS, pixelShader[SIMPLEST], "emittedparticle_simplest_PS.cso");
 
-			asRenderer::LoadShader(CS,kickoffUpdateCS, "emittedparticle_kickoffUpdateCS.cso");
-			asRenderer::LoadShader(CS,finishUpdateCS, "emittedparticle_finishUpdateCS.cso");
-			asRenderer::LoadShader(CS,emitCS, "emittedparticle_emitCS.cso");
-			asRenderer::LoadShader(CS,emitCS_FROMMESH, "emittedparticle_emit_FROMMESH_CS.cso");
-			asRenderer::LoadShader(CS,sphpartitionCS, "emittedparticle_sphpartitionCS.cso");
-			asRenderer::LoadShader(CS,sphpartitionoffsetsCS, "emittedparticle_sphpartitionoffsetsCS.cso");
-			asRenderer::LoadShader(CS,sphpartitionoffsetsresetCS, "emittedparticle_sphpartitionoffsetsresetCS.cso");
-			asRenderer::LoadShader(CS,sphdensityCS, "emittedparticle_sphdensityCS.cso");
-			asRenderer::LoadShader(CS,sphforceCS, "emittedparticle_sphforceCS.cso");
-			asRenderer::LoadShader(CS,simulateCS, "emittedparticle_simulateCS.cso");
-			asRenderer::LoadShader(CS,simulateCS_SORTING, "emittedparticle_simulate_SORTING_CS.cso");
-			asRenderer::LoadShader(CS,simulateCS_DEPTHCOLLISIONS, "emittedparticle_simulate_DEPTHCOLLISIONS_CS.cso");
-			asRenderer::LoadShader(CS,simulateCS_SORTING_DEPTHCOLLISIONS, "emittedparticle_simulate_SORTING_DEPTHCOLLISIONS_CS.cso");
+			asRenderer::LoadShader(CS, kickoffUpdateCS, "emittedparticle_kickoffUpdateCS.cso");
+			asRenderer::LoadShader(CS, finishUpdateCS, "emittedparticle_finishUpdateCS.cso");
+			asRenderer::LoadShader(CS, emitCS, "emittedparticle_emitCS.cso");
+			asRenderer::LoadShader(CS, emitCS_FROMMESH, "emittedparticle_emit_FROMMESH_CS.cso");
+			asRenderer::LoadShader(CS, sphpartitionCS, "emittedparticle_sphpartitionCS.cso");
+			asRenderer::LoadShader(CS, sphpartitionoffsetsCS, "emittedparticle_sphpartitionoffsetsCS.cso");
+			asRenderer::LoadShader(CS, sphpartitionoffsetsresetCS, "emittedparticle_sphpartitionoffsetsresetCS.cso");
+			asRenderer::LoadShader(CS, sphdensityCS, "emittedparticle_sphdensityCS.cso");
+			asRenderer::LoadShader(CS, sphforceCS, "emittedparticle_sphforceCS.cso");
+			asRenderer::LoadShader(CS, simulateCS, "emittedparticle_simulateCS.cso");
+			asRenderer::LoadShader(CS, simulateCS_SORTING, "emittedparticle_simulate_SORTING_CS.cso");
+			asRenderer::LoadShader(CS, simulateCS_DEPTHCOLLISIONS, "emittedparticle_simulate_DEPTHCOLLISIONS_CS.cso");
+			asRenderer::LoadShader(CS, simulateCS_SORTING_DEPTHCOLLISIONS, "emittedparticle_simulate_SORTING_DEPTHCOLLISIONS_CS.cso");
 
 
 			GraphicsDevice* device = asRenderer::GetDevice();
@@ -742,7 +748,6 @@ namespace as
 			LoadShaders();
 
 			asBackLog::post("asEmittedParticle Initialized");
-
 			AS_CORE_INFO("asEmittedParticle Initialized");
 		}
 
@@ -796,7 +801,9 @@ namespace as
 				archive << SPH_e;
 			}
 		}
-	}
+
+}
+
 }
 
 

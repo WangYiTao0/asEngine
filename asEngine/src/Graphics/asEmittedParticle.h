@@ -9,12 +9,14 @@
 
 #include <memory>
 
-class asArchive;
 
 namespace as
 {
+	class asArchive;
+
 	namespace asScene
 	{
+
 		class asEmittedParticle
 		{
 		public:
@@ -26,6 +28,7 @@ namespace as
 				PARTICLESHADERTYPE_COUNT,
 				ENUM_FORCE_UINT32 = 0xFFFFFFFF,
 			};
+
 		private:
 			ParticleCounters debugData = {};
 			std::unique_ptr<asGraphics::GPUBuffer> debugDataReadbackBuffer;
@@ -36,13 +39,12 @@ namespace as
 			std::unique_ptr<asGraphics::GPUBuffer> aliveList[2];
 			std::unique_ptr<asGraphics::GPUBuffer> deadList;
 			std::unique_ptr<asGraphics::GPUBuffer> distanceBuffer; // for sorting
-			std::unique_ptr<asGraphics::GPUBuffer> sphPartitionCellIndices; // for SPH Smoothed-particle hydrodynamics
+			std::unique_ptr<asGraphics::GPUBuffer> sphPartitionCellIndices; // for SPH
 			std::unique_ptr<asGraphics::GPUBuffer> sphPartitionCellOffsets; // for SPH
 			std::unique_ptr<asGraphics::GPUBuffer> densityBuffer; // for SPH
 			std::unique_ptr<asGraphics::GPUBuffer> counterBuffer;
 			std::unique_ptr<asGraphics::GPUBuffer> indirectBuffers; // kickoffUpdate, simulation, draw
 			std::unique_ptr<asGraphics::GPUBuffer> constantBuffer;
-
 			void CreateSelfBuffers();
 
 			float emit = 0.0f;
@@ -120,5 +122,6 @@ namespace as
 			static void LoadShaders();
 			static void Initialize();
 		};
+
 	}
 }
