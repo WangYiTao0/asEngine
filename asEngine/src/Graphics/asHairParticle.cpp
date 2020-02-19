@@ -219,13 +219,13 @@ namespace as
 
 			asRenderer::LoadShader(VS,vs, "hairparticleVS.cso");
 
-			asRenderer::LoadShader(PS,ps_simplest, "hairparticlePS_simplest.cso");
-			asRenderer::LoadShader(PS,ps_alphatestonly, "hairparticlePS_alphatestonly.cso");
-			asRenderer::LoadShader(PS,ps_deferred, "hairparticlePS_deferred.cso");
-			asRenderer::LoadShader(PS,ps_forward, "hairparticlePS_forward.cso");
-			asRenderer::LoadShader(PS,ps_forward_transparent, "hairparticlePS_forward_transparent.cso");
-			asRenderer::LoadShader(PS,ps_tiledforward, "hairparticlePS_tiledforward.cso");
-			asRenderer::LoadShader(PS,ps_tiledforward_transparent, "hairparticlePS_tiledforward_transparent.cso");
+			asRenderer::LoadShader(PS,ps_simplest, "hairparticle_simplest_PS.cso");
+			asRenderer::LoadShader(PS,ps_alphatestonly, "hairparticle_alphatestonly_PS.cso");
+			asRenderer::LoadShader(PS,ps_deferred, "hairparticle_deferred_PS.cso");
+			asRenderer::LoadShader(PS,ps_forward, "hairparticle_forward_PS.cso");
+			asRenderer::LoadShader(PS,ps_forward_transparent, "hairparticle_forward_transparent_PS.cso");
+			asRenderer::LoadShader(PS,ps_tiledforward, "hairparticle_tiledforward_PS.cso");
+			asRenderer::LoadShader(PS,ps_tiledforward_transparent, "hairparticle_tiledforward_transparent_PS.cso");
 
 			asRenderer::LoadShader(CS,cs_simulate, "hairparticle_simulateCS.cso");
 

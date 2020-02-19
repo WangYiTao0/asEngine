@@ -862,7 +862,7 @@ namespace as
 				renderPath->GetGUI().SetVisible(true);
 			}
 			GetGUI().SetVisible(true);
-			asProfiler::SetEnabled(true);
+			//asProfiler::SetEnabled(true);
 			main->infoDisplay.active = true;
 
 			cinemaModeCheckBox->SetCheck(false);

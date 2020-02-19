@@ -238,14 +238,14 @@ namespace as
 			asRenderer::LoadShader(VS,screenVS, "screenVS.cso");
 
 			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_STANDARD][IMAGE_SAMPLING_SIMPLE], "imagePS.cso");
-			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_SEPARATENORMALMAP][IMAGE_SAMPLING_SIMPLE], "imagePS_separatenormalmap.cso");
-			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_MASKED][IMAGE_SAMPLING_SIMPLE], "imagePS_masked.cso");
+			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_SEPARATENORMALMAP][IMAGE_SAMPLING_SIMPLE], "image_separatenormalmap_PS.cso");
+			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_MASKED][IMAGE_SAMPLING_SIMPLE], "image_masked_PS.cso");
 			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_FULLSCREEN][IMAGE_SAMPLING_SIMPLE], "screenPS.cso");
 
-			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_STANDARD][IMAGE_SAMPLING_BICUBIC], "imagePS_bicubic.cso");
-			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_SEPARATENORMALMAP][IMAGE_SAMPLING_BICUBIC], "imagePS_separatenormalmap_bicubic.cso");
-			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_MASKED][IMAGE_SAMPLING_BICUBIC], "imagePS_masked_bicubic.cso");
-			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_FULLSCREEN][IMAGE_SAMPLING_BICUBIC], "screenPS_bicubic.cso");
+			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_STANDARD][IMAGE_SAMPLING_BICUBIC], "image_bicubic_PS.cso");
+			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_SEPARATENORMALMAP][IMAGE_SAMPLING_BICUBIC], "image_separatenormalmap_bicubic_PS.cso");
+			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_MASKED][IMAGE_SAMPLING_BICUBIC], "image_masked_bicubic_PS.cso");
+			asRenderer::LoadShader(PS,imagePS[IMAGE_SHADER_FULLSCREEN][IMAGE_SAMPLING_BICUBIC], "screen_bicubic_PS.cso");
 
 
 			GraphicsDevice* device = asRenderer::GetDevice();

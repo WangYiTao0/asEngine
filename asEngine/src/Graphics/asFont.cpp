@@ -200,7 +200,7 @@ namespace as
 		// add default font if there is none yet:
 		if (fontStyles.empty())
 		{
-			AddFontStyle(FONTPATH + "arial.ttf");
+			AddFontStyle(FONTPATH + "Champagne & Limousines Bold.ttf");
 		}
 
 		GraphicsDevice* device = as::asRenderer::GetDevice();
