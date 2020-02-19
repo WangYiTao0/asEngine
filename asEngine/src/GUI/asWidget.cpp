@@ -24,8 +24,7 @@ namespace as
 	using namespace asGraphics;
 	using namespace asScene;
 
-
-	static asGraphics::PipelineState PSO_colorpicker;
+	static asGraphics::PipelineState PSO_colored;
 
 	void asWidget::Update(asGUI* gui, float dt)
 	{
@@ -249,7 +248,7 @@ namespace as
 		desc.bs = asRenderer::GetBlendState(BSTYPE_TRANSPARENT);
 		desc.rs = asRenderer::GetRasterizerState(RSTYPE_DOUBLESIDED);
 		desc.pt = TRIANGLESTRIP;
-		asRenderer::GetDevice()->CreatePipelineState(&desc, &PSO_colorpicker);
+		asRenderer::GetDevice()->CreatePipelineState(&desc, &PSO_colored);
 	}
 
 
@@ -372,13 +371,11 @@ namespace as
 
 		asColor color = GetColor();
 
-		gui->ResetScissor(cmd);
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x, translation.y, scale.x, scale.y, color.toFloat4()), cmd);
 
-
-		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 		asFont(text, asFontParams((int)(translation.x + scale.x * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
@@ -440,11 +437,12 @@ namespace as
 
 		gui->ResetScissor(cmd);
 
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
+
+
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x, translation.y, scale.x, scale.y, color.toFloat4()), cmd);
 
-
-		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 		asFont(text, asFontParams((int)translation.x + 2, (int)translation.y + 2, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_TOP, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
@@ -589,14 +587,12 @@ namespace as
 
 		asColor color = GetColor();
 
-		gui->ResetScissor(cmd);
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
+
 
 		asImage::Draw(asTextureHelper::getWhite()
 			, asImageParams(translation.x, translation.y, scale.x, scale.y, color.toFloat4()), cmd);
 
-
-
-		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
 		string activeText = text;
 		if (state == ACTIVE)
@@ -718,7 +714,6 @@ namespace as
 			}
 		}
 
-		float headWidth = scale.x * 0.05f;
 
 		hitBox.pos.x = translation.x - headWidth * 0.5f;
 		hitBox.pos.y = translation.y;
@@ -776,36 +771,40 @@ namespace as
 
 		asColor color = GetColor();
 
-		float headWidth = scale.x * 0.05f;
-
-		gui->ResetScissor(cmd);
-
-		// trail
-		asImage::Draw(asTextureHelper::getWhite()
-			, asImageParams(translation.x - headWidth * 0.5f, translation.y + scale.y * 0.5f - scale.y * 0.1f, scale.x + headWidth, scale.y * 0.2f, color.toFloat4()), cmd);
-		// head
-		float headPosX = asMath::Lerp(translation.x, translation.x + scale.x, asMath::Clamp(asMath::InverseLerp(start, end, value), 0, 1));
-		asImage::Draw(asTextureHelper::getWhite()
-			, asImageParams(headPosX - headWidth * 0.5f, translation.y, headWidth, scale.y, color.toFloat4()), cmd);
-
-		if (parent != gui)
-		{
-			asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
-		}
 		// text
 		asFont(text, asFontParams((int)(translation.x - headWidth * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
-		//// value
-		//stringstream ss("");
-		//ss << value;
-		//asFont(ss.str(), asFontParams((int)(translation.x + scale.x + headWidth), (int)(translation.y + scale.y*0.5f), -1, WIFALIGN_LEFT, WIFALIGN_CENTER, 0, 0,
-		//	textColor, textShadowColor )).Draw(gui->GetGraphicsThread(), parent != nullptr);
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
-
+		// trail
+		asImage::Draw(asTextureHelper::getWhite()
+			, asImageParams(translation.x - headWidth * 0.5f, translation.y, scale.x + headWidth, scale.y, colors_base[state].toFloat4()), cmd);
+		// head
+		float headPosX = asMath::Lerp(translation.x + 2, translation.x + scale.x - 2, asMath::Clamp(asMath::InverseLerp(start, end, value), 0, 1));
+		asImage::Draw(asTextureHelper::getWhite()
+			, asImageParams(headPosX - headWidth * 0.5f, translation.y + 2, headWidth, scale.y - 4, color.toFloat4()), cmd);
 
 		valueInputField->Render(gui, cmd);
 	}
+	void asSlider::SetBaseColor(asColor color, ASWIDGETSTATE state)
+	{
+		if (state == ASWIDGETSTATE_COUNT)
+		{
+			for (int i = 0; i < ASWIDGETSTATE_COUNT; ++i)
+			{
+				colors_base[i] = color;
+			}
+		}
+		else
+		{
+			colors_base[state] = color;
+		}
+	}
+
+
+
+
 	void asSlider::OnSlide(function<void(asEventArgs args)> func)
 	{
 		onSlide = move(func);
@@ -910,7 +909,10 @@ namespace as
 
 		asColor color = GetColor();
 
-		gui->ResetScissor(cmd);
+		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
+			textColor, textShadowColor)).Draw(cmd);
+
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
 		// control
 		asImage::Draw(asTextureHelper::getWhite()
@@ -924,12 +926,6 @@ namespace as
 				, cmd);
 		}
 
-		if (parent != gui)
-		{
-			asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
-		}
-		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
 
 	}
 	void asCheckBox::OnClick(function<void(asEventArgs args)> func)
@@ -1133,7 +1129,8 @@ namespace as
 		{
 			color = colors[FOCUS];
 		}
-
+		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f),ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
+			textColor, textShadowColor)).Draw(cmd);
 		gui->ResetScissor(cmd);
 
 		// control-base
@@ -1146,12 +1143,12 @@ namespace as
 		asFont("V", asFontParams((int)(translation.x + scale.x + scale.y * 0.5f), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_CENTER, ASFALIGN_CENTER, 0, 0,
 			textColor, textShadowColor)).Draw(cmd);
 
-		if (parent != gui)
-		{
-			asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
-		}
-		asFont(text, asFontParams((int)(translation.x), (int)(translation.y + scale.y * 0.5f), ASFONTSIZE_DEFAULT, ASFALIGN_RIGHT, ASFALIGN_CENTER, 0, 0,
-			textColor, textShadowColor)).Draw(cmd);
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
+
+		// control-base
+		asImage::Draw(asTextureHelper::getWhite()
+			, asImageParams(translation.x, translation.y, scale.x, scale.y, color.toFloat4()), cmd);
+
 
 		if (selected >= 0)
 		{
@@ -1418,36 +1415,9 @@ namespace as
 	{
 		asWidget::Update(gui, dt);
 
-		//// TODO: Override window controls for nicer alignment:
-		//if (moveDragger != nullptr)
-		//{
-		//	moveDragger->scale.y = windowcontrolSize;
-		//}
-		//if (resizeDragger_UpperLeft != nullptr)
-		//{
-		//	resizeDragger_UpperLeft->scale.x = windowcontrolSize;
-		//	resizeDragger_UpperLeft->scale.y = windowcontrolSize;
-		//}
-		//if (resizeDragger_BottomRight != nullptr)
-		//{
-		//	resizeDragger_BottomRight->scale.x = windowcontrolSize;
-		//	resizeDragger_BottomRight->scale.y = windowcontrolSize;
-		//}
-		//if (closeButton != nullptr)
-		//{
-		//	closeButton->scale.x = windowcontrolSize;
-		//	closeButton->scale.y = windowcontrolSize;
-		//}
-		//if (minimizeButton != nullptr)
-		//{
-		//	minimizeButton->scale.x = windowcontrolSize;
-		//	minimizeButton->scale.y = windowcontrolSize;
-		//}
-
 		for (auto& x : childrenWidgets)
 		{
 			x->Update(gui, dt);
-			x->SetScissorRect(scissorRect);
 		}
 
 		if (!IsEnabled())
@@ -1470,6 +1440,7 @@ namespace as
 		}
 
 		asColor color = GetColor();
+		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 
 		gui->ResetScissor(cmd);
 
@@ -1485,6 +1456,7 @@ namespace as
 			if (x != gui->GetActiveWidget())
 			{
 				// the gui will render the active on on top of everything!
+				asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
 				x->Render(gui, cmd);
 			}
 		}
@@ -2024,7 +1996,7 @@ namespace as
 		const XMMATRIX Projection = asRenderer::GetDevice()->GetScreenProjection();
 
 		asRenderer::GetDevice()->BindConstantBuffer(VS, asRenderer::GetConstantBuffer(CBTYPE_MISC), CBSLOT_RENDERER_MISC, cmd);
-		asRenderer::GetDevice()->BindPipelineState(&PSO_colorpicker, cmd);
+		asRenderer::GetDevice()->BindPipelineState(&PSO_colored, cmd);
 
 		MiscCB cb;
 
@@ -2351,6 +2323,10 @@ namespace as
 			scrollbar_delta = pointerHitbox.pos.y - scrollbar_height * 0.5f - scrollbar_begin;
 		}
 
+		if (state == FOCUS)
+		{
+			scrollbar_delta -= asInput::GetPointer().z;
+		}
 		scrollbar_delta -= asInput::GetPointer().z;
 		scrollbar_delta = asMath::Clamp(scrollbar_delta, 0, scrollbar_size - scrollbar_height);
 		scrollbar_value = asMath::InverseLerp(scrollbar_begin, scrollbar_end, scrollbar_begin + scrollbar_delta);
@@ -2358,6 +2334,8 @@ namespace as
 		list_offset = -scrollbar_value * list_height;
 
 		// control-list
+		item_highlight = -1;
+		opener_highlight = -1;
 		if (scrollbar_state == SCROLLBAR_INACTIVE)
 		{
 			int i = -1;
@@ -2379,10 +2357,14 @@ namespace as
 
 				// opened flag box:
 				Hitbox2D open_box = Hitbox2D(XMFLOAT2(pos.x, pos.y - item_height * 0.25f), XMFLOAT2(item_height * 0.5f, item_height * 0.5f));
-				if (clicked && open_box.intersects(pointerHitbox))
+				if (open_box.intersects(pointerHitbox))
 				{
-					item.open = !item.open;
-					gui->ActivateWidget(this);
+					opener_highlight = i;
+					if (clicked)
+					{
+						item.open = !item.open;
+						gui->ActivateWidget(this);
+					}
 				}
 				else
 				{
@@ -2390,20 +2372,25 @@ namespace as
 					Hitbox2D name_box;
 					name_box.pos = XMFLOAT2(pos.x + item_height * 0.5f + 2, pos.y - item_height * 0.5f);
 					name_box.siz = XMFLOAT2(scale.x - 2 - item_height * 0.5f - 2 - item.level * item_height - tree_scrollbar_width - 2, item_height);
-					if (clicked && name_box.intersects(pointerHitbox))
+					if (name_box.intersects(pointerHitbox))
 					{
-						if (!asInput::Down(asInput::KEYBOARD_BUTTON_LCONTROL) && !asInput::Down(asInput::KEYBOARD_BUTTON_RCONTROL)
-							&& !asInput::Down(asInput::KEYBOARD_BUTTON_LSHIFT) && !asInput::Down(asInput::KEYBOARD_BUTTON_RSHIFT))
+						item_highlight = i;
+						if (clicked)
 						{
-							ClearSelection();
+							if (!asInput::Down(asInput::KEYBOARD_BUTTON_LCONTROL) && !asInput::Down(asInput::KEYBOARD_BUTTON_RCONTROL)
+								&& !asInput::Down(asInput::KEYBOARD_BUTTON_LSHIFT) && !asInput::Down(asInput::KEYBOARD_BUTTON_RSHIFT))
+							{
+								ClearSelection();
+							}
+							Select(i);
+							gui->ActivateWidget(this);
 						}
-						Select(i);
-						gui->ActivateWidget(this);
 					}
 				}
 			}
 		}
 	}
+
 	void asTreeList::Render(const asGUI* gui, CommandList cmd) const
 	{
 		assert(gui != nullptr && "Ivalid GUI!");
@@ -2412,8 +2399,10 @@ namespace as
 		{
 			return;
 		}
+		GraphicsDevice* device = asRenderer::GetDevice();
 
-		asRenderer::GetDevice()->BindScissorRects(1, &scissorRect, cmd);
+		device->BindScissorRects(1, &scissorRect, cmd);
+
 
 		// control-base
 		asImage::Draw(asTextureHelper::getWhite()
@@ -2446,14 +2435,39 @@ namespace as
 		Rect rect_without_scrollbar = scissorRect;
 		rect_without_scrollbar.top += (int32_t)item_height + 1;
 		rect_without_scrollbar.right -= (int32_t)tree_scrollbar_width + 1;
-		asRenderer::GetDevice()->BindScissorRects(1, &rect_without_scrollbar, cmd);
+		device->BindScissorRects(1, &rect_without_scrollbar, cmd);
+
+		struct Vertex
+		{
+			XMFLOAT4 pos;
+			XMFLOAT4 col;
+		};
+		static GPUBuffer vb_triangle;
+		if (!vb_triangle.IsValid())
+		{
+			Vertex vertices[3];
+			vertices[0].col = XMFLOAT4(1, 1, 1, 1);
+			vertices[1].col = XMFLOAT4(1, 1, 1, 1);
+			vertices[2].col = XMFLOAT4(1, 1, 1, 1);
+			asMath::ConstructTriangleEquilateral(1, vertices[0].pos, vertices[1].pos, vertices[2].pos);
+
+			GPUBufferDesc desc;
+			desc.BindFlags = BIND_VERTEX_BUFFER;
+			desc.ByteWidth = sizeof(vertices);
+			SubresourceData initdata;
+			initdata.pSysMem = vertices;
+			device->CreateBuffer(&desc, &initdata, &vb_triangle);
+		}
+		const XMMATRIX Projection = asRenderer::GetDevice()->GetScreenProjection();
 
 		// control-list
+		int i = -1;
 		int visible_count = 0;
 		int parent_level = 0;
 		bool parent_open = true;
 		for (const Item& item : items)
 		{
+			i++;
 			if (!parent_open && item.level > parent_level)
 			{
 				continue;
@@ -2465,18 +2479,32 @@ namespace as
 			XMFLOAT2 pos = XMFLOAT2(translation.x + 2 + item.level * item_height, translation.y + GetItemOffset(visible_count) + item_height * 0.5f);
 
 			// selected box:
-			if (item.selected)
+			if (item.selected || item_highlight == i)
 			{
 				asImage::Draw(asTextureHelper::getWhite()
 					, asImageParams(pos.x + item_height * 0.5f + 2, pos.y - item_height * 0.5f, scale.x - item_height * 0.5f - 2 - tree_scrollbar_width, item_height,
-						colors[FOCUS].toFloat4()), cmd);
+						colors[item.selected ? FOCUS : IDLE].toFloat4()), cmd);
 			}
 
-			// opened flag box:
-			asImage::Draw(asTextureHelper::getWhite()
-				, asImageParams(pos.x, pos.y - item_height * 0.25f, item_height * 0.5f, item_height * 0.5f,
-					item.open ? colors[ACTIVE].toFloat4() : colors[IDLE].toFloat4()), cmd);
+			// opened flag triangle:
+			{
+				device->BindPipelineState(&PSO_colored, cmd);
 
+				MiscCB cb;
+				cb.g_xColor = colors[opener_highlight == i ? ACTIVE : FOCUS].toFloat4();
+				XMStoreFloat4x4(&cb.g_xTransform, XMMatrixScaling(item_height * 0.3f, item_height * 0.3f, 1) * XMMatrixRotationZ(item.open ? XM_PIDIV2 : 0) * XMMatrixTranslation(pos.x + 5, pos.y - 2, 0) * Projection);
+				asRenderer::GetDevice()->UpdateBuffer(asRenderer::GetConstantBuffer(CBTYPE_MISC), &cb, cmd);
+				device->BindConstantBuffer(VS, asRenderer::GetConstantBuffer(CBTYPE_MISC), CBSLOT_RENDERER_MISC, cmd);
+				const GPUBuffer* vbs[] = {
+					&vb_triangle,
+				};
+				const uint32_t strides[] = {
+					sizeof(Vertex),
+				};
+				asRenderer::GetDevice()->BindVertexBuffers(vbs, 0, arraysize(vbs), strides, nullptr, cmd);
+
+				device->Draw(3, 0, cmd);
+			}
 			// Item name text:
 			asFont(item.name, asFontParams((int)pos.x + int(item_height * 0.5f) + 2, (int)pos.y, ASFONTSIZE_DEFAULT, ASFALIGN_LEFT, ASFALIGN_CENTER, 0, 0,
 				textColor, textShadowColor)).Draw(cmd);

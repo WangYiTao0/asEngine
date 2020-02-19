@@ -291,9 +291,9 @@ namespace as
 		ocean_enabledCheckBox->SetPos(XMFLOAT2(x + 100, y += step));
 		ocean_enabledCheckBox->OnClick([&](asEventArgs args) {
 			auto& weather = GetWeather();
+			weather.SetOceanEnabled(args.bValue);
 			if (!weather.IsOceanEnabled())
 			{
-				weather.SetOceanEnabled(args.bValue);
 				asRenderer::OceanRegenerate();
 			}
 			});
