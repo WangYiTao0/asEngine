@@ -46,8 +46,8 @@ namespace as
 			if (asStartupArguments::HasArgument("vulkan"))
 			{
 #ifdef ASENGINE_BUILD_VULKAN
-				asRenderer::SetShaderPath(asRenderer::GetShaderPath() + "spirv/");
-				asRenderer::SetDevice(std::make_shared<GraphicsDevice_Vulkan>(window, fullscreen, debugdevice));
+				//asRenderer::SetShaderPath(asRenderer::GetShaderPath() + "spirv/");
+				//asRenderer::SetDevice(std::make_shared<GraphicsDevice_Vulkan>(window, fullscreen, debugdevice));
 #else
 				asHelper::messageBox("Vulkan SDK not found during building the application! Vulkan API disabled!", "Error");
 #endif
