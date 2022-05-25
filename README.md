@@ -1,6 +1,6 @@
 # asEngine
 
-使用方法
+**インストール方法**
 
 ```
 git clone --recursive https://github.com/WangYiTao0/asEngine
@@ -11,3 +11,4 @@ cd scripts
 Run Win-GenProjects.bat
 ```
 
+**Open Project and Build**
